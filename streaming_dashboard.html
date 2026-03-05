@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subscriber Dynamics Dashboard | Reid Nelson</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0F1923;
+  --card: #172A3A;
+  --border: #1E3A5F;
+  --teal: #00D4AA;
+  --blue: #3B82F6;
+  --rose: #F43F5E;
+  --amber: #F59E0B;
+  --purple: #A855F7;
+  --lime: #84CC16;
+  --light: #E2E8F0;
+  --mid: #94A3B8;
+  --dim: #64748B;
+  --deep: #0D2A3A;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--light);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+.header {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 28px;
+}
+.header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+.tag {
+  display: inline-block; background: #0D3B4F; color: var(--teal);
+  font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 3px;
+  letter-spacing: 0.06em; margin-bottom: 8px;
+}
+h1 { font-size: 24px; font-weight: 700; color: #fff; margin: 4px 0; }
+.subtitle { font-size: 13px; color: var(--mid); }
+.author { text-align: right; font-size: 12px; color: var(--dim); }
+.author strong { color: var(--mid); font-weight: 500; }
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; margin-top: 16px; flex-wrap: wrap; }
+.tab {
+  background: transparent; color: var(--mid); border: 1px solid var(--border);
+  border-radius: 4px; padding: 7px 16px; font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.tab:hover { border-color: var(--teal); color: var(--light); }
+.tab.active { background: var(--teal); color: var(--bg); border-color: var(--teal); }
+
+/* Content */
+.content { padding: 20px 28px; }
+.metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.metric-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px 18px; position: relative; overflow: hidden; flex: 1; min-width: 150;
+}
+.metric-card .accent { position: absolute; top: 0; left: 12px; right: 12px; height: 3px; border-radius: 0 0 2px 2px; }
+.metric-card .value {
+  font-size: 28px; font-weight: 700; color: #fff; margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.metric-card .label { font-size: 12px; color: var(--mid); margin-top: 2px; font-weight: 500; }
+.metric-card .sub { font-size: 10px; color: var(--dim); margin-top: 4px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+@media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } .metrics { flex-direction: column; } }
+
+.chart-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px;
+}
+.chart-label {
+  font-size: 11px; color: var(--dim); font-weight: 600; margin-bottom: 14px;
+  letter-spacing: 0.04em;
+}
+.chart-wrap { position: relative; height: 260px; }
+
+.insight-box {
+  background: var(--deep); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; margin-bottom: 16px;
+}
+.insight-box .tag-inline { font-size: 11px; font-weight: 600; color: var(--teal); margin-bottom: 6px; }
+.insight-box p { font-size: 13px; line-height: 1.65; color: var(--light); }
+.insight-box strong { color: #fff; }
+
+/* Horizontal bar component */
+.hbar-row { display: flex; align-items: center; margin-bottom: 14px; gap: 8px; }
+.hbar-label { width: 88px; font-size: 11px; color: var(--mid); text-align: right; font-weight: 500; }
+.hbar-track { flex: 1; height: 24px; background: #0D1B26; border-radius: 4px; overflow: hidden; display: flex; }
+.hbar-seg { display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; }
+.hbar-total { width: 52px; font-size: 12px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+/* Progress bars */
+.prog-item { margin-bottom: 18px; }
+.prog-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.prog-header .name { font-size: 12px; color: var(--light); font-weight: 500; }
+.prog-header .pct { font-size: 14px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.prog-track { height: 8px; background: #0D1B26; border-radius: 4px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+.prog-note { font-size: 10px; color: var(--dim); margin-top: 2px; }
+
+.footer {
+  border-top: 1px solid var(--border); margin-top: 24px; padding-top: 12px;
+  display: flex; justify-content: space-between; font-size: 10px; color: var(--dim);
+  flex-wrap: wrap; gap: 8px;
+}
+
+.legend-row { display: flex; gap: 16px; margin-top: 14px; margin-left: 96px; }
+.legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--mid); }
+.legend-swatch { width: 10px; height: 10px; border-radius: 2px; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Entry animation */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.animate-in { animation: fadeUp 0.4s ease forwards; }
+.delay-1 { animation-delay: 0.05s; opacity: 0; }
+.delay-2 { animation-delay: 0.1s; opacity: 0; }
+.delay-3 { animation-delay: 0.15s; opacity: 0; }
+.delay-4 { animation-delay: 0.2s; opacity: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="tag">STREAMING MARKET INTELLIGENCE</div>
+      <h1>Subscriber Dynamics Dashboard</h1>
+      <div class="subtitle">SVOD Monetization Economics & Platform Positioning &nbsp;|&nbsp; Q1 2026</div>
+    </div>
+    <div class="author"><strong>Reid Nelson</strong><br>Subscription Economy Research</div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-tab="0">Overview</button>
+    <button class="tab" data-tab="1">ARPU Deep Dive</button>
+    <button class="tab" data-tab="2">Retention</button>
+    <button class="tab" data-tab="3">Ad Economics</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- TAB 0: OVERVIEW -->
+  <div class="tab-panel active" id="panel-0">
+    <div class="metrics">
+      <div class="metric-card animate-in delay-1"><div class="accent" style="background:var(--teal)"></div><div class="value">$17.26</div><div class="label">Netflix UCAN ARPU</div><div class="sub">Q4 2024 (last reported)</div></div>
+      <div class="metric-card animate-in delay-2"><div class="accent" style="background:var(--rose)"></div><div class="value">55%</div><div class="label">NFLX Ad-Tier Signups</div><div class="sub">Share of new subs choosing ads</div></div>
+      <div class="metric-card animate-in delay-3"><div class="accent" style="background:var(--blue)"></div><div class="value">71%</div><div class="label">Industry Net Adds</div><div class="sub">From ad tiers (9 qtrs, Antenna)</div></div>
+      <div class="metric-card animate-in delay-4"><div class="accent" style="background:var(--amber)"></div><div class="value">190M</div><div class="label">NFLX Ad-Tier MAV</div><div class="sub">Monthly active viewers globally</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="chart-card"><div class="chart-label">BLENDED ARPU BY PLATFORM</div><div class="chart-wrap"><canvas id="chart-arpu"></canvas></div></div>
+      <div class="chart-card"><div class="chart-label">AD-TIER ADOPTION RATE</div><div class="chart-wrap"><canvas id="chart-adoption"></canvas></div></div>
+    </div>
+    <div class="chart-card"><div class="chart-label">COMPETITIVE POSITIONING RADAR</div><div class="chart-wrap" style="height:300px"><canvas id="chart-radar"></canvas></div></div>
+  </div>
+
+  <!-- TAB 1: ARPU DEEP DIVE -->
+  <div class="tab-panel" id="panel-1">
+    <div class="metrics">
+      <div class="metric-card"><div class="accent" style="background:var(--teal)"></div><div class="value">$18.66</div><div class="label">Netflix Blended ARPU</div><div class="sub">Sub ($17.26) + Est. Ad ($1.40)</div></div>
+      <div class="metric-card"><div class="accent" style="background:var(--rose)"></div><div class="value">$1.5B</div><div class="label">NFLX Ad Revenue 2025</div><div class="sub">2.5x YoY growth</div></div>
+      <div class="metric-card"><div class="accent" style="background:var(--blue)"></div><div class="value">$3B</div><div class="label">2026 Ad Rev Target</div><div class="sub">Netflix guidance</div></div>
+      <div class="metric-card"><div class="accent" style="background:var(--amber)"></div><div class="value">6.3%</div><div class="label">ARPU Growth YoY</div><div class="sub">Q4 2025 (exceeded consensus)</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="chart-card"><div class="chart-label">NETFLIX AD REVENUE TRAJECTORY ($M)</div><div class="chart-wrap"><canvas id="chart-adrev"></canvas></div></div>
+      <div class="chart-card">
+        <div class="chart-label">ARPU COMPOSITION WATERFALL</div>
+        <div style="padding:16px 0" id="waterfall-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: RETENTION -->
+  <div class="tab-panel" id="panel-2">
+    <div class="metrics">
+      <div class="metric-card"><div class="accent" style="background:var(--teal)"></div><div class="value">2.0%</div><div class="label">Netflix Monthly Churn</div><div class="sub">2.75x better than industry avg</div></div>
+      <div class="metric-card"><div class="accent" style="background:var(--rose)"></div><div class="value">85%</div><div class="label">12-Month Retention</div><div class="sub">Netflix modeled survival rate</div></div>
+      <div class="metric-card"><div class="accent" style="background:var(--blue)"></div><div class="value">42%</div><div class="label">Win-Back Rate</div><div class="sub">Resubscription within 12 months</div></div>
+      <div class="metric-card"><div class="accent" style="background:var(--amber)"></div><div class="value">65%</div><div class="label">New-to-Platform</div><div class="sub">Ad-tier subs are new, not downgrades</div></div>
+    </div>
+    <div class="chart-card" style="margin-bottom:16px"><div class="chart-label">12-MONTH SUBSCRIBER SURVIVAL CURVES (MODELED)</div><div class="chart-wrap" style="height:300px"><canvas id="chart-survival"></canvas></div></div>
+    <div class="insight-box">
+      <div class="tag-inline">KEY FINDING</div>
+      <p>Antenna's Q2 2025 data shows <strong>no significant retention difference</strong> between ad-supported and ad-free subscribers — eliminating the primary bear case against hybrid monetization. Combined with the finding that 65% of ad-tier subscribers are entirely new to platforms (not downgrades), the data confirms ad tiers are expanding the addressable market rather than cannibalizing premium revenue.</p>
+    </div>
+  </div>
+
+  <!-- TAB 3: AD ECONOMICS -->
+  <div class="tab-panel" id="panel-3">
+    <div class="metrics">
+      <div class="metric-card"><div class="accent" style="background:var(--teal)"></div><div class="value">$1.5B</div><div class="label">Netflix 2025 Ad Revenue</div><div class="sub">First-ever disclosure</div></div>
+      <div class="metric-card"><div class="accent" style="background:var(--rose)"></div><div class="value">2.5x</div><div class="label">YoY Ad Rev Growth</div><div class="sub">Exceeded internal target</div></div>
+      <div class="metric-card"><div class="accent" style="background:var(--blue)"></div><div class="value">46%</div><div class="label">US Streaming Ad-Tier</div><div class="sub">Share of all subs (Antenna)</div></div>
+      <div class="metric-card"><div class="accent" style="background:var(--amber)"></div><div class="value">57%</div><div class="label">Gross Adds from Ads</div><div class="sub">Q1 2025 new signups</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="chart-card"><div class="chart-label">INDUSTRY NET ADDS: AD-TIER vs. AD-FREE (M)</div><div class="chart-wrap"><canvas id="chart-netadds"></canvas></div></div>
+      <div class="chart-card">
+        <div class="chart-label">AD-TIER SUBSCRIBER COMPOSITION</div>
+        <div style="padding:16px 0" id="composition-container"></div>
+      </div>
+    </div>
+    <div class="insight-box">
+      <div class="tag-inline">STRATEGIC IMPLICATION</div>
+      <p>The ad-tier is a market expansion mechanism, not a margin diluter. With 65% of ad-tier subscribers being new to platforms and ad revenue per user approaching parity with subscription-only ARPU at scale (Netflix targets closing the gap through interactive ads and first-party data in 2026), the structural winners are platforms that can command <strong>premium CPMs while maintaining content moats</strong>. Netflix's $1.5B disclosure — combined with 190M monthly active viewers and 55% new-signup adoption — positions it as the only platform operating in the "Optimal Monetization" quadrant.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>Sources: Netflix Q4 2025 Shareholder Letter; Antenna Premium SVOD Reports; Disney FY25 Earnings; public filings</div>
+    <div>Reid Nelson &nbsp;|&nbsp; reidn94@gmail.com</div>
+  </div>
+</div>
+
+<script>
+// ── Chart.js defaults ──
+Chart.defaults.color = '#94A3B8';
+Chart.defaults.borderColor = '#1E3A5F';
+Chart.defaults.font.family = "'DM Sans', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+Chart.defaults.plugins.legend.labels.padding = 14;
+Chart.defaults.plugins.tooltip.backgroundColor = '#172A3A';
+Chart.defaults.plugins.tooltip.borderColor = '#1E3A5F';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.cornerRadius = 6;
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.titleFont = { weight: '600' };
+Chart.defaults.scale.grid = { color: '#1E3A5F', lineWidth: 0.5 };
+
+const C = { teal:'#00D4AA', blue:'#3B82F6', rose:'#F43F5E', amber:'#F59E0B', purple:'#A855F7', lime:'#84CC16' };
+const platColors = { 'Netflix':C.rose, 'Disney+':C.blue, 'Max':C.purple, 'Peacock':C.amber, 'Paramount+':C.teal };
+
+// ── Tab switching ──
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.tab-panel');
+let chartsInitialized = { 0: false, 1: false, 2: false, 3: false };
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const idx = tab.dataset.tab;
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + idx).classList.add('active');
+    if (!chartsInitialized[idx]) { initCharts(parseInt(idx)); chartsInitialized[idx] = true; }
+  });
+});
+
+function initCharts(tabIdx) {
+  if (tabIdx === 0) initTab0();
+  if (tabIdx === 1) initTab1();
+  if (tabIdx === 2) initTab2();
+  if (tabIdx === 3) initTab3();
+}
+
+// ── TAB 0 ──
+function initTab0() {
+  // ARPU stacked bar
+  new Chart(document.getElementById('chart-arpu'), {
+    type: 'bar',
+    data: {
+      labels: ['Netflix','Disney+','Max','Peacock','Paramount+'],
+      datasets: [
+        { label: 'Sub ARPU', data: [17.26,7.99,7.44,5.64,6.50], backgroundColor: C.blue, borderRadius: 0 },
+        { label: 'Est. Ad/User', data: [1.40,2.50,2.00,4.10,2.20], backgroundColor: C.teal, borderRadius: { topLeft:4, topRight:4 } }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: $${ctx.raw.toFixed(2)}` } }
+      },
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true, ticks: { callback: v => '$' + v }, max: 22 }
+      }
+    }
+  });
+
+  // Adoption horizontal bar
+  new Chart(document.getElementById('chart-adoption'), {
+    type: 'bar',
+    data: {
+      labels: ['Peacock','Paramount+','Netflix*','Disney+*','Max'],
+      datasets: [{
+        label: 'Ad-Tier %',
+        data: [84,58,55,50,28],
+        backgroundColor: [C.amber, C.teal, C.rose, C.blue, C.purple],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ctx.raw + '%' } }
+      },
+      scales: {
+        x: { max: 100, ticks: { callback: v => v + '%' } }
+      }
+    }
+  });
+
+  // Radar
+  new Chart(document.getElementById('chart-radar'), {
+    type: 'radar',
+    data: {
+      labels: ['Content Moat','Distribution','Ad Scale','Pricing Power','Sub Retention','ARPU Growth'],
+      datasets: [
+        { label: 'Netflix', data: [92,88,90,85,95,80], borderColor: C.rose, backgroundColor: C.rose+'25', borderWidth: 2.5, pointRadius: 3 },
+        { label: 'Disney+', data: [85,58,65,55,78,60], borderColor: C.blue, backgroundColor: C.blue+'18', borderWidth: 1.5, pointRadius: 2 },
+        { label: 'Max', data: [72,50,40,45,70,48], borderColor: C.purple, backgroundColor: C.purple+'10', borderWidth: 1.5, pointRadius: 2 },
+        { label: 'Peacock', data: [45,42,70,30,55,50], borderColor: C.amber, backgroundColor: C.amber+'10', borderWidth: 1.5, pointRadius: 2 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { r: { beginAtZero: true, max: 100, ticks: { stepSize: 25, color: '#64748B', backdropColor: 'transparent' }, grid: { color: '#1E3A5F' }, pointLabels: { font: { size: 10 } } } }
+    }
+  });
+}
+
+// ── TAB 1 ──
+function initTab1() {
+  new Chart(document.getElementById('chart-adrev'), {
+    type: 'line',
+    data: {
+      labels: ["Q1 '24","Q2 '24","Q3 '24","Q4 '24","Q1 '25","Q2 '25","Q3 '25","Q4 '25","Q1 '26E","Q2 '26E"],
+      datasets: [{
+        label: 'Netflix Ad Rev ($M)',
+        data: [150,250,300,400,500,650,800,1000,1200,1500],
+        borderColor: C.rose, backgroundColor: C.rose + '30',
+        fill: true, tension: 0.3, borderWidth: 2.5, pointRadius: 3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { ticks: { callback: v => '$' + v + 'M' } } }
+    }
+  });
+
+  // Build waterfall HTML
+  const data = [
+    { platform:'Netflix', sub:17.26, ad:1.40, total:18.66, color:C.rose },
+    { platform:'Disney+', sub:7.99, ad:2.50, total:10.49, color:C.blue },
+    { platform:'Max', sub:7.44, ad:2.00, total:9.44, color:C.purple },
+    { platform:'Peacock', sub:5.64, ad:4.10, total:9.74, color:C.amber },
+    { platform:'Paramount+', sub:6.50, ad:2.20, total:8.70, color:C.teal },
+  ];
+  const container = document.getElementById('waterfall-container');
+  let html = '';
+  data.forEach(d => {
+    const subW = (d.sub / 20) * 100;
+    const adW = (d.ad / 20) * 100;
+    html += `<div class="hbar-row">
+      <div class="hbar-label">${d.platform}</div>
+      <div class="hbar-track">
+        <div class="hbar-seg" style="width:${subW}%;background:${C.blue};color:#fff">$${d.sub}</div>
+        <div class="hbar-seg" style="width:${adW}%;background:${C.teal};color:#000">+$${d.ad.toFixed(2)}</div>
+      </div>
+      <div class="hbar-total" style="color:${d.color}">$${d.total.toFixed(2)}</div>
+    </div>`;
+  });
+  html += `<div class="legend-row">
+    <div class="legend-item"><div class="legend-swatch" style="background:${C.blue}"></div>Subscription ARPU</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:${C.teal}"></div>Est. Ad Revenue/User</div>
+  </div>`;
+  container.innerHTML = html;
+}
+
+// ── TAB 2 ──
+function initTab2() {
+  new Chart(document.getElementById('chart-survival'), {
+    type: 'line',
+    data: {
+      labels: ['M1','M3','M6','M9','M12'],
+      datasets: [
+        { label:'Netflix', data:[98,95,91,88,85], borderColor:C.rose, borderWidth:3, pointRadius:4, tension:0.3 },
+        { label:'Disney+', data:[95,88,80,74,69], borderColor:C.blue, borderWidth:2, pointRadius:3, tension:0.3 },
+        { label:'Max', data:[93,84,74,67,61], borderColor:C.purple, borderWidth:2, pointRadius:3, tension:0.3 },
+        { label:'Peacock', data:[90,78,65,55,48], borderColor:C.amber, borderWidth:2, pointRadius:3, tension:0.3 },
+        { label:'Paramount+', data:[88,74,60,50,43], borderColor:C.teal, borderWidth:2, pointRadius:3, tension:0.3 },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { min: 30, max: 100, ticks: { callback: v => v + '%' } } },
+      plugins: { tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + '%' } } }
+    }
+  });
+}
+
+// ── TAB 3 ──
+function initTab3() {
+  new Chart(document.getElementById('chart-netadds'), {
+    type: 'bar',
+    data: {
+      labels: ["Q1 '24","Q2 '24","Q3 '24","Q4 '24","Q1 '25","Q2 '25","Q3 '25","Q4 '25"],
+      datasets: [
+        { label:'Ad-Tier Adds', data:[8.2,9.5,11.0,12.3,10.8,13.5,14.2,15.0], backgroundColor:C.teal, borderRadius:3 },
+        { label:'Ad-Free Adds', data:[4.1,3.8,3.5,4.2,3.1,2.9,2.5,2.8], backgroundColor:C.blue, borderRadius:3 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: { y: { ticks: { callback: v => v + 'M' } } }
+    }
+  });
+
+  // Composition progress bars
+  const items = [
+    { label:'New to Platform', pct:65, color:C.teal, note:'Never subscribed before' },
+    { label:'Win-Back', pct:23, color:C.blue, note:'Previously churned, returned' },
+    { label:'Downgrade', pct:11, color:C.amber, note:'Moved from ad-free tier' },
+  ];
+  const container = document.getElementById('composition-container');
+  let html = '';
+  items.forEach(d => {
+    html += `<div class="prog-item">
+      <div class="prog-header">
+        <div class="name">${d.label}</div>
+        <div class="pct" style="color:${d.color}">${d.pct}%</div>
+      </div>
+      <div class="prog-track"><div class="prog-fill" style="width:${d.pct}%;background:${d.color}"></div></div>
+      <div class="prog-note">${d.note}</div>
+    </div>`;
+  });
+  html += `<div style="font-size:10px;color:var(--dim);margin-top:8px;font-style:italic">Source: Antenna Q2 2025 Report</div>`;
+  container.innerHTML = html;
+}
+
+// Init first tab
+chartsInitialized[0] = true;
+initTab0();
+</script>
+</body>
+</html>
