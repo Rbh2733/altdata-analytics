@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Economy Research | Reid Nelson</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-hover: #222633;
+            --border: #2a2e3d;
+            --text: #e4e6ed;
+            --text-muted: #8b8fa3;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --green: #22c55e;
+            --red: #ef4444;
+            --amber: #f59e0b;
+            --blue: #3b82f6;
+            --purple: #a855f7;
+            --cyan: #06b6d4;
+            --pink: #ec4899;
+            --orange: #f97316;
+            --radius: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .header-left p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .badge strong { color: var(--text); }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 4px;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab:hover { color: var(--text); background: var(--surface-hover); }
+        .tab.active { background: var(--accent); color: white; }
+
+        /* Tab content */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .kpi-card .label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .kpi-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+
+        .kpi-card .delta {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .kpi-card .delta.up { color: var(--green); }
+        .kpi-card .delta.down { color: var(--red); }
+        .kpi-card .delta.neutral { color: var(--amber); }
+
+        /* Chart containers */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .chart-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .chart-card.full { grid-column: 1 / -1; }
+
+        .chart-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .chart-card .subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .chart-wrap {
+            position: relative;
+            width: 100%;
+            height: 280px;
+        }
+
+        .chart-wrap.tall { height: 340px; }
+
+        /* Data table */
+        .table-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        th:hover { color: var(--text); }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: var(--surface-hover); }
+
+        .mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; }
+        .text-green { color: var(--green); }
+        .text-red { color: var(--red); }
+        .text-amber { color: var(--amber); }
+        .text-muted { color: var(--text-muted); }
+
+        .platform-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .tag-nflx { background: #e50914; color: white; }
+        .tag-dis { background: #0051c3; color: white; }
+        .tag-spot { background: #1db954; color: white; }
+        .tag-cmcsa { background: #6937ff; color: white; }
+        .tag-wbd { background: #0033a0; color: white; }
+        .tag-para { background: #0064ff; color: white; }
+        .tag-nyt { background: #1a1a1a; color: white; }
+        .tag-lion { background: #c8102e; color: white; }
+
+        /* Methodology note */
+        .method-note {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-top: 24px;
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .method-note strong { color: var(--text); }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 32px 0 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .footer a { color: var(--accent-light); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chart-grid { grid-template-columns: 1fr; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .header { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <h1>Subscription Economy Research</h1>
+            <p>Independent analytical practice covering 8 companies across Premium SVOD, audio, and broadband</p>
+        </div>
+        <div class="header-right">
+            <span class="badge"><strong>8 Companies</strong> Tracked</span>
+            <span class="badge"><strong>50,000+</strong> Words Published</span>
+            <span class="badge">Updated Q1 2026</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('overview')">Market Overview</button>
+        <button class="tab" onclick="switchTab('revenue')">Platform Economics</button>
+        <button class="tab" onclick="switchTab('retention')">Bundle & Retention</button>
+        <button class="tab" onclick="switchTab('events')">Content Events</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1: MARKET OVERVIEW -->
+    <!-- ============================================================ -->
+    <div id="tab-overview" class="tab-content active">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="label">Premium SVOD YoY Growth</div>
+                <div class="value">7%</div>
+                <div class="delta down">First time in single digits</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Bundle Penetration</div>
+                <div class="value">27%</div>
+                <div class="delta up">+13pp from Q4 2023</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Avg Monthly Churn (Industry)</div>
+                <div class="value">5.5%</div>
+                <div class="delta neutral">Netflix at 2.0% (2.75x better)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Win-Back Rate (12mo)</div>
+                <div class="value">42%</div>
+                <div class="delta up">Resubscription within 1 year</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Premium SVOD Growth Deceleration</h3>
+                <div class="subtitle">Year-over-year growth rate approaching maturity inflection</div>
+                <div class="chart-wrap"><canvas id="chart-growth"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Bundle Penetration Trajectory</h3>
+                <div class="subtitle">Share of total subscriptions held in multi-service bundles</div>
+                <div class="chart-wrap"><canvas id="chart-bundles"></canvas></div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Research Coverage Universe</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Platform</th>
+                        <th>Research Focus</th>
+                        <th>Key Metric Tracked</th>
+                        <th>Analytical Output</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="platform-tag tag-nflx">NFLX</span></td>
+                        <td>Subscriber economics, ad-tier growth, M&A viability</td>
+                        <td class="mono">$12.1B Q4 rev, 2.0% churn</td>
+                        <td>10,000-word acquisition analysis + quarterly model</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td>Bundle retention, ESPN DTC launch, parks yield</td>
+                        <td class="mono">$29.99/mo ESPN, $1.33B DTC income</td>
+                        <td>Bundle retention model + content event tracker</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-spot">SPOT</span></td>
+                        <td>Gross margin expansion, pricing power, format mix</td>
+                        <td class="mono">31.6% GM, targeting 35-40%</td>
+                        <td>Margin trajectory model + price sensitivity</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td>Versant spin-off, broadband retention, Peacock scaling</td>
+                        <td class="mono">68/32 segment mix post-spin</td>
+                        <td>RemainCo re-rating thesis + spin analysis</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-wbd">WBD</span></td>
+                        <td>Acquisition target analysis, content library valuation</td>
+                        <td class="mono">$82.7B EV (deal context)</td>
+                        <td>Netflix-WBD viability analysis (10,000 words)</td>
+                        <td class="text-amber">Archived (acquired)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-para">PARA+</span></td>
+                        <td>Content-driven acquisition, bundle conversion</td>
+                        <td class="mono">1.3M sign-ups (Landman)</td>
+                        <td>Content event impact tracking</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-nyt">NYT</span></td>
+                        <td>Subscription platform economics, perception lag</td>
+                        <td class="mono">11M+ subscribers</td>
+                        <td>Perception Lag framework case study</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-lion">LION</span></td>
+                        <td>Post-Starz SOTP, frustrated bidder dynamics</td>
+                        <td class="mono">Content library arbitrage</td>
+                        <td>SOTP valuation + M&A scenario model</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2: PLATFORM ECONOMICS -->
+    <!-- ============================================================ -->
+    <div id="tab-revenue" class="tab-content">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="label">Netflix Q4 2025 Revenue</div>
+                <div class="value">$12.1B</div>
+                <div class="delta up">Beat guidance by ~20%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Netflix Ad-Tier Growth</div>
+                <div class="value">2.5x</div>
+                <div class="delta up">Year-over-year, targeting $3B annual</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Spotify Gross Margin</div>
+                <div class="value">31.6%</div>
+                <div class="delta up">Targeting 35-40% long-term</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Disney DTC Operating Income</div>
+                <div class="value">$1.33B</div>
+                <div class="delta up">First sustained profitability year</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Operating Margin Comparison</h3>
+                <div class="subtitle">Netflix structural advantage vs. legacy media peers</div>
+                <div class="chart-wrap"><canvas id="chart-margins"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Spotify Margin Expansion Trajectory</h3>
+                <div class="subtitle">Gross margin path from podcast/audiobook economics</div>
+                <div class="chart-wrap"><canvas id="chart-spotify-margin"></canvas></div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card full">
+                <h3>Netflix Revenue Build: Multi-Stream Monetization</h3>
+                <div class="subtitle">Content spend as competitive moat; revenue growth from pricing + ad tier + paid sharing</div>
+                <div class="chart-wrap tall"><canvas id="chart-nflx-revenue"></canvas></div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Platform Pricing Landscape</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Platform</th>
+                        <th>Base Tier</th>
+                        <th>Premium Tier</th>
+                        <th>Bundle Offer</th>
+                        <th>Recent Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="platform-tag tag-nflx">NFLX</span></td>
+                        <td class="mono">$7.99 (ads)</td>
+                        <td class="mono">$22.99</td>
+                        <td>N/A (standalone)</td>
+                        <td>Ad-tier growing 2.5x YoY</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td class="mono">$9.99 (D+)</td>
+                        <td class="mono">$29.99 (ESPN Unltd)</td>
+                        <td>D+ / Hulu / ESPN @ $29.99</td>
+                        <td>ESPN Unlimited DTC launch</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-spot">SPOT</span></td>
+                        <td class="mono">Free (ad-supported)</td>
+                        <td class="mono">$11.99 (Individual)</td>
+                        <td>Audiobooks 15hr included</td>
+                        <td>Q1 2026 hike to ~$12.99</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td class="mono">$7.99 (Peacock)</td>
+                        <td class="mono">$13.99 (no ads)</td>
+                        <td>Xfinity broadband bundle</td>
+                        <td>NBA rights ($2.45B/yr)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3: BUNDLE & RETENTION -->
+    <!-- ============================================================ -->
+    <div id="tab-retention" class="tab-content">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="label">Netflix Monthly Churn</div>
+                <div class="value">2.0%</div>
+                <div class="delta up">2.75x better than industry avg</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Netflix Subscriber LTV (US)</div>
+                <div class="value">$388</div>
+                <div class="delta up">Industry avg ~$140</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Bundle Churn Reduction</div>
+                <div class="value">59%</div>
+                <div class="delta up">Multi-service vs. standalone</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">3+ Format Engagement LTV</div>
+                <div class="value">$647</div>
+                <div class="delta up">+67% vs. single-format users</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Churn Rate by Platform</h3>
+                <div class="subtitle">Monthly churn rate (lower = stickier); Netflix structural advantage</div>
+                <div class="chart-wrap"><canvas id="chart-churn"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Netflix LTV by Engagement Depth</h3>
+                <div class="subtitle">Subscriber lifetime value scales with multi-format usage</div>
+                <div class="chart-wrap"><canvas id="chart-ltv"></canvas></div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card full">
+                <h3>12-Month Survival Curves: Bundle vs. Standalone</h3>
+                <div class="subtitle">Modeled retention trajectory showing bundle attach rate impact on subscriber longevity</div>
+                <div class="chart-wrap tall"><canvas id="chart-survival"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 4: CONTENT EVENTS -->
+    <!-- ============================================================ -->
+    <div id="tab-events" class="tab-content">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="label">Landman Sign-Ups (90 days)</div>
+                <div class="value">1.3M</div>
+                <div class="delta up">Paramount+ content-driven acquisition</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Spotify Video Re-Stream Lift</div>
+                <div class="value">+34%</div>
+                <div class="delta up">Post-music-video engagement</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Comcast Olympics Ad Sell-Through</div>
+                <div class="value">100%</div>
+                <div class="delta up">Fastest sell-through in history</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Disney Fubo Combined Subs</div>
+                <div class="value">~6M</div>
+                <div class="delta neutral">Sports streaming consolidation</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Content-Driven Acquisition Events</h3>
+                <div class="subtitle">Subscriber sign-ups attributable to specific content launches</div>
+                <div class="chart-wrap"><canvas id="chart-content-events"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Rapid-Response Analysis Coverage</h3>
+                <div class="subtitle">Breaking market events requiring same-week analytical turnaround</div>
+                <div class="chart-wrap"><canvas id="chart-events-timeline"></canvas></div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Breaking Event Analysis Log</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Event</th>
+                        <th>Platform(s)</th>
+                        <th>Impact Assessment</th>
+                        <th>Analysis Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mono">Jan 2026</td>
+                        <td>Comcast-Versant Spin-Off</td>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td>RemainCo re-rating: 68/32 segment mix unlocked</td>
+                        <td>Spin-off thesis + SOTP model</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jan 2026</td>
+                        <td>Disney Fubo Acquisition</td>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td>Sports streaming vertical integration, ~6M subs added</td>
+                        <td>M&A impact + bundle analysis</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jan 2026</td>
+                        <td>ESPN Unlimited Launch ($29.99)</td>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td>DTC burn-the-boats moment; 47,000 live events</td>
+                        <td>Pricing + cannibalization model</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Feb 2026</td>
+                        <td>PSKY Acquires WBD ($31/share)</td>
+                        <td><span class="platform-tag tag-wbd">WBD</span> <span class="platform-tag tag-nflx">NFLX</span></td>
+                        <td>Netflix collects $2.8B breakup fee; content landscape reshuffled</td>
+                        <td>Deal analysis + NFLX windfall impact</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Feb 2026</td>
+                        <td>Comcast "Legendary February"</td>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td>Super Bowl + Olympics + NBA ASG; 100% ad sell-through</td>
+                        <td>Revenue comp vs. 2022 ($1.48B baseline)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Q1 2026</td>
+                        <td>Spotify Price Increase</td>
+                        <td><span class="platform-tag tag-spot">SPOT</span></td>
+                        <td>~$648M annual revenue uplift; churn monitoring active</td>
+                        <td>Price sensitivity + margin model update</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Sep 2025</td>
+                        <td>Jimmy Kimmel Controversy</td>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td>Churn spike from politically-driven cancellations</td>
+                        <td>Content risk + churn event analysis</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Methodology Note -->
+    <div class="method-note">
+        <strong>Methodology:</strong> This dashboard represents an independent research practice maintained since early 2025.
+        Data sources include company earnings releases, SEC filings, syndicated industry reports (including Antenna's Premium SVOD 2025 Year in Review),
+        and original modeling. All subscriber economics models use publicly available quarterly disclosures as inputs.
+        Python pipelines (pandas, API integrations) automate data collection from financial APIs with quarterly refresh cadences.
+        <br><br>
+        <strong>Coverage:</strong> 8 companies tracked with documented assumptions, defined review criteria, and structured analytical output
+        totaling 50,000+ words across thesis documents, viability analyses, and event-driven research.
+        <br><br>
+        <strong>Contact:</strong> Reid Nelson | reidnelson3363@outlook.com | Austin, TX
+    </div>
+
+    <div class="footer">
+        Built with Chart.js | Independent Research Portfolio | <a href="mailto:reidnelson3363@outlook.com">reidnelson3363@outlook.com</a>
+    </div>
+
+</div>
+
+<script>
+// ============================================================
+// CHART DEFAULTS
+// ============================================================
+Chart.defaults.color = '#8b8fa3';
+Chart.defaults.borderColor = '#2a2e3d';
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyle = 'circle';
+Chart.defaults.plugins.legend.labels.padding = 16;
+Chart.defaults.plugins.tooltip.backgroundColor = '#1a1d27';
+Chart.defaults.plugins.tooltip.borderColor = '#2a2e3d';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.padding = 12;
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+const COLORS = {
+    accent: '#6366f1', green: '#22c55e', red: '#ef4444', amber: '#f59e0b',
+    blue: '#3b82f6', purple: '#a855f7', cyan: '#06b6d4', pink: '#ec4899', orange: '#f97316'
+};
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function switchTab(tabId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.target.classList.add('active');
+
+    // Lazy-init charts on first view
+    if (tabId === 'revenue' && !window._revenueInit) { initRevenueCharts(); window._revenueInit = true; }
+    if (tabId === 'retention' && !window._retentionInit) { initRetentionCharts(); window._retentionInit = true; }
+    if (tabId === 'events' && !window._eventsInit) { initEventsCharts(); window._eventsInit = true; }
+}
+
+// ============================================================
+// TAB 1: OVERVIEW CHARTS
+// ============================================================
+new Chart(document.getElementById('chart-growth'), {
+    type: 'line',
+    data: {
+        labels: ['Q1 2022', 'Q2 2022', 'Q3 2022', 'Q4 2022', 'Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025'],
+        datasets: [{
+            label: 'Premium SVOD YoY Growth',
+            data: [24, 21, 19, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8.5, 8, 7.5, 7],
+            borderColor: COLORS.accent,
+            backgroundColor: 'rgba(99,102,241,0.1)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 3,
+            pointHoverRadius: 6,
+        }, {
+            label: 'Single-Digit Threshold',
+            data: Array(16).fill(10),
+            borderColor: COLORS.red,
+            borderDash: [6, 4],
+            pointRadius: 0,
+            borderWidth: 1,
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+            tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '%' } }
+        },
+        scales: {
+            y: { ticks: { callback: v => v + '%' }, min: 0, max: 28, grid: { color: '#1f2233' } },
+            x: { ticks: { maxRotation: 45 }, grid: { display: false } }
+        }
+    }
+});
+
+new Chart(document.getElementById('chart-bundles'), {
+    type: 'bar',
+    data: {
+        labels: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025'],
+        datasets: [{
+            label: 'Bundle Penetration (%)',
+            data: [12, 13, 13.5, 14, 16, 17.5, 19, 21, 22.5, 24, 25.5, 27],
+            backgroundColor: 'rgba(99,102,241,0.7)',
+            borderColor: COLORS.accent,
+            borderWidth: 1,
+            borderRadius: 4,
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+            tooltip: { callbacks: { label: ctx => ctx.parsed.y + '% of total subscriptions' } }
+        },
+        scales: {
+            y: { ticks: { callback: v => v + '%' }, min: 0, max: 32, grid: { color: '#1f2233' } },
+            x: { ticks: { maxRotation: 45 }, grid: { display: false } }
+        }
+    }
+});
+
+// ============================================================
+// TAB 2: PLATFORM ECONOMICS CHARTS (lazy)
+// ============================================================
+function initRevenueCharts() {
+    new Chart(document.getElementById('chart-margins'), {
+        type: 'bar',
+        data: {
+            labels: ['Netflix', 'Spotify', 'Disney DTC', 'Legacy Media Avg', 'Comcast (RemainCo)'],
+            datasets: [{
+                label: 'Operating Margin',
+                data: [29, 13.6, 8, 12, 18],
+                backgroundColor: [COLORS.accent, COLORS.green, COLORS.blue, COLORS.red, COLORS.purple],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => ctx.parsed.x + '% operating margin' } }
+            },
+            scales: {
+                x: { ticks: { callback: v => v + '%' }, grid: { color: '#1f2233' } },
+                y: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chart-spotify-margin'), {
+        type: 'line',
+        data: {
+            labels: ['Q1 24', 'Q2 24', 'Q3 24', 'Q4 24', 'Q1 25', 'Q2 25', 'Q3 25', 'Q4 25E', '2026E', '2027E', 'Target'],
+            datasets: [{
+                label: 'Gross Margin',
+                data: [27.6, 29.2, 30.1, 30.8, 31.0, 31.3, 31.6, 32.9, 34, 36, 38],
+                borderColor: COLORS.green,
+                backgroundColor: 'rgba(34,197,94,0.1)',
+                fill: true, tension: 0.3, pointRadius: 4, pointHoverRadius: 7,
+            }, {
+                label: 'Long-Term Target Range',
+                data: [null, null, null, null, null, null, null, null, null, null, 40],
+                borderColor: COLORS.amber, borderDash: [6, 4],
+                pointRadius: 6, pointStyle: 'triangle', pointHoverRadius: 9,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '%' } } },
+            scales: {
+                y: { ticks: { callback: v => v + '%' }, min: 25, max: 42, grid: { color: '#1f2233' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chart-nflx-revenue'), {
+        type: 'bar',
+        data: {
+            labels: ['Scripted Originals', 'Licensed Content', 'Unscripted/Reality', 'Live Sports', 'Podcasts', 'Gaming', 'Documentaries'],
+            datasets: [{
+                label: 'Annual Content Investment ($B)',
+                data: [8.5, 4.5, 2.0, 0.65, 0.18, 0.5, 1.0],
+                backgroundColor: [
+                    COLORS.accent, COLORS.blue, COLORS.pink,
+                    COLORS.green, COLORS.orange, COLORS.cyan, COLORS.purple
+                ],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.y + 'B annual spend' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => '$' + v + 'B' }, grid: { color: '#1f2233' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+}
+
+// ============================================================
+// TAB 3: RETENTION CHARTS (lazy)
+// ============================================================
+function initRetentionCharts() {
+    new Chart(document.getElementById('chart-churn'), {
+        type: 'bar',
+        data: {
+            labels: ['Netflix', 'Disney+', 'Paramount+', 'Peacock', 'Industry Avg'],
+            datasets: [{
+                label: 'Monthly Churn Rate',
+                data: [2.0, 4.2, 5.8, 6.1, 5.5],
+                backgroundColor: [COLORS.green, COLORS.blue, COLORS.purple, COLORS.accent, COLORS.red],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => ctx.parsed.y + '% monthly churn' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => v + '%' }, max: 8, grid: { color: '#1f2233' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chart-ltv'), {
+        type: 'bar',
+        data: {
+            labels: ['1 Format Only\n(50% of base)', '2 Formats\n(30% of base)', '3+ Formats\n(20% of base)', 'Industry Average'],
+            datasets: [{
+                label: 'Subscriber LTV',
+                data: [310, 450, 647, 140],
+                backgroundColor: [COLORS.blue, COLORS.accent, COLORS.green, COLORS.red],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.y + ' lifetime value' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => '$' + v }, grid: { color: '#1f2233' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Survival curve
+    const months = Array.from({length: 13}, (_, i) => 'M' + i);
+    const bundleSurvival = [100, 96, 92.5, 89.5, 87, 84.5, 82.5, 80.5, 79, 77.5, 76, 75, 74];
+    const standaloneSurvival = [100, 94.5, 89.3, 84.5, 80, 75.8, 71.8, 68.1, 64.6, 61.3, 58.2, 55.2, 52.5];
+    const promoSurvival = [100, 88, 78, 70, 63, 57, 52, 47.5, 43.5, 40, 37, 34.5, 32];
+
+    new Chart(document.getElementById('chart-survival'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Bundle Subscribers',
+                data: bundleSurvival,
+                borderColor: COLORS.green, backgroundColor: 'rgba(34,197,94,0.08)',
+                fill: true, tension: 0.3, pointRadius: 3,
+            }, {
+                label: 'Standalone (Organic)',
+                data: standaloneSurvival,
+                borderColor: COLORS.blue, backgroundColor: 'rgba(59,130,246,0.08)',
+                fill: true, tension: 0.3, pointRadius: 3,
+            }, {
+                label: 'Promotional Cohort',
+                data: promoSurvival,
+                borderColor: COLORS.red, backgroundColor: 'rgba(239,68,68,0.08)',
+                fill: true, tension: 0.3, pointRadius: 3,
+            }, {
+                label: '42% Win-Back Line',
+                data: [null, null, null, null, null, null, null, null, null, null, null, null, 42],
+                pointRadius: 8, pointStyle: 'star', pointHoverRadius: 12,
+                borderColor: COLORS.amber, showLine: false,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '% retained' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => v + '%' }, min: 20, max: 100, grid: { color: '#1f2233' } },
+                x: { title: { display: true, text: 'Months Since Subscription Start', color: '#8b8fa3' }, grid: { display: false } }
+            }
+        }
+    });
+}
+
+// ============================================================
+// TAB 4: CONTENT EVENTS CHARTS (lazy)
+// ============================================================
+function initEventsCharts() {
+    new Chart(document.getElementById('chart-content-events'), {
+        type: 'bar',
+        data: {
+            labels: ['Landman\n(Paramount+)', 'NFL Christmas\n(Netflix)', 'WWE Raw\n(Netflix)', 'Squid Game S2\n(Netflix)', 'Avatar: F&A\n(Disney)'],
+            datasets: [{
+                label: 'Estimated Sign-Up Impact',
+                data: [1300, 850, 620, 950, 480],
+                backgroundColor: [COLORS.purple, COLORS.accent, COLORS.pink, COLORS.green, COLORS.blue],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => (ctx.parsed.y / 1000).toFixed(1) + 'M sign-ups (est.)' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => (v/1000).toFixed(1) + 'M' }, grid: { color: '#1f2233' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chart-events-timeline'), {
+        type: 'bar',
+        data: {
+            labels: ['Sep 2025', 'Oct 2025', 'Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026'],
+            datasets: [{
+                label: 'Analyses Published',
+                data: [2, 1, 2, 3, 5, 4, 2],
+                backgroundColor: 'rgba(99,102,241,0.7)',
+                borderColor: COLORS.accent,
+                borderWidth: 1,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' rapid-response analyses' } }
+            },
+            scales: {
+                y: { ticks: { stepSize: 1 }, grid: { color: '#1f2233' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+}
+</script>
+
+</body>
+</html>
