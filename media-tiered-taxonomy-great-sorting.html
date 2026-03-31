@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Great Sorting — Nelson Media Tiered Taxonomy</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0B0D11;
+  --surface: rgba(255,255,255,0.025);
+  --text: #E0DCD4;
+  --dim: rgba(255,255,255,0.45);
+  --faint: rgba(255,255,255,0.22);
+  --border: rgba(255,255,255,0.07);
+  --t1: #C9A94E; --t1b: #A88C3E; --t2: #E05040; --t2b: #4A90D9;
+  --t3: #7B8FA1; --t3b: #5E6E7E; --t4: #C94444; --out: #8B6EC7; --lion: #E0A030;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.55;min-height:100vh}
+.wrap{max-width:1020px;margin:0 auto;padding:40px 24px 80px}
+h1{font-family:'Libre Baskerville',serif;font-size:34px;font-weight:700;letter-spacing:-0.02em;line-height:1.1}
+.sub{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dim);margin-top:6px}
+.rule{height:1px;margin:20px 0 32px;background:linear-gradient(90deg,var(--t1),var(--t2),var(--t2b),var(--out));opacity:.45}
+.toolbar{display:flex;justify-content:flex-end;margin-bottom:20px}
+.btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--dim);padding:7px 16px;border-radius:5px;cursor:pointer;font:12px 'JetBrains Mono',monospace;transition:.2s}
+.btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+/* Tier blocks */
+.tier{margin-bottom:32px}
+.tier-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.tier-tag{font:700 11px/1 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.07em;padding:3px 10px;border-radius:4px}
+.tier-label{font-size:16px;font-weight:700}
+.tier-tagline{font-size:12.5px;color:var(--dim);font-style:italic;margin-bottom:12px;padding-left:2px}
+
+/* Company cards */
+.company{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden;transition:border-color .2s}
+.company-head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:0;border:0;cursor:pointer;color:var(--text);font-family:'DM Sans',sans-serif;text-align:left}
+.company-name{font-weight:700;font-size:16px;flex-shrink:0}
+.company-ticker{font:12px 'JetBrains Mono',monospace;color:var(--faint);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:4px;margin-left:10px;flex-shrink:0}
+.chevron{font-size:16px;color:rgba(255,255,255,.25);transition:transform .25s;flex-shrink:0;margin-left:12px}
+.company.open .chevron{transform:rotate(180deg)}
+.company-body{display:none;padding:0 18px 16px}
+.company.open .company-body{display:block}
+.company-desc{font-size:13px;color:var(--dim);line-height:1.55;margin-bottom:14px;font-style:italic}
+
+/* Subsidiary grid */
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:10px}
+.sub-card{background:rgba(0,0,0,.22);border-radius:6px;padding:10px 12px;border-left:3px solid rgba(255,255,255,.08)}
+.sub-cat{font:700 10px/1 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.sub-item{font-size:12.5px;color:rgba(255,255,255,.7);padding:2px 0;line-height:1.4}
+.company-note{margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.025);border-radius:4px;font-size:11.5px;color:var(--dim);border-left:2px solid rgba(255,255,255,.08)}
+
+/* Framework note */
+.framework{margin-top:28px;padding:18px 20px;background:rgba(255,255,255,.018);border:1px solid var(--border);border-radius:8px}
+.framework-label{font:700 11px/1 'JetBrains Mono',monospace;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.framework p{font-size:13px;color:var(--dim);line-height:1.65}
+.framework em{color:rgba(255,255,255,.6);font-style:italic}
+.footer{margin-top:24px;font:11px 'JetBrains Mono',monospace;color:var(--faint);text-align:center}
+
+@media(max-width:600px){
+  h1{font-size:26px}
+  .sub-grid{grid-template-columns:1fr}
+  .wrap{padding:24px 16px 60px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>The Great Sorting</h1>
+    <div class="sub" id="stats"></div>
+    <div class="rule"></div>
+  </header>
+  <div class="toolbar"><button class="btn" id="toggle-btn" onclick="toggleAll()">Expand All</button></div>
+  <div id="content"></div>
+  <div class="framework">
+    <div class="framework-label">Framework Note</div>
+    <p>The Great Unbundling taxonomy describes <em>how</em> companies pay for things (Tech Gatekeepers, Content Fortresses, Linear Yield-Cos, PE Aggregators). The tiers describe <em>where</em> companies end up after the collision shakes out. The taxonomy categories don't disappear; they resolve into structural positions based on which combination of assets and strategies proved durable. The tiers are outcomes; the taxonomy describes behavioral logic. The domain changes. The operation does not.</p>
+  </div>
+  <div class="footer">Nelson Media Tiered Taxonomy v2.2 // March 2026</div>
+</div>
+
+<script>
+const DATA = [
+  {
+    tier:"Tier 1", label:"IP Ecosystem with Optional Distribution", color:"#C9A94E",
+    tagline:"Streaming is a feature, not the product. Unreplicable. Consolidated IP 2009-2019 at pre-inflation prices.",
+    companies:[{
+      name:"Disney", ticker:"DIS",
+      desc:"The Content Fortress. Parks, merchandise, cruises, licensing create a monetization stack nobody else has.",
+      subs:[
+        {cat:"Film Studios", items:["Walt Disney Animation Studios","Pixar Animation Studios","Marvel Studios","Lucasfilm","20th Century Studios","Searchlight Pictures","Disney Nature","Blue Sky Studios (legacy library: Ice Age, Rio)"]},
+        {cat:"TV Production", items:["ABC Signature","20th Television","FX Productions","Onyx Collective (via Hulu)"]},
+        {cat:"Streaming / DTC", items:["Disney+","Hulu (full ownership)","ESPN+ / ESPN Select","Star+ (Latin America)","Movies Anywhere (digital locker JV)"]},
+        {cat:"Sports", items:["ESPN (80%; Hearst 20%)","ESPN Unlimited (DTC, $29.99/mo)","ESPN on ABC","ESPN Deportes","ESPNU","SEC Network","ACC Network","ESPN Cricinfo","NFL Monday Night Football (~$2.7B/yr through 2033)","Super Bowl 2026 (ABC)","NBA (primary package, through 2036)","MLB midweek package (30 exclusive games, MLB.TV distribution)","College Football Playoff","UFC"]},
+        {cat:"Broadcast / Cable", items:["ABC","FX","Freeform","National Geographic","Disney Channel","Disney XD","Disney Junior"]},
+        {cat:"Parks & Experiences", items:["Walt Disney World (FL)","Disneyland Resort (CA)","Tokyo Disney Resort (OLC license)","Disneyland Paris","Shanghai Disney Resort","Hong Kong Disneyland","Disney Cruise Line","Disney Vacation Club","Adventures by Disney","National Geographic Expeditions"]},
+        {cat:"Consumer Products", items:["Licensing & Merchandise","Disney Store / shopDisney","Disney Publishing Worldwide","Marvel Comics","Disney-Hyperion"]},
+        {cat:"Live Entertainment", items:["Disney Theatrical Group (The Lion King, Aladdin, Frozen on Broadway)","Disney on Ice","Marvel Universe Live!"]},
+        {cat:"Acquisitions / Stakes", items:["Fubo (~70% ownership, vMVPD)","BAMTech (streaming technology)","Hotstar (India, via Star)"]},
+        {cat:"Key IP", items:["Marvel Cinematic Universe","Star Wars / Indiana Jones","Frozen / Moana / Encanto","Avatar (via 20th Century)","The Simpsons (via 20th Century)","ESPN brand"]}
+      ]
+    }]
+  },
+  {
+    tier:"Tier 1b", label:"Infrastructure Ecosystem", color:"#A88C3E",
+    tagline:"Owns the pipes, the parks, the studio, and a streaming platform. Mini-Disney with a broadband moat Disney can't replicate.",
+    companies:[{
+      name:"Comcast", ticker:"CMCSA",
+      desc:"RemainCo post-Versant spin. Crown jewels retained: broadband, parks, studio, Peacock, NBC Sports. Proactively shed linear decline.",
+      subs:[
+        {cat:"Film Studios", items:["Universal Pictures","Focus Features","Illumination","DreamWorks Animation"]},
+        {cat:"Streaming", items:["Peacock"]},
+        {cat:"Broadcast / Cable", items:["NBC","Telemundo","Bravo","NBC Local Stations (owned & operated)","Cozi TV","TeleXitos","Universo"]},
+        {cat:"Sports", items:["NBC Sports","NFL Sunday Night Football (~$2B/yr through 2033)","NBA on NBC (11-yr, $2.45B/yr, returned 2025)","MLB Sunday Night Baseball (returned 2026 after 25 years; Wild Card Round)","Olympics","Premier League (partial)","NASCAR"]},
+        {cat:"Parks & Experiences", items:["Universal Studios Orlando","Universal Studios Hollywood","Universal Studios Japan","Universal Studios Beijing","Universal Studios Singapore","Epic Universe (opened May 2025)","Universal Kids Resort (May 2026)","Universal UK (Bedford, 2031)","Pokemon Partnership (global, Jan 2026)"]},
+        {cat:"International", items:["Sky UK","Sky Italia","Sky Deutschland","Sky News","Sky Sports","Sky Studios (original European production)"]},
+        {cat:"Key IP", items:["Super Mario (Nintendo partnership)","Pokemon (partnership)","Jurassic World","Fast & Furious","Minions / Despicable Me","How to Train Your Dragon"]}
+      ],
+      note:"Versant (VSNT) spun off Jan 5, 2026: CNBC, MS NOW (fka MSNBC), USA Network, Syfy, Oxygen, Golf Channel, Fandango (75% JV), Rotten Tomatoes, GolfNow"
+    }]
+  },
+  {
+    tier:"Tier 2", label:"Distribution Monopoly", color:"#E05040",
+    tagline:"Everyone licenses to Netflix. Content flows inward through economic gravity. The Banker.",
+    companies:[{
+      name:"Netflix", ticker:"NFLX",
+      desc:"Distribution monopoly. Walked away from WBD ($82.7B), collected $2.8B breakup fee and reinvested in the business. Content flows inward through economic gravity. The Banker who waits.",
+      subs:[
+        {cat:"Streaming Tiers", items:["Netflix Premium","Netflix Standard","Netflix Standard with Ads (94M+ MAU)","Netflix Basic (phasing out)"]},
+        {cat:"Studios / Content", items:["Netflix Studios (Original Production)","Netflix Animation","Netflix Documentary","Netflix International (regional originals in 50+ countries)"]},
+        {cat:"Live & Events", items:["WWE Raw (10-yr, $5B)","NFL Christmas Day games (2024-2026, ~$75M/game)","MLB Opening Night + Home Run Derby + Field of Dreams (3-yr deal, 2026-2028)","MMA (Rousey vs. Carano card, Ngannou)","Jake Paul boxing events","Netflix Cup (golf)","Live Comedy Specials"]},
+        {cat:"Experiential", items:["Netflix Houses (experiential venues)"]},
+        {cat:"Key Licensing Inflows", items:["Sony Pay-1 Deal ($7B+ global)","20+ Paramount shows (incl. Sheridan originals)","WBD/HBO content licensing deals","NBC windowing (St. Denis Medical, etc.)","Warner Music Group documentary first-look"]},
+        {cat:"Key IP", items:["Stranger Things","Wednesday / Addams Family","Squid Game","Glass Onion / Knives Out","Bridgerton","One Piece (live-action)"]}
+      ],
+      note:"Walked away from WBD Feb 26, 2026. Sarandos: 'If they are six or seven times levered, they need to make some money, and we're buyers.' Now licensing from both PSKY and WBD at favorable rates. The Banker doesn't need to own the house; he just needs everyone to owe him."
+    }]
+  },
+  {
+    tier:"Tier 2b", label:"Platform Aggregation Layers", color:"#4A90D9",
+    tagline:"Channel models that tax the entire ecosystem without competing directly in content. The landlords.",
+    companies:[
+      {
+        name:"Amazon", ticker:"AMZN",
+        desc:"Media as loss leader for Prime ecosystem. Prime Video Channels = the toll booth.",
+        subs:[
+          {cat:"Streaming", items:["Prime Video (bundled with Prime)","Prime Video Channels (marketplace: 900+ FAST channels)","MGM+ (fka Epix)"]},
+          {cat:"Studios", items:["Amazon MGM Studios","MGM Library (4,000+ films, 17,000+ TV episodes)","United Artists (revived 2024, prestige label)","Orion Pictures (genre/diverse audiences)"]},
+          {cat:"Live Sports", items:["NFL Thursday Night Football (~$1B/yr through 2033)","NFL Black Friday game","NBA (Thursday/Friday games, from 2025)","NASCAR","WNBA"]},
+          {cat:"Livestreaming", items:["Twitch"]},
+          {cat:"Media Reference", items:["IMDb","Box Office Mojo"]},
+          {cat:"Key IP", items:["Lord of the Rings: Rings of Power","Fallout","The Boys","Jack Ryan","James Bond (via MGM / Eon Productions JV)","A24 output deal (post-theatrical to Prime Video)"]}
+        ]
+      },
+      {
+        name:"Alphabet", ticker:"GOOGL",
+        desc:"YouTube is #1 in total TV time. Controls discovery, distribution, and the ad stack. The attention chokepoint.",
+        subs:[
+          {cat:"Video Platform", items:["YouTube","YouTube Shorts","YouTube Premium","YouTube Kids"]},
+          {cat:"Live TV / Sports", items:["YouTube TV (vMVPD, 8M+ subs)","NFL Sunday Ticket (~$2B/yr, exclusive through 2029)","NFL exclusive international games"]},
+          {cat:"Distribution", items:["Google TV (aggregation layer)","Chromecast / Google TV devices"]},
+          {cat:"Advertising", items:["Google Ads / DV360 (buys media inventory across all platforms)","YouTube Advertising (largest digital video ad platform)"]},
+          {cat:"Key Leverage", items:["#1 total TV viewing time in US","YouTube creator economy (3M+ monetized channels)","Shorts: 70B+ daily views"]}
+        ]
+      }
+    ]
+  },
+  {
+    tier:"Tier 3", label:"Content Independence", color:"#7B8FA1",
+    tagline:"No distribution, no debt, no streaming platform. Sells to highest bidder. Elegant, profitable, capped.",
+    companies:[{
+      name:"Sony", ticker:"SONY",
+      desc:"The Arms Dealer. Shed financial services (SFGI spin Oct 2025) to concentrate on entertainment. Content supplier to whoever wins.",
+      subs:[
+        {cat:"Film", items:["Sony Pictures (Columbia Pictures, TriStar Pictures, Screen Gems)","Sony Pictures Classics","Sony Pictures Animation (Spider-Verse)","AFFIRM Films (faith-based)","3000 Pictures (prestige/literary)"]},
+        {cat:"Television", items:["Sony Pictures Television","Bad Wolf (Doctor Who)","Left Bank Pictures (The Crown)","Eleven Film (Sex Education)","19 Entertainment (American Idol)","Game Show Network (partial)"]},
+        {cat:"Anime", items:["Crunchyroll (largest anime platform globally)","Aniplex","Funimation (merged into Crunchyroll)"]},
+        {cat:"Key IP", items:["Spider-Man (most valuable individual superhero franchise)","Ghostbusters","Jumanji","Uncharted (film franchise)","The Last of Us (co-prod w/ HBO)","Gran Turismo (film)","Demon Slayer (via Aniplex)","Nintendo film distribution (Zelda live-action; flows to Netflix via Pay-1)"]}
+      ],
+      note:"Sony Financial Group (SFGI) spun off Oct 2025. TCL JV for TV/audio hardware exits April 2027. Sony-Amazon international theatrical distribution deal (June 2025). Pay-1 Netflix deal ($7B+) guarantees revenue floor without streaming infrastructure costs."
+    }]
+  },
+  {
+    tier:"Tier 3b", label:"Failed Escape Velocity", color:"#5E6E7E",
+    tagline:"Unlimited capital couldn't build a standalone platform. Distributes through Amazon and Google channels. Cautionary tale.",
+    companies:[{
+      name:"Apple", ticker:"AAPL",
+      desc:"Media as ecosystem adhesive. $20B+ spent on content with minimal market share. Now distributing via competitors' channels.",
+      subs:[
+        {cat:"Streaming", items:["Apple TV+","Apple TV Channels (marketplace)"]},
+        {cat:"Sports", items:["MLS Season Pass (exclusive global rights)","MLB Friday Night Baseball (weekly doubleheader)","Formula 1 (primary US broadcast partner, 2026)"]},
+        {cat:"Bundle", items:["Apple One (TV+, iCloud, News+)"]},
+        {cat:"Distribution", items:["Available on Amazon Fire TV, Google Chromecast, Roku, Samsung, LG","Apple TV hardware (set-top box)"]},
+        {cat:"Key IP / Awards", items:["CODA (Best Picture)","Killers of the Flower Moon","Severance","Ted Lasso","The Morning Show","Slow Horses","A24 multi-year production deal (non-exclusive; On the Rocks, etc.)"]}
+      ]
+    }]
+  },
+  {
+    tier:"Tier 4", label:"Trapped Middle", color:"#C94444",
+    tagline:"Vertical integration on borrowed money. Licenses to Netflix, rents from Amazon, competes with everyone. Structurally worst case.",
+    companies:[{
+      name:"Paramount Skydance + WBD", ticker:"PSKY / WBD",
+      desc:"PSKY won WBD at $31/share after Netflix walked. Ellison's $40B personal guarantee. Combined entity carries ~$79B debt, forcing divestitures over 18-36 months. The coupled constraint system: Gulf sovereign capital stress, synergy credibility gaps, regulatory timing, and 7.6M dual-subscriber ARPU destruction.",
+      subs:[
+        {cat:"PSKY Film", items:["Paramount Pictures","Skydance Media","Skydance Animation","Nickelodeon Movies","Miramax (partial)"]},
+        {cat:"PSKY Streaming", items:["Paramount+","Pluto TV (FAST, 80M+ MAU)","BET+ (unified platform mid-2026)","Showtime (merged into P+)"]},
+        {cat:"PSKY Broadcast", items:["CBS","CBS News","CBS Sports (NFL Sunday AFC, ~$2.1B/yr through 2033; Super Bowl rotation; March Madness)","CBS Television Stations"]},
+        {cat:"PSKY Cable", items:["MTV","Nickelodeon","Comedy Central","BET","Smithsonian Channel","CMT"]},
+        {cat:"PSKY Key IP", items:["Star Trek","Top Gun","Mission: Impossible","SpongeBob / PAW Patrol","Transformers","Yellowstone / Sheridan universe","Halo (Paramount+ series)"]},
+        {cat:"WBD Studios", items:["Warner Bros. Pictures","New Line Cinema","Warner Bros. Animation","DC Studios","Castle Rock Entertainment"]},
+        {cat:"WBD Streaming", items:["Max (fka HBO Max)","Discovery+ (merging into Max)"]},
+        {cat:"WBD Premium / News", items:["HBO","CNN","CNN International"]},
+        {cat:"WBD Cable", items:["TNT","TBS","Discovery Channel","HGTV","Food Network","TLC","Animal Planet","OWN","Investigation Discovery","Magnolia Network"]},
+        {cat:"WBD Sports / Digital", items:["TNT Sports","TBS (MLB Tuesday nights + LCS + Division Series)","Eurosport (international)","Bleacher Report"]},
+        {cat:"WBD Key IP", items:["Harry Potter / Wizarding World","DC Universe (Batman, Superman, etc.)","Game of Thrones / ASOIAF / HOTD","Lord of the Rings (partial)","Looney Tunes","Hanna-Barbera"]},
+        {cat:"WBD Other", items:["Cartoon Network / Adult Swim","Mortal Kombat (film franchise)","Warner Bros. Consumer Products"]}
+      ],
+      note:"Netflix's downstream targets as PSKY-WBD debt forces divestitures: Harry Potter, DC Universe, HBO library assets. The $2.8B breakup fee Netflix collected is now funding content licensing at favorable rates. 7.6M dual-subscriber overlap creates ARPU destruction on platform merge."
+    }]
+  },
+  {
+    tier:"Outsider", label:"The Exit", color:"#8B6EC7",
+    tagline:"The one company that escaped the subscription hierarchy entirely. Sold entertainment to Disney (2019), kept the cash machines, bought Tubi for FAST.",
+    companies:[{
+      name:"Fox Corporation", ticker:"FOXA / FOX",
+      desc:"Post-Disney sale RemainCo. Murdoch retained news, sports, and broadcast. Proof of concept that the subscription hierarchy is a structural trap for everyone inside it; the one company that left before the walls went up.",
+      subs:[
+        {cat:"News", items:["Fox News Channel","Fox Business Network","Fox Nation (streaming)"]},
+        {cat:"Sports", items:["Fox Sports","FS1","FS2","NFL Sunday NFC package (~$2.2B/yr through 2033)","Super Bowl rotation","MLB Saturday regional + All-Star Game + World Series + World Baseball Classic (US)","Big Ten Network (61% stake)","Fox Deportes","FIFA World Cup 2026 (rights)","Penske Entertainment (1/3 stake: IndyCar, Indianapolis Motor Speedway)","Caliente TV (Mexico, acquired 2025)","FOX Bet (Flutter partnership)"]},
+        {cat:"Broadcast", items:["Fox Broadcasting Company","Fox Television Stations (29 O&O stations in 14 of top 15 DMAs)","Fox Entertainment"]},
+        {cat:"Tubi Media Group", items:["Tubi (free AVOD, 80M+ MAU)","MarVista Entertainment (content factory)","FOX One (DTC bundle, launched 2025)","Bento Box Entertainment (animation)","AdRise (ad-tech platform)"]},
+        {cat:"Other", items:["TMZ","Outkick","Studio Ramsay Global","Fox Weather"]},
+        {cat:"Key Leverage", items:["Tubi profitable FY2026","Tubi regularly beats Max and Peacock in total viewing time","AVOD over SVOD: quantity over prestige, owned over licensed","Dual-class share structure (Murdoch family ~40% voting control)"]}
+      ],
+      note:"Tubi reached profitability in FY2026. FOX One launched as DTC bundle bringing all Fox linear brands to cord-cutters. The anti-Netflix playbook: AVOD economics, content factory model, zero subscription fatigue exposure."
+    }]
+  }
+];
+
+const LIONSGATE = {
+  tier:"Untiered", label:"Last Free Agent", color:"#E0A030",
+  tagline:"Acquisition determines which tier the acquirer is optimizing for. The Rosetta Stone of the taxonomy.",
+  companies:[{
+    name:"Lionsgate", ticker:"LION",
+    desc:"Last Unsigned Independent. Widely expected acquisition target. Whoever buys LION reveals which tier they're optimizing for.",
+    subs:[
+      {cat:"Film", items:["Lionsgate Films","Summit Entertainment","Entertainment One / eOne (acquired from Hasbro, $500M)","Pantelion Films (Latino market)","Roadside Attractions (co-venture)"]},
+      {cat:"Television", items:["Lionsgate Television","3 Arts Entertainment"]},
+      {cat:"Streaming", items:["Starz (spun off; Byron Allen 10.7% stake, 13M OTT subs)"]},
+      {cat:"Key IP", items:["John Wick","Hunger Games","Twilight","SAW","The Expendables","Dirty Dancing","Highlander (reboot)","Power (franchise via Starz)","Ballerina (John Wick spinoff)"]}
+    ],
+    note:"Steven Mnuchin holds board seat. Legendary/Apollo identified as lead acquirer. First AGM as standalone company was March 17, 2026 (Anson Funds activist window)."
+  }]
+};
+
+// Render
+let allOpen = false;
+function toggleAll() {
+  allOpen = !allOpen;
+  document.querySelectorAll('.company').forEach(c => {
+    allOpen ? c.classList.add('open') : c.classList.remove('open');
+  });
+  document.getElementById('toggle-btn').textContent = allOpen ? 'Collapse All' : 'Expand All';
+}
+
+function renderCompany(co, color) {
+  const card = document.createElement('div');
+  card.className = 'company';
+  const head = document.createElement('button');
+  head.className = 'company-head';
+  head.innerHTML = `<div><span class="company-name" style="color:${color}">${co.name}</span><span class="company-ticker">${co.ticker}</span></div><span class="chevron">&#9662;</span>`;
+  head.onclick = () => card.classList.toggle('open');
+  card.appendChild(head);
+
+  const body = document.createElement('div');
+  body.className = 'company-body';
+  body.innerHTML = `<div class="company-desc">${co.desc}</div>`;
+  const grid = document.createElement('div');
+  grid.className = 'sub-grid';
+  co.subs.forEach(s => {
+    const sc = document.createElement('div');
+    sc.className = 'sub-card';
+    sc.style.borderLeftColor = color + '55';
+    sc.innerHTML = `<div class="sub-cat" style="color:${color}">${s.cat}</div>` + s.items.map(i => `<div class="sub-item">${i}</div>`).join('');
+    grid.appendChild(sc);
+  });
+  body.appendChild(grid);
+  if (co.note) body.innerHTML += `<div class="company-note">${co.note}</div>`;
+  card.appendChild(body);
+  return card;
+}
+
+function renderTier(t) {
+  const div = document.createElement('div');
+  div.className = 'tier';
+  div.innerHTML = `<div class="tier-head"><span class="tier-tag" style="color:${t.color};background:${t.color}18">${t.tier}</span><span class="tier-label">${t.label}</span></div><div class="tier-tagline">${t.tagline}</div>`;
+  t.companies.forEach(co => div.appendChild(renderCompany(co, t.color)));
+  return div;
+}
+
+const content = document.getElementById('content');
+let totalSubs = 0;
+let totalCos = 0;
+[...DATA, LIONSGATE].forEach(t => {
+  content.appendChild(renderTier(t));
+  t.companies.forEach(co => { totalCos++; co.subs.forEach(s => totalSubs += s.items.length); });
+});
+
+document.getElementById('stats').textContent = `Media Tiered Taxonomy // ${totalCos} companies // ${totalSubs} subsidiaries & assets`;
+</script>
+</body>
+</html>
