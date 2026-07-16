@@ -42,7 +42,7 @@
 | Ampere Analysis | European demand-forecasting firm; acquired PlumResearch (May 2026) |
 | PlumResearch | Device-agnostic tracking and behavioral metrics; now part of Ampere Analysis |
 | Gracenote | Nielsen subsidiary; supplies metadata/content ontology rather than competing on demand directly |
-| Whip Media / TV Time | Audience preference and demand tracking |
+| Whip Media (TV Time shut down) | Consumer app TV Time shut down Jul 15, 2026; owner Blue Torch Capital pivoted resources to Helix, an enterprise B2B SaaS platform. Bingers, launched by TV Time's original founder, is an unaffiliated indie successor, not a Whip Media product; see `layers/04-demand-valuation-layer.md` |
 | Luminate | Demand/behavior analytics; also powers Walmart Connect's clean room (Identity layer) |
 | Diesel Labs | Content analytics and audience-preference mapping; an ownership change (acquisition) has been referenced in lower-confidence source material but is not yet independently verified, confirm before citing |
 
