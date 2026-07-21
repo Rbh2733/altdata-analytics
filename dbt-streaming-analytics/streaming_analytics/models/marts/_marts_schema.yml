@@ -1,0 +1,148 @@
+version: 2
+
+models:
+  - name: dim_artists
+    description: >
+      Artist dimension table with comprehensive profile metrics.
+      Includes derived segments (stream_tier, popularity_tier, career_stage)
+      for dashboard filtering without runtime calculation.
+    
+    columns:
+      - name: artist_key
+        description: Surrogate key (MD5 hash of artist_name)
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: artist_name
+        description: Natural key - artist display name
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: stream_tier
+        description: Performance segment based on total streams
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Platinum', 'Gold', 'Silver', 'Bronze']
+      
+      - name: popularity_tier
+        description: Popularity segment based on average track popularity
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['High', 'Medium', 'Low']
+      
+      - name: career_stage
+        description: Career maturity based on years active
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Established', 'Growing', 'Emerging']
+
+  - name: dim_genres
+    description: >
+      Genre dimension with audio fingerprinting and market positioning.
+      Enables genre-level analysis including market share and sonic profiling.
+    
+    columns:
+      - name: genre_key
+        description: Surrogate key (MD5 hash of genre)
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: genre
+        description: Natural key - genre name
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: stream_market_share_pct
+        description: Percentage of total market streams
+      
+      - name: audio_character
+        description: Derived audio profile classification
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['High Energy', 'Dance-Friendly', 'Instrumental-Heavy', 'Chill/Ambient', 'Balanced']
+
+  - name: fct_track_performance
+    description: >
+      Central fact table at track grain. Contains all measures and 
+      dimension keys for star schema joins. Use for ad-hoc exploration
+      and detailed track-level analysis.
+    
+    columns:
+      - name: track_id
+        description: Primary key - unique track identifier
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: artist_key
+        description: Foreign key to dim_artists
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_artists')
+                field: artist_key
+      
+      - name: genre_key
+        description: Foreign key to dim_genres
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_genres')
+                field: genre_key
+      
+      - name: stream_count
+        description: Total stream count for the track
+        data_tests:
+          - not_null
+      
+      - name: performance_tier
+        description: Derived tier based on stream count
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Viral', 'Hit', 'Moderate', 'Emerging']
+
+  - name: rpt_label_market_share
+    description: >
+      Pre-aggregated executive report for label performance analysis.
+      Designed for direct BI consumption without joins. Answers questions
+      about market share, content strategy, and competitive positioning.
+    
+    columns:
+      - name: label
+        description: Record label name (primary key)
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: stream_market_share_pct
+        description: Label's percentage of total market streams
+      
+      - name: efficiency_index
+        description: >
+          Ratio of label's streams-per-track vs market average.
+          100 = average, >100 = outperforming, <100 = underperforming
+      
+      - name: competitive_tier
+        description: Market position classification
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Major', 'Mid-Tier', 'Indie/Boutique']
+      
+      - name: content_strategy
+        description: Genre diversification strategy
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Diversified', 'Multi-Genre', 'Specialist']

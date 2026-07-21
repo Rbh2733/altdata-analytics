@@ -1,0 +1,23 @@
+name: 'streaming_analytics'
+version: '1.0.0'
+
+# Which profile dbt uses for this project. The matching profile is
+# committed in profiles.yml next to this file; run with --profiles-dir .
+profile: 'streaming_analytics'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  streaming_analytics:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

@@ -1,0 +1,7 @@
+dbt-duckdb>=1.9
+duckdb>=1.0
+# Only for the optional Streamlit dashboard (dashboard.py).
+# Floor 1.51: dashboard.py uses width="stretch", which st.plotly_chart gained in 1.51.
+streamlit>=1.51
+plotly>=5.0
+pandas>=2.0

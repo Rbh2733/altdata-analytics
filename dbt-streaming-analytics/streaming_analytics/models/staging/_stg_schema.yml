@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: stg_streaming_tracks
+    description: >
+      Cleaned and typed track data from the synthetic streaming catalog.
+      This staging model serves as the single source of truth for all
+      downstream track analytics.
+
+    columns:
+      - name: track_id
+        description: Unique identifier for each track
+        data_tests:
+          - unique
+          - not_null
+
+      - name: track_name
+        description: Name of the track
+        data_tests:
+          - not_null
+
+      - name: artist_name
+        description: Name of the primary artist
+        data_tests:
+          - not_null
+
+      - name: genre
+        description: Musical genre classification
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Pop', 'Rock', 'Hip-Hop', 'Metal', 'Indie', 'Country', 'Classical', 'EDM', 'Jazz', 'R&B', 'Folk', 'Reggaeton']
+
+      - name: release_date
+        description: Date the track was released
+        data_tests:
+          - not_null
+
+      - name: release_year
+        description: Year extracted from release_date (2015-2025)
+
+      - name: popularity
+        description: Popularity score (0-100)
+        data_tests:
+          - not_null
+
+      - name: stream_count
+        description: Total number of streams
+        data_tests:
+          - not_null
+
+      - name: label
+        description: Record label (fictional; Meridian Records, Halcyon Music Group, etc.)
+        data_tests:
+          - not_null
+
+      - name: country
+        description: Primary market country
+        data_tests:
+          - not_null
