@@ -24,10 +24,6 @@ A research map of the streaming alternative-data ecosystem: the layers between r
 - Four analysis PDFs at the repository root (SVOD ad-tier inflection, competitive positioning, competitive architecture).
 - `media-tiered-taxonomy-great-sorting.html`, an interactive rendering of the media taxonomy the published essays are built on.
 
-### substack-staging
-
-Staging for essays in progress before they publish.
-
 ## Method, in one paragraph
 
 The same operation runs through everything here: find what consensus is pricing, find the structural layer it skipped, measure the gap. The repository exists because measurement claims should be inspectable; where data cannot be published, it is generated deterministically and labeled as such, and where a number is reported, the code that produced it is committed next to it.
