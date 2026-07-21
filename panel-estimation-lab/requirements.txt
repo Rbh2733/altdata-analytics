@@ -1,0 +1,6 @@
+duckdb>=0.10
+numpy>=1.26
+pandas>=2.0
+
+# development
+pytest>=8.0
