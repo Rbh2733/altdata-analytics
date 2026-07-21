@@ -1,0 +1,146 @@
+{
+  "cik": 9990001,
+  "entityName": "Arborlight Therapeutics, Inc.",
+  "facts": {
+    "us-gaap": {
+      "RevenueFromContractWithCustomerExcludingAssessedTax": {
+        "label": "Revenues",
+        "description": "Total revenue recognized during the period.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 1885200000,
+              "accn": "0009990001-25-000000",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 2054900000,
+              "accn": "0009990001-26-000000",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            }
+          ]
+        }
+      },
+      "NetIncomeLoss": {
+        "label": "NetIncomeLoss",
+        "description": "Synthetic fixture facts for NetIncomeLoss.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 320500000,
+              "accn": "0009990001-25-000000",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 349300000,
+              "accn": "0009990001-26-000000",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            }
+          ]
+        }
+      },
+      "EarningsPerShareDiluted": {
+        "label": "EarningsPerShareDiluted",
+        "description": "Synthetic fixture facts for EarningsPerShareDiluted.",
+        "units": {
+          "USD/shares": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 2.43,
+              "accn": "0009990001-25-000000",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 2.65,
+              "accn": "0009990001-26-000000",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            }
+          ]
+        }
+      },
+      "Assets": {
+        "label": "Assets",
+        "description": "Synthetic fixture facts for Assets.",
+        "units": {
+          "USD": [
+            {
+              "end": "2024-12-31",
+              "val": 3770400000,
+              "accn": "0009990001-25-000000",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "end": "2025-12-31",
+              "val": 4109800000,
+              "accn": "0009990001-26-000000",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            }
+          ]
+        }
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+        "label": "NetCashProvidedByUsedInOperatingActivities",
+        "description": "Synthetic fixture facts for NetCashProvidedByUsedInOperatingActivities.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 452400000,
+              "accn": "0009990001-25-000000",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 493200000,
+              "accn": "0009990001-26-000000",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

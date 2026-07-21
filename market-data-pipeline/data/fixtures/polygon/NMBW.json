@@ -1,0 +1,102 @@
+{
+  "status": "OK",
+  "request_id": "synthetic-fixture",
+  "results": [
+    {
+      "start_date": "2025-02-01",
+      "end_date": "2026-01-31",
+      "timeframe": "annual",
+      "fiscal_period": "FY",
+      "fiscal_year": "2025",
+      "cik": "0009990005",
+      "company_name": "Nimbusware Cloud Corp.",
+      "filing_date": "2026-03-24",
+      "financials": {
+        "income_statement": {
+          "revenues": {
+            "value": 754900000,
+            "unit": "USD",
+            "label": "Revenues",
+            "order": 100
+          },
+          "net_income_loss": {
+            "value": 60400000,
+            "unit": "USD",
+            "label": "Net Income/Loss",
+            "order": 3200
+          },
+          "diluted_earnings_per_share": {
+            "value": 0.51,
+            "unit": "USD / shares",
+            "label": "Diluted Earnings Per Share",
+            "order": 4300
+          }
+        },
+        "balance_sheet": {
+          "assets": {
+            "value": 1434300000,
+            "unit": "USD",
+            "label": "Assets",
+            "order": 100
+          }
+        },
+        "cash_flow_statement": {
+          "net_cash_flow_from_operating_activities": {
+            "value": 158500000,
+            "unit": "USD",
+            "label": "Net Cash Flow From Operating Activities",
+            "order": 100
+          }
+        }
+      }
+    },
+    {
+      "start_date": "2024-02-01",
+      "end_date": "2025-01-31",
+      "timeframe": "annual",
+      "fiscal_period": "FY",
+      "fiscal_year": "2024",
+      "cik": "0009990005",
+      "company_name": "Nimbusware Cloud Corp.",
+      "filing_date": "2025-03-24",
+      "financials": {
+        "income_statement": {
+          "revenues": {
+            "value": 608800000,
+            "unit": "USD",
+            "label": "Revenues",
+            "order": 100
+          },
+          "net_income_loss": {
+            "value": 48700000,
+            "unit": "USD",
+            "label": "Net Income/Loss",
+            "order": 3200
+          },
+          "diluted_earnings_per_share": {
+            "value": 0.41,
+            "unit": "USD / shares",
+            "label": "Diluted Earnings Per Share",
+            "order": 4300
+          }
+        },
+        "balance_sheet": {
+          "assets": {
+            "value": 1156700000,
+            "unit": "USD",
+            "label": "Assets",
+            "order": 100
+          }
+        },
+        "cash_flow_statement": {
+          "net_cash_flow_from_operating_activities": {
+            "value": 127800000,
+            "unit": "USD",
+            "label": "Net Cash Flow From Operating Activities",
+            "order": 100
+          }
+        }
+      }
+    }
+  ]
+}

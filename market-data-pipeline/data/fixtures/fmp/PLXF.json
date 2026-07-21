@@ -1,0 +1,79 @@
+{
+  "symbol": "PLXF",
+  "income_statement": [
+    {
+      "date": "2025-12-31",
+      "symbol": "PLXF",
+      "reportedCurrency": "USD",
+      "cik": "0009990007",
+      "fillingDate": "2026-02-15",
+      "acceptedDate": "2026-02-15 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "revenue": 5238100000,
+      "netIncome": 261900000,
+      "epsdiluted": 1.6
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "PLXF",
+      "reportedCurrency": "USD",
+      "cik": "0009990007",
+      "fillingDate": "2025-02-15",
+      "acceptedDate": "2025-02-15 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "revenue": 4941600000,
+      "netIncome": 247100000,
+      "epsdiluted": 1.51
+    }
+  ],
+  "balance_sheet": [
+    {
+      "date": "2025-12-31",
+      "symbol": "PLXF",
+      "reportedCurrency": "USD",
+      "cik": "0009990007",
+      "fillingDate": "2026-02-15",
+      "acceptedDate": "2026-02-15 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "totalAssets": 7333300000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "PLXF",
+      "reportedCurrency": "USD",
+      "cik": "0009990007",
+      "fillingDate": "2025-02-15",
+      "acceptedDate": "2025-02-15 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "totalAssets": 6918200000
+    }
+  ],
+  "cash_flow": [
+    {
+      "date": "2025-12-31",
+      "symbol": "PLXF",
+      "reportedCurrency": "USD",
+      "cik": "0009990007",
+      "fillingDate": "2026-02-15",
+      "acceptedDate": "2026-02-15 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "operatingCashFlow": 476600000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "PLXF",
+      "reportedCurrency": "USD",
+      "cik": "0009990007",
+      "fillingDate": "2025-02-15",
+      "acceptedDate": "2025-02-15 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "operatingCashFlow": 444700000
+    }
+  ]
+}

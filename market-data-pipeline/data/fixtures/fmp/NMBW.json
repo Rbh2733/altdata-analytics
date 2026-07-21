@@ -1,0 +1,79 @@
+{
+  "symbol": "NMBW",
+  "income_statement": [
+    {
+      "date": "2025-12-31",
+      "symbol": "NMBW",
+      "reportedCurrency": "USD",
+      "cik": "0009990005",
+      "fillingDate": "2026-03-24",
+      "acceptedDate": "2026-03-24 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "revenue": 742800000,
+      "netIncome": 59400000,
+      "epsdiluted": 0.5
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "NMBW",
+      "reportedCurrency": "USD",
+      "cik": "0009990005",
+      "fillingDate": "2025-03-24",
+      "acceptedDate": "2025-03-24 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "revenue": 599100000,
+      "netIncome": 47900000,
+      "epsdiluted": 0.41
+    }
+  ],
+  "balance_sheet": [
+    {
+      "date": "2025-12-31",
+      "symbol": "NMBW",
+      "reportedCurrency": "USD",
+      "cik": "0009990005",
+      "fillingDate": "2026-03-24",
+      "acceptedDate": "2026-03-24 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "totalAssets": 1411400000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "NMBW",
+      "reportedCurrency": "USD",
+      "cik": "0009990005",
+      "fillingDate": "2025-03-24",
+      "acceptedDate": "2025-03-24 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "totalAssets": 1138200000
+    }
+  ],
+  "cash_flow": [
+    {
+      "date": "2025-12-31",
+      "symbol": "NMBW",
+      "reportedCurrency": "USD",
+      "cik": "0009990005",
+      "fillingDate": "2026-03-24",
+      "acceptedDate": "2026-03-24 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "operatingCashFlow": 156000000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "NMBW",
+      "reportedCurrency": "USD",
+      "cik": "0009990005",
+      "fillingDate": "2025-03-24",
+      "acceptedDate": "2025-03-24 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "operatingCashFlow": 125800000
+    }
+  ]
+}
