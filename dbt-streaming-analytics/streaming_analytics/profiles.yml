@@ -1,0 +1,9 @@
+streaming_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      # Relative to the working directory; run dbt from this directory so
+      # the database file lands here (it is gitignored and rebuilt on demand).
+      path: streaming.duckdb
+      threads: 4

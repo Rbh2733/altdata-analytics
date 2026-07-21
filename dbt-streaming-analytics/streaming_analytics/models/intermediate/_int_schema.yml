@@ -1,0 +1,216 @@
+version: 2
+
+models:
+  - name: int_artist_metrics
+    description: >
+      Artist-level aggregations from track data. Calculates volume metrics,
+      performance averages, audio profiles, and career timelines per artist.
+      Serves as the foundation for dim_artists.
+    
+    columns:
+      - name: artist_name
+        description: Primary key - unique artist identifier
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: total_tracks
+        description: Count of distinct tracks by this artist
+        data_tests:
+          - not_null
+      
+      - name: total_albums
+        description: Count of distinct albums by this artist
+        data_tests:
+          - not_null
+      
+      - name: total_streams
+        description: Sum of stream_count across all tracks
+        data_tests:
+          - not_null
+      
+      - name: avg_popularity
+        description: Mean popularity score across tracks (0-100 scale)
+      
+      - name: max_popularity
+        description: Highest popularity score achieved by any track
+      
+      - name: avg_streams_per_track
+        description: Average streams per track (total_streams / total_tracks)
+      
+      - name: avg_danceability
+        description: Mean danceability score (0-1 scale)
+      
+      - name: avg_energy
+        description: Mean energy score (0-1 scale)
+      
+      - name: avg_tempo
+        description: Mean tempo in BPM
+      
+      - name: primary_genre
+        description: Most common genre for this artist (statistical mode)
+      
+      - name: primary_label
+        description: Most common record label for this artist (statistical mode)
+      
+      - name: genre_count
+        description: Number of distinct genres this artist has released in
+      
+      - name: explicit_tracks
+        description: Count of tracks flagged as explicit
+      
+      - name: first_release_year
+        description: Earliest release year in catalog
+      
+      - name: latest_release_year
+        description: Most recent release year in catalog
+      
+      - name: career_span_years
+        description: Difference between latest and first release year
+      
+      - name: country_count
+        description: Number of distinct countries where artist has presence
+
+  - name: int_genre_performance
+    description: >
+      Genre-level aggregations with audio fingerprinting. Calculates market
+      metrics, sonic profiles, and content characteristics per genre.
+      Serves as the foundation for dim_genres.
+    
+    columns:
+      - name: genre
+        description: Primary key - genre classification
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: total_tracks
+        description: Count of tracks in this genre
+        data_tests:
+          - not_null
+      
+      - name: unique_artists
+        description: Count of distinct artists in this genre
+        data_tests:
+          - not_null
+      
+      - name: unique_albums
+        description: Count of distinct albums in this genre
+      
+      - name: total_streams
+        description: Sum of streams across all tracks in genre
+        data_tests:
+          - not_null
+      
+      - name: avg_popularity
+        description: Mean popularity score for genre
+      
+      - name: avg_streams_per_track
+        description: Average streams per track in genre
+      
+      - name: avg_danceability
+        description: >
+          Audio fingerprint - mean danceability (0-1).
+          Higher values indicate more dance-suitable tracks.
+      
+      - name: avg_energy
+        description: >
+          Audio fingerprint - mean energy (0-1).
+          Higher values indicate more intense, active tracks.
+      
+      - name: avg_tempo
+        description: Audio fingerprint - mean tempo in BPM
+      
+      - name: avg_loudness
+        description: >
+          Audio fingerprint - mean loudness in dB.
+          Typically ranges from -60 to 0 dB.
+      
+      - name: avg_instrumentalness
+        description: >
+          Audio fingerprint - mean instrumentalness (0-1).
+          Higher values indicate more instrumental (less vocal) content.
+      
+      - name: explicit_pct
+        description: Percentage of tracks flagged as explicit
+      
+      - name: dominant_label
+        description: Most common record label in genre (statistical mode)
+      
+      - name: label_diversity
+        description: Count of distinct labels releasing in this genre
+      
+      - name: country_reach
+        description: Number of distinct countries with presence in genre
+      
+      - name: top_country
+        description: Country with highest track count in genre
+
+  - name: int_label_catalog
+    description: >
+      Record label aggregations for catalog analysis. Calculates roster size,
+      performance metrics, content strategy indicators, and market positioning.
+      Serves as the foundation for rpt_label_market_share.
+    
+    columns:
+      - name: label
+        description: Primary key - record label name
+        data_tests:
+          - unique
+          - not_null
+      
+      - name: catalog_size
+        description: Total number of tracks released by label
+        data_tests:
+          - not_null
+      
+      - name: roster_size
+        description: Count of distinct artists signed to label
+        data_tests:
+          - not_null
+      
+      - name: album_count
+        description: Count of distinct albums released by label
+      
+      - name: total_streams
+        description: Sum of streams across all label tracks
+        data_tests:
+          - not_null
+      
+      - name: avg_track_popularity
+        description: Mean popularity score across label catalog
+      
+      - name: avg_streams_per_track
+        description: Average streams per track (efficiency metric)
+      
+      - name: top_track_streams
+        description: Highest stream count achieved by any single track
+      
+      - name: primary_genre
+        description: Most common genre in label catalog (statistical mode)
+      
+      - name: genre_diversity
+        description: >
+          Count of distinct genres in catalog.
+          Higher values indicate diversified content strategy.
+      
+      - name: explicit_content_pct
+        description: Percentage of catalog flagged as explicit
+      
+      - name: avg_track_length_min
+        description: Mean track duration in minutes
+      
+      - name: primary_market
+        description: Country with highest track count for label
+      
+      - name: market_reach
+        description: Count of distinct countries where label has presence
+      
+      - name: earliest_release
+        description: First year of release activity
+      
+      - name: latest_release
+        description: Most recent year of release activity
+      
+      - name: active_years
+        description: Count of distinct years with releases

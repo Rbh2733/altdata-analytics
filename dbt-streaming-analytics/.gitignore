@@ -1,0 +1,19 @@
+# dbt artifacts (regenerated on build)
+target/
+dbt_packages/
+logs/
+
+# DuckDB database (rebuilt from the seed by dbt build)
+*.duckdb
+*.duckdb.wal
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
