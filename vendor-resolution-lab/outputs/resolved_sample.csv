@@ -1,0 +1,151 @@
+raw_id,week,raw_string,amount,core,method,score,vendor,final_vendor,final_method,category,new_vendor_flag,tagger_confidence
+1110,1,OPENA IAPI LLC,9.11,OPENA IAPI,unmatched,0.645,,OpenAI,tagger_tail,AI and ML Platforms,0,0.9
+2193,1,PAYPAL *CLAUDE AI SUB,138.1,CLAUDE AI SUB,review,0.876,Anthropic,Anthropic,tagger_review,AI and ML Platforms,0,0.897
+2735,1,FS *INTELLIJ LIC RENEWAL,51.82,INTELLIJ LIC,exact,1.0,JetBrains,JetBrains,exact,Developer Tools,0,
+3516,1,HF SPACES 800-555-0147,42.66,HF SPACES,exact,1.0,Hugging Face,Hugging Face,exact,AI and ML Platforms,0,
+4220,1,PP*1PASSWORD INC,22.83,1PASSWORD,exact,1.0,1Password,1Password,exact,Security,0,
+4290,1,SQ *CLAUDE AI SUBSC,34.76,CLAUDE AI SUBSC,fuzzy_auto,0.915,Anthropic,Anthropic,fuzzy_auto,AI and ML Platforms,0,
+4296,1,PAYPAL *GITLAB,83.52,GITLAB,exact,1.0,GitLab,GitLab,exact,Developer Tools,0,
+4491,1,PAYPAL *GRAMMARLY STORE 112,62.47,GRAMMARLY,exact,1.0,Grammarly,Grammarly,exact,SaaS Productivity,0,
+5067,1,F S*HUGGINGFACE INC,24.53,F S HUGGINGFACE,exact,0.98,Hugging Face,Hugging Face,exact,AI and ML Platforms,0,
+5259,1,STRIPE*MICROSOFTAZURE AUSTIN TX,262.42,MICROSOFTAZURE,exact,1.0,Microsoft Azure,Microsoft Azure,exact,Cloud Infrastructure,0,
+5909,1,CLAUDE AI SUBSCR8 00-555-0147,33.14,CLAUDE AI SUBSCR8,fuzzy_auto,0.916,Anthropic,Anthropic,fuzzy_auto,AI and ML Platforms,0,
+5972,1,IN *CLAUDE AI SUBSC,166.8,CLAUDE AI SUBSC,fuzzy_auto,0.915,Anthropic,Anthropic,fuzzy_auto,AI and ML Platforms,0,
+6233,1,PAYPAL *COHERE TECH INC,53.18,COHERE TECH,exact,1.0,Cohere,Cohere,exact,AI and ML Platforms,0,
+6570,1,FS *HEROKU DYNOS MONTHLY,39.93,HEROKU DYNOS,exact,1.0,Heroku,Heroku,exact,Cloud Infrastructure,0,
+6727,1,PAYPAL *CLAUDE AI S,175.54,CLAUDE AI S,review,0.831,Anthropic,Anthropic,tagger_review,AI and ML Platforms,0,0.815
+6728,1,SQ *CLAUDE AI SUBS,39.97,CLAUDE AI SUBS,review,0.896,Anthropic,Anthropic,tagger_review,AI and ML Platforms,0,0.933
+6821,1,CLOUDFLARE RENEWAL,15.11,CLOUDFLARE,exact,1.0,Cloudflare,Cloudflare,exact,Cloud Infrastructure,0,
+7209,1,CIRCLE INTERNET SV,559.94,CIRCLE INTERNET SV,fuzzy_auto,0.918,CircleCI,CircleCI,fuzzy_auto,Developer Tools,0,
+7435,1,PP*OPENAIAPI,108.82,OPENAIAPI,unmatched,0.671,,OpenAI,tagger_tail,AI and ML Platforms,0,0.947
+7653,2,MISTRLA AI 0423,917.63,MISTRLA AI,review,0.82,Mistral AI,Mistral AI,tagger_review,AI and ML Platforms,0,0.9
+7673,2,SYNK .COM,57.65,SYNK,unmatched,0.412,,Snyk,tagger_tail,Security,0,0.75
+7935,2,AMAZON WEB ESRV,76.02,AMAZON WEB ESRV,review,0.896,Amazon Web Services,Amazon Web Services,tagger_review,Cloud Infrastructure,0,0.933
+8364,2,PP*CLAUDE AI SUBSC,33.61,CLAUDE AI SUBSC,fuzzy_auto,0.915,Anthropic,Anthropic,fuzzy_auto,AI and ML Platforms,0,
+8818,2,IN *FUNCTIONAL SOFT,83.77,FUNCTIONAL SOFT,review,0.81,Sentry,Sentry,tagger_review,Developer Tools,0,0.882
+8952,2,HUGGINGFACE,65.87,HUGGINGFACE,exact,1.0,Hugging Face,Hugging Face,exact,AI and ML Platforms,0,
+9104,2,WEB*CLAUDE AI SUBSC,142.62,CLAUDE AI SUBSC,fuzzy_auto,0.915,Anthropic,Anthropic,fuzzy_auto,AI and ML Platforms,0,
+9983,2,PP*CIRCLE INTERNETS VC LLC,35.38,CIRCLE INTERNETS VC,review,0.787,CircleCI,CircleCI,tagger_review,Developer Tools,0,0.947
+10057,2,PP*CLAUDE AI SUBSC,70.99,CLAUDE AI SUBSC,fuzzy_auto,0.915,Anthropic,Anthropic,fuzzy_auto,AI and ML Platforms,0,
+10115,2,PP*AMAZON WEB SERVI,26.3,AMAZON WEB SERVI,fuzzy_auto,0.915,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+10912,2,STRIPE*NOTION 0423,3.49,NOTION,exact,1.0,Notion,Notion,exact,SaaS Productivity,0,
+11977,2,PAYPAL *ELEVEN LABS I,53.21,ELEVEN LABS I,fuzzy_auto,0.912,ElevenLabs,ElevenLabs,fuzzy_auto,AI and ML Platforms,0,
+12133,2,OPENAIA USTIN TX,90.31,OPENAIA USTIN TX,unmatched,0.488,,OpenAI,tagger_tail,AI and ML Platforms,0,0.615
+12896,2,STRIPEI*NTELLIJ LIC LLC,59.97,STRIPEI NTELLIJ LIC,unmatched,0.6,,JetBrains,tagger_tail,Developer Tools,0,0.774
+13116,2,SQ *MAKE INTEGROMA,72.89,MAKE INTEGROMA,review,0.856,Make.com,Make.com,tagger_review,Automation,0,0.966
+14155,2,OPENAICHATGPT SUBSCR AUS,147.14,OPENAICHATGPT SUBSCR AUS,unmatched,0.605,,OpenAI,tagger_tail,AI and ML Platforms,0,0.889
+14192,2,SQ *SUPAABSE,26.43,SUPAABSE,unmatched,0.631,,Supabase,tagger_tail,Data Infrastructure,0,0.875
+14815,2,AMAZON WEB SREVICES,29.95,AMAZON WEB SREVICES,fuzzy_auto,0.904,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+15525,3,DROPBOX,43.21,DROPBOX,exact,1.0,Dropbox,Dropbox,exact,SaaS Productivity,0,
+15782,3,MISTARLAI,82.44,MISTARLAI,unmatched,0.638,,Mistral AI,tagger_tail,AI and ML Platforms,0,0.889
+16135,3,STRIPE*WORKATO NYC,3.41,WORKATO,exact,1.0,Workato,Workato,exact,Automation,0,
+16530,3,PAYPAL *CLAUDE AI SUBSC,274.29,CLAUDE AI SUBSC,fuzzy_auto,0.915,Anthropic,Anthropic,fuzzy_auto,AI and ML Platforms,0,
+16733,3,IN *ELSATICSEARCH INC,36.74,ELSATICSEARCH,unmatched,0.507,,Elastic,tagger_tail,Data Infrastructure,0,0.923
+17319,3,OPENAIAPI INC,56.33,OPENAIAPI,unmatched,0.671,,OpenAI,tagger_tail,AI and ML Platforms,0,0.947
+17397,3,WEB*NEW RELIC .COM,97.38,NEW RELIC,exact,1.0,New Relic,New Relic,exact,Developer Tools,0,
+17582,3,FS *AMAZON WEB SER,278.18,AMAZON WEB SER,fuzzy_auto,0.914,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+19027,3,WEB*INTUIT MAILCHIM,54.93,INTUIT MAILCHIM,review,0.857,Mailchimp,Mailchimp,tagger_review,Sales and Marketing,0,0.968
+20974,3,SQ *CLAUDE AI SUBS,232.45,CLAUDE AI SUBS,review,0.896,Anthropic,Anthropic,tagger_review,AI and ML Platforms,0,0.933
+21566,3,WEB*REOTOL INC,87.78,REOTOL,unmatched,0.458,,Retool,tagger_tail,Automation,0,0.833
+21679,3,PP*ANTHROPICCLAUDE.AI ,20.73,ANTHROPICCLAUDE.AI,unmatched,0.685,,Anthropic,tagger_tail,AI and ML Platforms,0,0.973
+21745,3,ASANANYC,72.56,ASANANYC,unmatched,0.573,,Asana,tagger_tail,SaaS Productivity,0,0.769
+23198,4,SQ*AMAZON WEB SERVI,119.96,SQ AMAZON WEB SERVI,unmatched,0.718,,Amazon Web Services,tagger_tail,Cloud Infrastructure,0,0.882
+23362,4,CIRCLE INTERNTE SVC LLC,80.45,CIRCLE INTERNTE SVC,fuzzy_auto,0.904,CircleCI,CircleCI,fuzzy_auto,Developer Tools,0,
+23461,4,REALTIMEBOARD 800-555-0147,14.35,REALTIMEBOARD,exact,1.0,Miro,Miro,exact,SaaS Productivity,0,
+24521,4,AGILEBITSMONTHLY,60.18,AGILEBITSMONTHLY,unmatched,0.546,,1Password,tagger_tail,Security,0,0.72
+26037,4,HGUGINGFACE HUB,51.62,HGUGINGFACE HUB,unmatched,0.688,,Hugging Face,tagger_tail,AI and ML Platforms,0,0.933
+26068,4,PP*DIGITALOCEAN0423,17.02,DIGITALOCEAN0423,unmatched,0.621,,DigitalOcean,tagger_tail,Cloud Infrastructure,0,0.857
+26478,4,PP*MONDAY OCM LTD INC,104.48,MONDAY OCM LTD,review,0.894,Monday.com,Monday.com,tagger_review,SaaS Productivity,0,0.929
+26486,4,IN *SCALE LABS 800-555-0147,318.83,SCALE LABS,exact,1.0,Scale AI,Scale AI,exact,AI and ML Platforms,0,
+27461,4,MISTRLA AI,197.91,MISTRLA AI,review,0.82,Mistral AI,Mistral AI,tagger_review,AI and ML Platforms,0,0.9
+27507,4,HUGGINGFAEC HUB,46.8,HUGGINGFAEC HUB,review,0.838,Hugging Face,Hugging Face,tagger_review,AI and ML Platforms,0,0.933
+28586,4,STRIPE*OPENAI API,77.42,OPENAI API,exact,1.0,OpenAI,OpenAI,exact,AI and ML Platforms,0,
+29204,4,PAYPAL *AMAZON WEB SER,51.88,AMAZON WEB SER,fuzzy_auto,0.914,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+29488,4,PAYPAL *GOOGLE CLO,268.55,GOOGLE CLO,review,0.825,Google Cloud,Google Cloud,tagger_review,Cloud Infrastructure,0,0.909
+29913,4,HUGGINGAFCE HUB INC,101.8,HUGGINGAFCE HUB,review,0.838,Hugging Face,Hugging Face,tagger_review,AI and ML Platforms,0,0.933
+30273,5,ZOOM RENEWAL,35.52,ZOOM,exact,1.0,Zoom,Zoom,exact,SaaS Productivity,0,
+30726,5,MICROSOFTAZURE STORE 112,49.4,MICROSOFTAZURE,exact,1.0,Microsoft Azure,Microsoft Azure,exact,Cloud Infrastructure,0,
+31380,5,SQ *AKAMAI LINODE 0423,560.14,AKAMAI LINODE,exact,1.0,Linode,Linode,exact,Cloud Infrastructure,0,
+31658,5,STRIPE*HF SPCAES NYC,226.59,HF SPCAES,review,0.813,Hugging Face,Hugging Face,tagger_review,AI and ML Platforms,0,0.889
+31992,5,STRIPE*ELEVEN LABS,13.98,ELEVEN LABS,review,0.867,ElevenLabs,ElevenLabs,tagger_review,AI and ML Platforms,0,0.952
+32101,5,PAYPAL *AMAZON WEB ,13.33,AMAZON WEB,review,0.823,Amazon Web Services,Amazon Web Services,tagger_review,Cloud Infrastructure,0,0.8
+32642,5,STRIPE*MICROSOFT AZRUE,16.72,MICROSOFT AZRUE,review,0.838,Microsoft Azure,Microsoft Azure,tagger_review,Cloud Infrastructure,0,0.933
+33421,5,PAYPAL *CLAUDE AI SUBSC,44.41,CLAUDE AI SUBSC,fuzzy_auto,0.915,Anthropic,Anthropic,fuzzy_auto,AI and ML Platforms,0,
+34018,5,OPENA  IRENEWAL,204.16,OPENA IRENEWAL,unmatched,0.48,,OpenAI,tagger_tail,AI and ML Platforms,0,0.6
+35342,5,FS *CIRCLE INTERNET S,113.2,CIRCLE INTERNET S,fuzzy_auto,0.902,CircleCI,CircleCI,fuzzy_auto,Developer Tools,0,
+35366,5,AKAMAI LIONDE STORE 112,5.82,AKAMAI LIONDE,review,0.832,Linode,Linode,tagger_review,Cloud Infrastructure,0,0.923
+35517,5,PAYPAL *AMAZON WEB SER,34.87,AMAZON WEB SER,fuzzy_auto,0.914,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+35726,5,SQ *AMAZON WEB SERVIC,209.72,AMAZON WEB SERVIC,fuzzy_auto,0.902,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+35851,5,IN *AMAZON WEB SERVICE,204.57,AMAZON WEB SERVICE,fuzzy_auto,0.918,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+36345,5,STRIPE*MICROSOFTAZ,17.22,MICROSOFTAZ,unmatched,0.634,,Microsoft Azure,tagger_tail,Cloud Infrastructure,0,0.88
+36698,5,FIGMA RENEWAL,23.01,FIGMA,exact,1.0,Figma,Figma,exact,SaaS Productivity,0,
+36905,5,CIRCLE INTERNET SV,579.73,CIRCLE INTERNET SV,fuzzy_auto,0.918,CircleCI,CircleCI,fuzzy_auto,Developer Tools,0,
+36915,5,IN *CIRCLE INTERNET S,61.86,CIRCLE INTERNET S,fuzzy_auto,0.902,CircleCI,CircleCI,fuzzy_auto,Developer Tools,0,
+37312,5,SQ *POENAI 0423,37.94,POENAI,unmatched,0.458,,OpenAI,tagger_tail,AI and ML Platforms,0,0.833
+37666,6,SQ *CIRCLE INTERNET SV,68.08,CIRCLE INTERNET SV,fuzzy_auto,0.918,CircleCI,CircleCI,fuzzy_auto,Developer Tools,0,
+37953,6,PP*EXEPNSIFY #4821,288.76,EXEPNSIFY,unmatched,0.488,,Expensify,tagger_tail,Payments and Fintech,0,0.889
+38365,6,WEB*PAGERDUTYSTORE 112,29.07,PAGERDUTYSTORE,unmatched,0.58,,PagerDuty,tagger_tail,Developer Tools,0,0.783
+38764,6,WEB*TWILIO SEGMENT,29.51,TWILIO SEGMENT,exact,1.0,Segment,Segment,exact,Data Infrastructure,0,
+39770,6,WEB*OPENAIAPI,39.36,OPENAIAPI,unmatched,0.671,,OpenAI,tagger_tail,AI and ML Platforms,0,0.947
+39850,6,SQ *FASTLY MONTHLY,103.53,FASTLY,exact,1.0,Fastly,Fastly,exact,Cloud Infrastructure,0,
+40885,6,CLAUDE AI USBSCR,16.35,CLAUDE AI USBSCR,review,0.898,Anthropic,Anthropic,tagger_review,AI and ML Platforms,0,0.938
+40919,6,IN*OPENAI CHATGPT SUBSCR INC,175.53,IN OPENAI CHATGPT SUBSCR,exact,0.98,OpenAI,OpenAI,exact,AI and ML Platforms,0,
+41045,6,STRIPE*MIDJORUNEY MONTHLY,417.66,MIDJORUNEY,unmatched,0.645,,Midjourney,tagger_tail,AI and ML Platforms,0,0.9
+41637,6,AMAZON WEB SERVICSE AUS,100.0,AMAZON WEB SERVICSE AUS,review,0.854,Amazon Web Services,Amazon Web Services,tagger_review,Cloud Infrastructure,0,0.857
+42165,6,MICROSOFT AZURE INC,9.31,MICROSOFT AZURE,exact,1.0,Microsoft Azure,Microsoft Azure,exact,Cloud Infrastructure,0,
+42179,6,IN*SCALE AI LLC,196.99,IN SCALE AI,exact,0.98,Scale AI,Scale AI,exact,AI and ML Platforms,0,
+42459,6,STRIPE*MSFT AZUREN YC,36.95,MSFT AZUREN YC,review,0.783,Microsoft Azure,Microsoft Azure,tagger_review,Cloud Infrastructure,0,0.833
+42857,6,IN *DOKCER HUB NYC,42.67,DOKCER HUB,unmatched,0.67,,Docker,tagger_tail,Developer Tools,0,0.9
+43392,6,WEB*RUNWAY M L#482,37.25,RUNWAY M L,review,0.846,Runway ML,Runway ML,tagger_review,AI and ML Platforms,0,0.947
+45051,7,STRIPE*MIROAUSTIN TX,35.73,MIROAUSTIN TX,unmatched,0.408,,,new_vendor_candidate,Unclassified,1,0.476
+45195,7,PP*CLAUDE AI SUBSC,39.97,CLAUDE AI SUBSC,fuzzy_auto,0.915,Anthropic,Anthropic,fuzzy_auto,AI and ML Platforms,0,
+45403,7,SQ *DIGITAL OCEAN,20.55,DIGITAL OCEAN,exact,1.0,DigitalOcean,DigitalOcean,exact,Cloud Infrastructure,0,
+45666,7,MSFT AZURE RENEWAL,86.9,MSFT AZURE,exact,1.0,Microsoft Azure,Microsoft Azure,exact,Cloud Infrastructure,0,
+45820,7,IN *CIRCLE INTERNET SV,95.21,CIRCLE INTERNET SV,fuzzy_auto,0.918,CircleCI,CircleCI,fuzzy_auto,Developer Tools,0,
+46084,7,IN *QUORUMDATA 800-555-0147,154.43,QUORUMDATA,unmatched,0.258,,,new_vendor_candidate,Data Infrastructure,1,0.471
+46085,7,STRIPE*CLAUDE AI SU,501.42,CLAUDE AI SU,review,0.854,Anthropic,Anthropic,tagger_review,AI and ML Platforms,0,0.857
+46166,7,SENDRGID RENEWAL,24.12,SENDRGID,unmatched,0.631,,SendGrid,tagger_tail,Sales and Marketing,0,0.875
+46284,7,PUYSD-HALCYON COMPUTE NYC,27.06,PUYSD HALCYON COMPUTE,unmatched,0.247,,,new_vendor_candidate,Cloud Infrastructure,1,0.45
+46685,7,FS *CLOUDFLRAE NET LLC,503.28,CLOUDFLRAE NET,review,0.835,Cloudflare,Cloudflare,tagger_review,Cloud Infrastructure,0,0.929
+47085,7,STRIPE*CLAUDEAI SUBSCR LLC,34.56,CLAUDEAI SUBSCR,unmatched,0.648,,Anthropic,tagger_tail,AI and ML Platforms,0,0.968
+47262,7,WEB*TESSELLATECLOUDRENEWAL,31.34,TESSELLATECLOUDRENEWAL,unmatched,0.282,,,new_vendor_candidate,Cloud Infrastructure,1,0.514
+47305,7,PERPLEXITY .COM,80.64,PERPLEXITY,exact,1.0,Perplexity,Perplexity,exact,AI and ML Platforms,0,
+48232,7,HALCYON COMPUTE LLC,20.35,HALCYON COMPUTE,unmatched,0.265,,,new_vendor_candidate,Cloud Infrastructure,1,0.533
+48534,7,MARGINALIA SYSTEMS NYC,95.77,MARGINALIA SYSTEMS,unmatched,0.275,,,new_vendor_candidate,Developer Tools,1,0.5
+48658,7,PAYPAL *AMAZON WEB SERVI,31.67,AMAZON WEB SERVI,fuzzy_auto,0.915,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+48919,7,PAYPAL H*ALCYON COMPUTE AU,32.53,PAYPAL H ALCYON COMPUTE AU,unmatched,0.195,,,new_vendor_candidate,Payments and Fintech,1,0.391
+49687,7,AMAZON WEB SEVRICES NYC,26.95,AMAZON WEB SEVRICES,fuzzy_auto,0.904,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+50444,7,PP*FLUXGRID  AI AUSTIN TX,37.27,FLUXGRID AI,unmatched,0.406,,,new_vendor_candidate,Cloud Infrastructure,1,0.444
+50504,7,PYUSD-QUORUM DATA #4821,113.25,PYUSD QUORUM DATA,unmatched,0.183,,,new_vendor_candidate,Data Infrastructure,1,0.387
+51438,7,IN *MARGINALIA SYSTEMS AUSTIN TX,159.44,MARGINALIA SYSTEMS,unmatched,0.275,,,new_vendor_candidate,Developer Tools,1,0.5
+51768,7,PYUSD-VECTOR FOUNDR,82.88,PYUSD VECTOR FOUNDR,unmatched,0.258,,,new_vendor_candidate,AI and ML Platforms,1,0.471
+51793,7,SQ *HALCYON COMPUTE 0423,44.16,HALCYON COMPUTE,unmatched,0.265,,,new_vendor_candidate,Cloud Infrastructure,1,0.533
+51804,7,PYUSDM-ISTRALAI,77.71,PYUSDM ISTRALAI,unmatched,0.412,,Mistral AI,tagger_tail,AI and ML Platforms,0,0.75
+51826,7,WEB*AMAZON WEB SERVIC,80.1,AMAZON WEB SERVIC,fuzzy_auto,0.902,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+51882,7,PYUSD-AMAZONWEB SERV 0423,6.81,PYUSD AMAZONWEB SERV,unmatched,0.556,,Amazon Web Services,tagger_tail,Cloud Infrastructure,0,0.8
+52344,7,PP*MARGINALIA SYSTEMS ,164.47,MARGINALIA SYSTEMS,unmatched,0.275,,,new_vendor_candidate,Developer Tools,1,0.5
+53080,8,VECTORFOUNDRY INC,52.83,VECTORFOUNDRY,unmatched,0.261,,,new_vendor_candidate,AI and ML Platforms,1,0.476
+53132,8,PYUSD-MARGIANLIA SYSTEM,32.38,PYUSD MARGIANLIA SYSTEM,unmatched,0.225,,,new_vendor_candidate,Unclassified,1,0.41
+53508,8,IN *CIRCLE INTERNET SV,41.28,CIRCLE INTERNET SV,fuzzy_auto,0.918,CircleCI,CircleCI,fuzzy_auto,Developer Tools,0,
+53538,8,PYUSD-FLUXGRID AI RENEWAL,32.68,PYUSD FLUXGRID AI,unmatched,0.395,,,new_vendor_candidate,Cloud Infrastructure,1,0.48
+54027,8,PAYPAL *CLAUDE AI SUB,288.84,CLAUDE AI SUB,review,0.876,Anthropic,Anthropic,tagger_review,AI and ML Platforms,0,0.897
+55003,8,FLUXGRID AI #4821,158.04,FLUXGRID AI,unmatched,0.406,,,new_vendor_candidate,Cloud Infrastructure,1,0.444
+55075,8,FS *FLUXGRID AI 0423,304.16,FLUXGRID AI,unmatched,0.406,,,new_vendor_candidate,Cloud Infrastructure,1,0.444
+55216,8,PYUSD-QUORUM DATA,15.34,PYUSD QUORUM DATA,unmatched,0.183,,,new_vendor_candidate,Data Infrastructure,1,0.387
+55596,8,WEB*ELEVEN LAB SIO #48,340.72,ELEVEN LAB SIO,unmatched,0.777,,ElevenLabs,tagger_tail,AI and ML Platforms,0,0.929
+55858,8,PYUSD-TESSELLATE CLOUD AUSTIN TX,93.35,PYUSD TESSELLATE CLOUD,unmatched,0.489,,,new_vendor_candidate,Cloud Infrastructure,1,0.571
+56023,8,IN *HALCYON COMPUTE STORE 112,109.27,HALCYON COMPUTE,unmatched,0.265,,,new_vendor_candidate,Cloud Infrastructure,1,0.533
+56412,8,WEB*HALCYON COMPUTE,114.22,HALCYON COMPUTE,unmatched,0.265,,,new_vendor_candidate,Cloud Infrastructure,1,0.533
+56575,8,MISTRLA AI,6.62,MISTRLA AI,review,0.82,Mistral AI,Mistral AI,tagger_review,AI and ML Platforms,0,0.9
+56972,8,HALCYONCOMPUTE AUSTIN,66.66,HALCYONCOMPUTE AUSTIN,unmatched,0.247,,,new_vendor_candidate,Cloud Infrastructure,1,0.45
+57005,8,PAYPAL *CLAUDE AI SU,28.09,CLAUDE AI SU,review,0.854,Anthropic,Anthropic,tagger_review,AI and ML Platforms,0,0.857
+57088,8,PYUSD-FLUXGRID AI #4821,23.86,PYUSD FLUXGRID AI,unmatched,0.395,,,new_vendor_candidate,Cloud Infrastructure,1,0.48
+57478,8,NEW RLEIC,60.12,NEW RLEIC,review,0.813,New Relic,New Relic,tagger_review,Developer Tools,0,0.889
+57617,8,PYUSD-TESSELLATE CLOUD 800-555-0147,17.8,PYUSD TESSELLATE CLOUD,unmatched,0.489,,,new_vendor_candidate,Cloud Infrastructure,1,0.571
+57941,8,FLUXGRID AI LLC,37.59,FLUXGRID AI,unmatched,0.406,,,new_vendor_candidate,Cloud Infrastructure,1,0.444
+58135,8,STRIPE*VECTOR FOUNDRY,48.46,VECTOR FOUNDRY,unmatched,0.265,,,new_vendor_candidate,AI and ML Platforms,1,0.483
+58158,8,IN *CIRCLE INTERNET S,58.15,CIRCLE INTERNET S,fuzzy_auto,0.902,CircleCI,CircleCI,fuzzy_auto,Developer Tools,0,
+59077,8,VECTOFROUNDRY RENEWAL,42.81,VECTOFROUNDRY,unmatched,0.261,,,new_vendor_candidate,Unclassified,1,0.476
+59377,8,PYUSD-FLUXGRIDAI RENEWAL,39.41,PYUSD FLUXGRIDAI,unmatched,0.275,,,new_vendor_candidate,Cloud Infrastructure,1,0.5
+59706,8,SQ *AMAZON WEB SERVI,12.72,AMAZON WEB SERVI,fuzzy_auto,0.915,Amazon Web Services,Amazon Web Services,fuzzy_auto,Cloud Infrastructure,0,
+59961,8,PYUSD-HALCYONCOMPUTE MONTHLY,152.11,PYUSD HALCYONCOMPUTE,unmatched,0.226,,,new_vendor_candidate,Cloud Infrastructure,1,0.412

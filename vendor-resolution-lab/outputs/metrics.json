@@ -1,0 +1,30 @@
+{
+  "rows": 60000,
+  "assigned": 58748,
+  "coverage": 0.9791,
+  "false_merges_of_novel_rows": 126,
+  "novel_rows_total": 1189,
+  "novel_rows_flagged_new_vendor": 1063,
+  "new_vendor_flags_total": 1252,
+  "novel_detection_recall": 0.894,
+  "novel_detection_precision": 0.849,
+  "per_method": {
+    "exact": {
+      "n": 53143,
+      "precision": 0.999
+    },
+    "fuzzy_auto": {
+      "n": 69,
+      "precision": 1.0
+    },
+    "tagger_review": {
+      "n": 300,
+      "precision": 1.0
+    },
+    "tagger_tail": {
+      "n": 5236,
+      "precision": 0.9717
+    }
+  },
+  "tagger": "mock"
+}
