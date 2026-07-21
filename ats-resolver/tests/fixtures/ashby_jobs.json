@@ -1,0 +1,25 @@
+{
+  "jobs": [
+    {
+      "id": "ash-1",
+      "title": "Data Insights Analyst",
+      "location": "Remote, US",
+      "isRemote": true,
+      "department": "Data",
+      "team": "Insights",
+      "jobUrl": "https://jobs.ashbyhq.com/acme/ash-1",
+      "publishedAt": "2026-05-15T00:00:00Z",
+      "descriptionPlain": "Own the signal-to-insight step across alternative data sources."
+    },
+    {
+      "id": "ash-2",
+      "title": "Account Executive",
+      "location": "San Francisco",
+      "isRemote": false,
+      "department": "Sales",
+      "jobUrl": "https://jobs.ashbyhq.com/acme/ash-2",
+      "publishedAt": "2026-05-10T00:00:00Z"
+    }
+  ],
+  "apiVersion": "1"
+}

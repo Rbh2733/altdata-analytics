@@ -1,0 +1,20 @@
+[
+  {
+    "id": "abc-123",
+    "text": "Market Research Analyst",
+    "categories": {"location": "New York", "team": "Research", "department": "Data", "commitment": "Full-time"},
+    "workplaceType": "remote",
+    "hostedUrl": "https://jobs.lever.co/foglinedata/abc-123",
+    "applyUrl": "https://jobs.lever.co/foglinedata/abc-123/apply",
+    "createdAt": 1747000000000,
+    "descriptionPlain": "Analyze aggregated market datasets for institutional research clients."
+  },
+  {
+    "id": "def-456",
+    "text": "Sales Engineer",
+    "categories": {"location": "Austin, TX", "team": "Sales"},
+    "workplaceType": "hybrid",
+    "hostedUrl": "https://jobs.lever.co/foglinedata/def-456",
+    "createdAt": 1746000000000
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "jobs": [
+    {
+      "id": 5012345,
+      "title": "Senior Customer Insights Analyst",
+      "updated_at": "2026-05-20T10:00:00-04:00",
+      "location": {"name": "Remote - US"},
+      "absolute_url": "https://boards.greenhouse.io/acme/jobs/5012345",
+      "departments": [{"id": 1, "name": "Analytics"}],
+      "offices": [{"name": "Remote"}]
+    },
+    {
+      "id": 5012346,
+      "title": "Market Intelligence Analyst",
+      "updated_at": "2026-05-18T09:00:00-04:00",
+      "location": {"name": "Chicago, IL"},
+      "absolute_url": "https://boards.greenhouse.io/acme/jobs/5012346",
+      "departments": [{"id": 2, "name": "Strategy"}]
+    }
+  ],
+  "meta": {"total": 2}
+}
