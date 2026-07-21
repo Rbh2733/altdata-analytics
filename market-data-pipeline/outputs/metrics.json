@@ -1,0 +1,252 @@
+{
+  "companies": 10,
+  "periods": [
+    "FY2024",
+    "FY2025"
+  ],
+  "sources": [
+    "edgar",
+    "fmp",
+    "polygon"
+  ],
+  "observations": 296,
+  "groups": 100,
+  "classification": {
+    "agreement": 84,
+    "minor_divergence": 3,
+    "material_divergence": 1,
+    "unit_scale_mismatch": 1,
+    "period_misalignment": 10,
+    "single_source": 1
+  },
+  "agreement_rate_pct": 84.0,
+  "resolved_by_source": {
+    "edgar": 99,
+    "fmp": 1
+  },
+  "groups_without_regulatory_anchor": 1,
+  "flagged": [
+    {
+      "ticker": "CNDP",
+      "metric": "operating_cash_flow",
+      "period": "FY2025",
+      "classification": "single_source",
+      "rel_disagreement_pct": 0.0,
+      "values": {
+        "edgar": 153900000.0
+      },
+      "resolved_source": "edgar",
+      "note": "only edgar reports this metric for the period"
+    },
+    {
+      "ticker": "MRHW",
+      "metric": "net_income",
+      "period": "FY2025",
+      "classification": "minor_divergence",
+      "rel_disagreement_pct": 0.7236,
+      "values": {
+        "edgar": 69100000.0,
+        "fmp": 69400000.0,
+        "polygon": 68900000.0
+      },
+      "resolved_source": "edgar",
+      "note": "fmp deviates 0.43% from the resolved value"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "eps_diluted",
+      "period": "FY2024",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 0.0,
+      "values": {
+        "edgar": 0.41,
+        "fmp": 0.41,
+        "polygon": 0.41
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "eps_diluted",
+      "period": "FY2025",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 1.9608,
+      "values": {
+        "edgar": 0.51,
+        "fmp": 0.5,
+        "polygon": 0.51
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "net_income",
+      "period": "FY2024",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 1.6427,
+      "values": {
+        "edgar": 48700000.0,
+        "fmp": 47900000.0,
+        "polygon": 48700000.0
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "net_income",
+      "period": "FY2025",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 1.6556,
+      "values": {
+        "edgar": 60400000.0,
+        "fmp": 59400000.0,
+        "polygon": 60400000.0
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "operating_cash_flow",
+      "period": "FY2024",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 1.5649,
+      "values": {
+        "edgar": 127800000.0,
+        "fmp": 125800000.0,
+        "polygon": 127800000.0
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "operating_cash_flow",
+      "period": "FY2025",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 1.5773,
+      "values": {
+        "edgar": 158500000.0,
+        "fmp": 156000000.0,
+        "polygon": 158500000.0
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "revenue",
+      "period": "FY2024",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 1.5933,
+      "values": {
+        "edgar": 608800000.0,
+        "fmp": 599100000.0,
+        "polygon": 608800000.0
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "revenue",
+      "period": "FY2025",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 1.6029,
+      "values": {
+        "edgar": 754900000.0,
+        "fmp": 742800000.0,
+        "polygon": 754900000.0
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "total_assets",
+      "period": "FY2024",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 1.5994,
+      "values": {
+        "edgar": 1156700000.0,
+        "fmp": 1138200000.0,
+        "polygon": 1156700000.0
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "NMBW",
+      "metric": "total_assets",
+      "period": "FY2025",
+      "classification": "period_misalignment",
+      "rel_disagreement_pct": 1.5966,
+      "values": {
+        "edgar": 1434300000.0,
+        "fmp": 1411400000.0,
+        "polygon": 1434300000.0
+      },
+      "resolved_source": "edgar",
+      "note": "window end dates span 31 days across sources"
+    },
+    {
+      "ticker": "ONFD",
+      "metric": "revenue",
+      "period": "FY2025",
+      "classification": "unit_scale_mismatch",
+      "rel_disagreement_pct": 99.9,
+      "values": {
+        "edgar": 2847300000.0,
+        "fmp": 2847300.0,
+        "polygon": 2847300000.0
+      },
+      "resolved_source": "edgar",
+      "note": "max/min ratio 1,000.0, consistent with a dropped 1,000x scale factor"
+    },
+    {
+      "ticker": "PLXF",
+      "metric": "operating_cash_flow",
+      "period": "FY2025",
+      "classification": "minor_divergence",
+      "rel_disagreement_pct": 1.1031,
+      "values": {
+        "edgar": 471400000.0,
+        "fmp": 476600000.0,
+        "polygon": 471400000.0
+      },
+      "resolved_source": "edgar",
+      "note": "fmp deviates 1.10% from the resolved value"
+    },
+    {
+      "ticker": "QNTB",
+      "metric": "revenue",
+      "period": "FY2024",
+      "classification": "material_divergence",
+      "rel_disagreement_pct": 8.9068,
+      "values": {
+        "edgar": 1412400000.0,
+        "fmp": 1538200000.0,
+        "polygon": 1412400000.0
+      },
+      "resolved_source": "edgar",
+      "note": "fmp deviates 8.91% from the resolved value"
+    },
+    {
+      "ticker": "TSSL",
+      "metric": "revenue",
+      "period": "FY2025",
+      "classification": "minor_divergence",
+      "rel_disagreement_pct": 0.8003,
+      "values": {
+        "edgar": 612300000.0,
+        "fmp": 612300000.0,
+        "polygon": 607400000.0
+      },
+      "resolved_source": "edgar",
+      "note": "polygon deviates 0.80% from the resolved value"
+    }
+  ]
+}
