@@ -1,0 +1,5 @@
+pathology,quarter,start_date,end_date,target,value
+duplicate_feed_day,2023Q3,2023-08-14,2023-08-14,extra_rows,2506
+recruitment_wave,2023Q2,2023-04-01,2023-04-30,new_panelists,1500
+supplier_outage,2024Q1,2024-02-05,2024-02-16,card_B_rows_removed,1203
+descriptor_change,2024Q2,2024-05-20,2024-12-31,Bramblebox,BRMB*BOX 0520

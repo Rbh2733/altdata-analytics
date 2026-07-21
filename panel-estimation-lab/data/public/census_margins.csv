@@ -1,0 +1,17 @@
+margin,age_band,income_band,region,population
+age_income,18-29,low,,26032
+age_income,18-29,mid,,14224
+age_income,18-29,high,,3888
+age_income,30-44,low,,24119
+age_income,30-44,mid,,25897
+age_income,30-44,high,,13936
+age_income,45-59,low,,18014
+age_income,45-59,mid,,24091
+age_income,45-59,high,,13818
+age_income,60+,low,,15981
+age_income,60+,mid,,11894
+age_income,60+,high,,8106
+region,,,north,60268
+region,,,south,55932
+region,,,east,43857
+region,,,west,39943
