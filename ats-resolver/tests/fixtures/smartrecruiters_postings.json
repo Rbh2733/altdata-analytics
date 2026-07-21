@@ -1,0 +1,21 @@
+{
+  "totalFound": 2,
+  "limit": 100,
+  "offset": 0,
+  "content": [
+    {
+      "id": "sr-1",
+      "name": "Category Insights Analyst",
+      "location": {"city": "Chicago", "region": "IL", "country": "us", "remote": false},
+      "department": {"label": "Insights"},
+      "releasedDate": "2026-05-12T00:00:00.000Z"
+    },
+    {
+      "id": "sr-2",
+      "name": "Remote Research Analyst",
+      "location": {"city": null, "region": null, "country": "us", "remote": true},
+      "department": {"label": "Research"},
+      "releasedDate": "2026-05-11T00:00:00.000Z"
+    }
+  ]
+}
