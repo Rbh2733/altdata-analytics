@@ -1,0 +1,102 @@
+{
+  "status": "OK",
+  "request_id": "synthetic-fixture",
+  "results": [
+    {
+      "start_date": "2025-01-01",
+      "end_date": "2025-12-31",
+      "timeframe": "annual",
+      "fiscal_period": "FY",
+      "fiscal_year": "2025",
+      "cik": "0009990008",
+      "company_name": "Quantelle Biosciences, Inc.",
+      "filing_date": "2026-02-16",
+      "financials": {
+        "income_statement": {
+          "revenues": {
+            "value": 1731600000,
+            "unit": "USD",
+            "label": "Revenues",
+            "order": 100
+          },
+          "net_income_loss": {
+            "value": 242400000,
+            "unit": "USD",
+            "label": "Net Income/Loss",
+            "order": 3200
+          },
+          "diluted_earnings_per_share": {
+            "value": 3.19,
+            "unit": "USD / shares",
+            "label": "Diluted Earnings Per Share",
+            "order": 4300
+          }
+        },
+        "balance_sheet": {
+          "assets": {
+            "value": 3809500000,
+            "unit": "USD",
+            "label": "Assets",
+            "order": 100
+          }
+        },
+        "cash_flow_statement": {
+          "net_cash_flow_from_operating_activities": {
+            "value": 311700000,
+            "unit": "USD",
+            "label": "Net Cash Flow From Operating Activities",
+            "order": 100
+          }
+        }
+      }
+    },
+    {
+      "start_date": "2024-01-01",
+      "end_date": "2024-12-31",
+      "timeframe": "annual",
+      "fiscal_period": "FY",
+      "fiscal_year": "2024",
+      "cik": "0009990008",
+      "company_name": "Quantelle Biosciences, Inc.",
+      "filing_date": "2025-02-16",
+      "financials": {
+        "income_statement": {
+          "revenues": {
+            "value": 1412400000,
+            "unit": "USD",
+            "label": "Revenues",
+            "order": 100
+          },
+          "net_income_loss": {
+            "value": 197700000,
+            "unit": "USD",
+            "label": "Net Income/Loss",
+            "order": 3200
+          },
+          "diluted_earnings_per_share": {
+            "value": 2.6,
+            "unit": "USD / shares",
+            "label": "Diluted Earnings Per Share",
+            "order": 4300
+          }
+        },
+        "balance_sheet": {
+          "assets": {
+            "value": 3107300000,
+            "unit": "USD",
+            "label": "Assets",
+            "order": 100
+          }
+        },
+        "cash_flow_statement": {
+          "net_cash_flow_from_operating_activities": {
+            "value": 254200000,
+            "unit": "USD",
+            "label": "Net Cash Flow From Operating Activities",
+            "order": 100
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "HLGR",
+  "income_statement": [
+    {
+      "date": "2025-12-31",
+      "symbol": "HLGR",
+      "reportedCurrency": "USD",
+      "cik": "0009990003",
+      "fillingDate": "2026-02-11",
+      "acceptedDate": "2026-02-11 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "revenue": 3612800000,
+      "netIncome": 325200000,
+      "epsdiluted": null
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "HLGR",
+      "reportedCurrency": "USD",
+      "cik": "0009990003",
+      "fillingDate": "2025-02-11",
+      "acceptedDate": "2025-02-11 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "revenue": 3473800000,
+      "netIncome": 312600000,
+      "epsdiluted": 1.49
+    }
+  ],
+  "balance_sheet": [
+    {
+      "date": "2025-12-31",
+      "symbol": "HLGR",
+      "reportedCurrency": "USD",
+      "cik": "0009990003",
+      "fillingDate": "2026-02-11",
+      "acceptedDate": "2026-02-11 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "totalAssets": 10115800000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "HLGR",
+      "reportedCurrency": "USD",
+      "cik": "0009990003",
+      "fillingDate": "2025-02-11",
+      "acceptedDate": "2025-02-11 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "totalAssets": 9726600000
+    }
+  ],
+  "cash_flow": [
+    {
+      "date": "2025-12-31",
+      "symbol": "HLGR",
+      "reportedCurrency": "USD",
+      "cik": "0009990003",
+      "fillingDate": "2026-02-11",
+      "acceptedDate": "2026-02-11 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "operatingCashFlow": 794800000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "HLGR",
+      "reportedCurrency": "USD",
+      "cik": "0009990003",
+      "fillingDate": "2025-02-11",
+      "acceptedDate": "2025-02-11 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "operatingCashFlow": 764200000
+    }
+  ]
+}

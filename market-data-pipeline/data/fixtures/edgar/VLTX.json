@@ -1,0 +1,156 @@
+{
+  "cik": 9990010,
+  "entityName": "Veltrix Instruments, Inc.",
+  "facts": {
+    "us-gaap": {
+      "Revenues": {
+        "label": "Revenues",
+        "description": "Total revenue recognized during the period.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 1794800000,
+              "accn": "0009990010-25-000009",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 1920400000,
+              "accn": "0009990010-26-000009",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            },
+            {
+              "start": "2025-07-01",
+              "end": "2025-09-30",
+              "val": 489600000,
+              "accn": "0009990010-26-000900",
+              "fy": 2025,
+              "fp": "Q3",
+              "form": "10-Q",
+              "filed": "2025-10-28"
+            }
+          ]
+        }
+      },
+      "NetIncomeLoss": {
+        "label": "NetIncomeLoss",
+        "description": "Synthetic fixture facts for NetIncomeLoss.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 197400000,
+              "accn": "0009990010-25-000009",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 211200000,
+              "accn": "0009990010-26-000009",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            }
+          ]
+        }
+      },
+      "EarningsPerShareDiluted": {
+        "label": "EarningsPerShareDiluted",
+        "description": "Synthetic fixture facts for EarningsPerShareDiluted.",
+        "units": {
+          "USD/shares": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 2.15,
+              "accn": "0009990010-25-000009",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 2.3,
+              "accn": "0009990010-26-000009",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            }
+          ]
+        }
+      },
+      "Assets": {
+        "label": "Assets",
+        "description": "Synthetic fixture facts for Assets.",
+        "units": {
+          "USD": [
+            {
+              "end": "2024-12-31",
+              "val": 2871700000,
+              "accn": "0009990010-25-000009",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "end": "2025-12-31",
+              "val": 3072600000,
+              "accn": "0009990010-26-000009",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            }
+          ]
+        }
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+        "label": "NetCashProvidedByUsedInOperatingActivities",
+        "description": "Synthetic fixture facts for NetCashProvidedByUsedInOperatingActivities.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 269200000,
+              "accn": "0009990010-25-000009",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-09"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 288100000,
+              "accn": "0009990010-26-000009",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-09"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

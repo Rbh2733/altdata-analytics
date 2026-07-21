@@ -1,0 +1,156 @@
+{
+  "cik": 9990008,
+  "entityName": "Quantelle Biosciences, Inc.",
+  "facts": {
+    "us-gaap": {
+      "Revenues": {
+        "label": "Revenues",
+        "description": "Total revenue recognized during the period.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 1538200000,
+              "accn": "0009990008-25-000007",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-16"
+            },
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 1412400000,
+              "accn": "0009990008-26-000007",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-16"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 1731600000,
+              "accn": "0009990008-26-000007",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-16"
+            }
+          ]
+        }
+      },
+      "NetIncomeLoss": {
+        "label": "NetIncomeLoss",
+        "description": "Synthetic fixture facts for NetIncomeLoss.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 197700000,
+              "accn": "0009990008-25-000007",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-16"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 242400000,
+              "accn": "0009990008-26-000007",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-16"
+            }
+          ]
+        }
+      },
+      "EarningsPerShareDiluted": {
+        "label": "EarningsPerShareDiluted",
+        "description": "Synthetic fixture facts for EarningsPerShareDiluted.",
+        "units": {
+          "USD/shares": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 2.6,
+              "accn": "0009990008-25-000007",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-16"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 3.19,
+              "accn": "0009990008-26-000007",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-16"
+            }
+          ]
+        }
+      },
+      "Assets": {
+        "label": "Assets",
+        "description": "Synthetic fixture facts for Assets.",
+        "units": {
+          "USD": [
+            {
+              "end": "2024-12-31",
+              "val": 3107300000,
+              "accn": "0009990008-25-000007",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-16"
+            },
+            {
+              "end": "2025-12-31",
+              "val": 3809500000,
+              "accn": "0009990008-26-000007",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-16"
+            }
+          ]
+        }
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+        "label": "NetCashProvidedByUsedInOperatingActivities",
+        "description": "Synthetic fixture facts for NetCashProvidedByUsedInOperatingActivities.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 254200000,
+              "accn": "0009990008-25-000007",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-16"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 311700000,
+              "accn": "0009990008-26-000007",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-16"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

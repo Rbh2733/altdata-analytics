@@ -1,0 +1,102 @@
+{
+  "status": "OK",
+  "request_id": "synthetic-fixture",
+  "results": [
+    {
+      "start_date": "2025-01-01",
+      "end_date": "2025-12-31",
+      "timeframe": "annual",
+      "fiscal_period": "FY",
+      "fiscal_year": "2025",
+      "cik": "0009990009",
+      "company_name": "Tessellate Systems, Inc.",
+      "filing_date": "2026-02-17",
+      "financials": {
+        "income_statement": {
+          "revenues": {
+            "value": 607400000,
+            "unit": "USD",
+            "label": "Revenues",
+            "order": 100
+          },
+          "net_income_loss": {
+            "value": -18400000,
+            "unit": "USD",
+            "label": "Net Income/Loss",
+            "order": 3200
+          },
+          "diluted_earnings_per_share": {
+            "value": -0.39,
+            "unit": "USD / shares",
+            "label": "Diluted Earnings Per Share",
+            "order": 4300
+          }
+        },
+        "balance_sheet": {
+          "assets": {
+            "value": 796000000,
+            "unit": "USD",
+            "label": "Assets",
+            "order": 100
+          }
+        },
+        "cash_flow_statement": {
+          "net_cash_flow_from_operating_activities": {
+            "value": 36700000,
+            "unit": "USD",
+            "label": "Net Cash Flow From Operating Activities",
+            "order": 100
+          }
+        }
+      }
+    },
+    {
+      "start_date": "2024-01-01",
+      "end_date": "2024-12-31",
+      "timeframe": "annual",
+      "fiscal_period": "FY",
+      "fiscal_year": "2024",
+      "cik": "0009990009",
+      "company_name": "Tessellate Systems, Inc.",
+      "filing_date": "2025-02-17",
+      "financials": {
+        "income_statement": {
+          "revenues": {
+            "value": 467400000,
+            "unit": "USD",
+            "label": "Revenues",
+            "order": 100
+          },
+          "net_income_loss": {
+            "value": -14000000,
+            "unit": "USD",
+            "label": "Net Income/Loss",
+            "order": 3200
+          },
+          "diluted_earnings_per_share": {
+            "value": -0.3,
+            "unit": "USD / shares",
+            "label": "Diluted Earnings Per Share",
+            "order": 4300
+          }
+        },
+        "balance_sheet": {
+          "assets": {
+            "value": 607600000,
+            "unit": "USD",
+            "label": "Assets",
+            "order": 100
+          }
+        },
+        "cash_flow_statement": {
+          "net_cash_flow_from_operating_activities": {
+            "value": 28000000,
+            "unit": "USD",
+            "label": "Net Cash Flow From Operating Activities",
+            "order": 100
+          }
+        }
+      }
+    }
+  ]
+}

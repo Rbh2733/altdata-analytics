@@ -1,0 +1,136 @@
+{
+  "cik": 9990009,
+  "entityName": "Tessellate Systems, Inc.",
+  "facts": {
+    "us-gaap": {
+      "Revenues": {
+        "label": "Revenues",
+        "description": "Total revenue recognized during the period.",
+        "units": {
+          "USD": [
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 612300000,
+              "accn": "0009990009-26-000008",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            }
+          ]
+        }
+      },
+      "NetIncomeLoss": {
+        "label": "NetIncomeLoss",
+        "description": "Synthetic fixture facts for NetIncomeLoss.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": -14000000,
+              "accn": "0009990009-25-000008",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-17"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": -18400000,
+              "accn": "0009990009-26-000008",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            }
+          ]
+        }
+      },
+      "EarningsPerShareDiluted": {
+        "label": "EarningsPerShareDiluted",
+        "description": "Synthetic fixture facts for EarningsPerShareDiluted.",
+        "units": {
+          "USD/shares": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": -0.3,
+              "accn": "0009990009-25-000008",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-17"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": -0.39,
+              "accn": "0009990009-26-000008",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            }
+          ]
+        }
+      },
+      "Assets": {
+        "label": "Assets",
+        "description": "Synthetic fixture facts for Assets.",
+        "units": {
+          "USD": [
+            {
+              "end": "2024-12-31",
+              "val": 607600000,
+              "accn": "0009990009-25-000008",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-17"
+            },
+            {
+              "end": "2025-12-31",
+              "val": 796000000,
+              "accn": "0009990009-26-000008",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            }
+          ]
+        }
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+        "label": "NetCashProvidedByUsedInOperatingActivities",
+        "description": "Synthetic fixture facts for NetCashProvidedByUsedInOperatingActivities.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 28000000,
+              "accn": "0009990009-25-000008",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-17"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 36700000,
+              "accn": "0009990009-26-000008",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

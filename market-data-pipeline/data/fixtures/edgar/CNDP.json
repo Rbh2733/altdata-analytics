@@ -1,0 +1,146 @@
+{
+  "cik": 9990002,
+  "entityName": "Cinderpath Media Group, Inc.",
+  "facts": {
+    "us-gaap": {
+      "Revenues": {
+        "label": "Revenues",
+        "description": "Total revenue recognized during the period.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 1160300000,
+              "accn": "0009990002-25-000001",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-10"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 1183500000,
+              "accn": "0009990002-26-000001",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-10"
+            }
+          ]
+        }
+      },
+      "NetIncomeLoss": {
+        "label": "NetIncomeLoss",
+        "description": "Synthetic fixture facts for NetIncomeLoss.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 46400000,
+              "accn": "0009990002-25-000001",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-10"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 47300000,
+              "accn": "0009990002-26-000001",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-10"
+            }
+          ]
+        }
+      },
+      "EarningsPerShareDiluted": {
+        "label": "EarningsPerShareDiluted",
+        "description": "Synthetic fixture facts for EarningsPerShareDiluted.",
+        "units": {
+          "USD/shares": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 0.53,
+              "accn": "0009990002-25-000001",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-10"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 0.54,
+              "accn": "0009990002-26-000001",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-10"
+            }
+          ]
+        }
+      },
+      "Assets": {
+        "label": "Assets",
+        "description": "Synthetic fixture facts for Assets.",
+        "units": {
+          "USD": [
+            {
+              "end": "2024-12-31",
+              "val": 1740400000,
+              "accn": "0009990002-25-000001",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-10"
+            },
+            {
+              "end": "2025-12-31",
+              "val": 1775200000,
+              "accn": "0009990002-26-000001",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-10"
+            }
+          ]
+        }
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+        "label": "NetCashProvidedByUsedInOperatingActivities",
+        "description": "Synthetic fixture facts for NetCashProvidedByUsedInOperatingActivities.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 150800000,
+              "accn": "0009990002-25-000001",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-10"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 153900000,
+              "accn": "0009990002-26-000001",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-10"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

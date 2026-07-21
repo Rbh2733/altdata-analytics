@@ -1,0 +1,79 @@
+{
+  "symbol": "QNTB",
+  "income_statement": [
+    {
+      "date": "2025-12-31",
+      "symbol": "QNTB",
+      "reportedCurrency": "USD",
+      "cik": "0009990008",
+      "fillingDate": "2026-02-16",
+      "acceptedDate": "2026-02-16 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "revenue": 1731600000,
+      "netIncome": 242400000,
+      "epsdiluted": 3.19
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "QNTB",
+      "reportedCurrency": "USD",
+      "cik": "0009990008",
+      "fillingDate": "2025-02-16",
+      "acceptedDate": "2025-02-16 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "revenue": 1538200000,
+      "netIncome": 197700000,
+      "epsdiluted": 2.6
+    }
+  ],
+  "balance_sheet": [
+    {
+      "date": "2025-12-31",
+      "symbol": "QNTB",
+      "reportedCurrency": "USD",
+      "cik": "0009990008",
+      "fillingDate": "2026-02-16",
+      "acceptedDate": "2026-02-16 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "totalAssets": 3809500000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "QNTB",
+      "reportedCurrency": "USD",
+      "cik": "0009990008",
+      "fillingDate": "2025-02-16",
+      "acceptedDate": "2025-02-16 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "totalAssets": 3107300000
+    }
+  ],
+  "cash_flow": [
+    {
+      "date": "2025-12-31",
+      "symbol": "QNTB",
+      "reportedCurrency": "USD",
+      "cik": "0009990008",
+      "fillingDate": "2026-02-16",
+      "acceptedDate": "2026-02-16 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "operatingCashFlow": 311700000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "QNTB",
+      "reportedCurrency": "USD",
+      "cik": "0009990008",
+      "fillingDate": "2025-02-16",
+      "acceptedDate": "2025-02-16 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "operatingCashFlow": 254200000
+    }
+  ]
+}

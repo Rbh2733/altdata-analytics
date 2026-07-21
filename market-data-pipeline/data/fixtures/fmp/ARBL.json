@@ -1,0 +1,79 @@
+{
+  "symbol": "ARBL",
+  "income_statement": [
+    {
+      "date": "2025-12-31",
+      "symbol": "ARBL",
+      "reportedCurrency": "USD",
+      "cik": "0009990001",
+      "fillingDate": "2026-02-09",
+      "acceptedDate": "2026-02-09 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "revenue": 2054900000,
+      "netIncome": 349300000,
+      "epsdiluted": 2.65
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "ARBL",
+      "reportedCurrency": "USD",
+      "cik": "0009990001",
+      "fillingDate": "2025-02-09",
+      "acceptedDate": "2025-02-09 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "revenue": 1885200000,
+      "netIncome": 320500000,
+      "epsdiluted": 2.43
+    }
+  ],
+  "balance_sheet": [
+    {
+      "date": "2025-12-31",
+      "symbol": "ARBL",
+      "reportedCurrency": "USD",
+      "cik": "0009990001",
+      "fillingDate": "2026-02-09",
+      "acceptedDate": "2026-02-09 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "totalAssets": 4109800000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "ARBL",
+      "reportedCurrency": "USD",
+      "cik": "0009990001",
+      "fillingDate": "2025-02-09",
+      "acceptedDate": "2025-02-09 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "totalAssets": 3770400000
+    }
+  ],
+  "cash_flow": [
+    {
+      "date": "2025-12-31",
+      "symbol": "ARBL",
+      "reportedCurrency": "USD",
+      "cik": "0009990001",
+      "fillingDate": "2026-02-09",
+      "acceptedDate": "2026-02-09 16:30:12",
+      "calendarYear": "2025",
+      "period": "FY",
+      "operatingCashFlow": 493200000
+    },
+    {
+      "date": "2024-12-31",
+      "symbol": "ARBL",
+      "reportedCurrency": "USD",
+      "cik": "0009990001",
+      "fillingDate": "2025-02-09",
+      "acceptedDate": "2025-02-09 16:30:12",
+      "calendarYear": "2024",
+      "period": "FY",
+      "operatingCashFlow": 452400000
+    }
+  ]
+}

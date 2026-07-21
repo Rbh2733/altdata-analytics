@@ -1,0 +1,146 @@
+{
+  "cik": 9990007,
+  "entityName": "Parallax Freight Systems, Inc.",
+  "facts": {
+    "us-gaap": {
+      "Revenues": {
+        "label": "Revenues",
+        "description": "Total revenue recognized during the period.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 4941600000,
+              "accn": "0009990007-25-000006",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-15"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 5238100000,
+              "accn": "0009990007-26-000006",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-15"
+            }
+          ]
+        }
+      },
+      "NetIncomeLoss": {
+        "label": "NetIncomeLoss",
+        "description": "Synthetic fixture facts for NetIncomeLoss.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 247100000,
+              "accn": "0009990007-25-000006",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-15"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 261900000,
+              "accn": "0009990007-26-000006",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-15"
+            }
+          ]
+        }
+      },
+      "EarningsPerShareDiluted": {
+        "label": "EarningsPerShareDiluted",
+        "description": "Synthetic fixture facts for EarningsPerShareDiluted.",
+        "units": {
+          "USD/shares": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 1.51,
+              "accn": "0009990007-25-000006",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-15"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 1.6,
+              "accn": "0009990007-26-000006",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-15"
+            }
+          ]
+        }
+      },
+      "Assets": {
+        "label": "Assets",
+        "description": "Synthetic fixture facts for Assets.",
+        "units": {
+          "USD": [
+            {
+              "end": "2024-12-31",
+              "val": 6918200000,
+              "accn": "0009990007-25-000006",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-15"
+            },
+            {
+              "end": "2025-12-31",
+              "val": 7333300000,
+              "accn": "0009990007-26-000006",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-15"
+            }
+          ]
+        }
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+        "label": "NetCashProvidedByUsedInOperatingActivities",
+        "description": "Synthetic fixture facts for NetCashProvidedByUsedInOperatingActivities.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 444700000,
+              "accn": "0009990007-25-000006",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-02-15"
+            },
+            {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 471400000,
+              "accn": "0009990007-26-000006",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-02-15"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "cik": 9990005,
+  "entityName": "Nimbusware Cloud Corp.",
+  "facts": {
+    "us-gaap": {
+      "Revenues": {
+        "label": "Revenues",
+        "description": "Total revenue recognized during the period.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-02-01",
+              "end": "2025-01-31",
+              "val": 608800000,
+              "accn": "0009990005-25-000004",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-03-24"
+            },
+            {
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "val": 754900000,
+              "accn": "0009990005-26-000004",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-03-24"
+            }
+          ]
+        }
+      },
+      "NetIncomeLoss": {
+        "label": "NetIncomeLoss",
+        "description": "Synthetic fixture facts for NetIncomeLoss.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-02-01",
+              "end": "2025-01-31",
+              "val": 48700000,
+              "accn": "0009990005-25-000004",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-03-24"
+            },
+            {
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "val": 60400000,
+              "accn": "0009990005-26-000004",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-03-24"
+            }
+          ]
+        }
+      },
+      "EarningsPerShareDiluted": {
+        "label": "EarningsPerShareDiluted",
+        "description": "Synthetic fixture facts for EarningsPerShareDiluted.",
+        "units": {
+          "USD/shares": [
+            {
+              "start": "2024-02-01",
+              "end": "2025-01-31",
+              "val": 0.41,
+              "accn": "0009990005-25-000004",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-03-24"
+            },
+            {
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "val": 0.51,
+              "accn": "0009990005-26-000004",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-03-24"
+            }
+          ]
+        }
+      },
+      "Assets": {
+        "label": "Assets",
+        "description": "Synthetic fixture facts for Assets.",
+        "units": {
+          "USD": [
+            {
+              "end": "2025-01-31",
+              "val": 1156700000,
+              "accn": "0009990005-25-000004",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-03-24"
+            },
+            {
+              "end": "2026-01-31",
+              "val": 1434300000,
+              "accn": "0009990005-26-000004",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-03-24"
+            }
+          ]
+        }
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+        "label": "NetCashProvidedByUsedInOperatingActivities",
+        "description": "Synthetic fixture facts for NetCashProvidedByUsedInOperatingActivities.",
+        "units": {
+          "USD": [
+            {
+              "start": "2024-02-01",
+              "end": "2025-01-31",
+              "val": 127800000,
+              "accn": "0009990005-25-000004",
+              "fy": 2024,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2025-03-24"
+            },
+            {
+              "start": "2025-02-01",
+              "end": "2026-01-31",
+              "val": 158500000,
+              "accn": "0009990005-26-000004",
+              "fy": 2025,
+              "fp": "FY",
+              "form": "10-K",
+              "filed": "2026-03-24"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
