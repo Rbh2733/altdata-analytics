@@ -1,0 +1,6 @@
+duckdb>=1.0
+requests>=2.31
+# Optional, loads .env automatically when present:
+python-dotenv>=1.0
+# Tests only:
+pytest>=8.0
