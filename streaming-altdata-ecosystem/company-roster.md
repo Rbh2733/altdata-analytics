@@ -44,7 +44,7 @@
 | Gracenote | Nielsen subsidiary; supplies metadata/content ontology rather than competing on demand directly |
 | Whip Media (TV Time shut down) | Consumer app TV Time shut down Jul 15, 2026; owner Blue Torch Capital pivoted resources to Helix, an enterprise B2B SaaS platform. Bingers, launched by TV Time's original founder, is an unaffiliated indie successor, not a Whip Media product; see `layers/04-demand-valuation-layer.md` |
 | Luminate | Demand/behavior analytics; also powers Walmart Connect's clean room (Identity layer) |
-| Diesel Labs | Content analytics and audience-preference mapping; an ownership change (acquisition) has been referenced in lower-confidence source material but is not yet independently verified, confirm before citing |
+| Diesel Labs | Content analytics and audience-preference mapping; owned by Forma Group; launched Diesel AI ("Daisy", Jul 2024) and PanelAI synthetic focus groups; see `layers/04-demand-valuation-layer.md` |
 
 ## Funnel Layer
 
@@ -59,10 +59,10 @@
 | Company | What it does |
 |---|---|
 | Stats Perform | FIFA's official betting-data and live-stream distributor (2026 Men's/2027 Women's World Cup); Opta and RunningBall infrastructure |
-| Sports Innovation Lab | "Fluid Fan Graph" transactional fan-behavior data |
-| Zoomph | Real-time social audience intelligence; partnered with Sports Innovation Lab (Apr 2025) |
-| Genius Sports | Public (Nasdaq) sports-data competitor to Stats Perform; not yet researched in depth here, flagged in the layer prompt file |
-| Sportradar | Public/near-public sports-data competitor to Stats Perform; not yet researched in depth here, flagged in the layer prompt file |
+| Sports Innovation Lab | "Fluid Fan Graph" transactional fan-behavior data; acquired by Genius Sports (Sep 2025) |
+| Zoomph | Real-time social audience intelligence; partnered with Sports Innovation Lab (Apr 2025), a partnership whose endgame was the Genius Sports acquisition |
+| Genius Sports (NYSE: GENI) | Public sports-data vendor; NFL exclusive data distribution through 2029 with the league its largest shareholder (~8.7%); NCAA through 2032; acquired Sports Innovation Lab (Sep 2025) and Legend (Apr 2026); see `layers/06-sports-rights-layer.md` |
+| Sportradar (Nasdaq: SRAD) | Public sports-data vendor; NBA (through 2030-31 per the research passes), MLB (through 2032, with league equity), NHL, UEFA, Bundesliga; acquired IMG ARENA (Nov 2025); Kalshi deal (Jun 2026); see `layers/06-sports-rights-layer.md` |
 
 ## Identity Resolution & Clean Rooms Layer
 
@@ -71,7 +71,7 @@
 | LiveRamp | Primary independent identity toll booth (RampID); being acquired by Publicis Groupe (announced May 2026, ~$2.17B EV) |
 | The Trade Desk | Owns Unified ID 2.0 (UID2), the leading open-source identity alternative to LiveRamp |
 | Amazon Marketing Cloud | Amazon's walled-garden clean room |
-| Walmart Connect | Walmart's walled-garden clean room, powered by Luminate; $4.8B ad revenue in 2025 |
+| Walmart Connect | Walmart's walled-garden clean room, powered by Luminate (rebranding to Scintilla); global ad revenue $4.4B in FY2025 and $6.4B in FY2026 per Walmart's SEC 8-Ks |
 
 ---
 
@@ -83,9 +83,9 @@ Surrounds the ecosystem as the reason it exists. Where data and money flow down 
 |---|---|
 | Amazon | Blends standalone streaming economics into "Subscription Services"; dual posture (withholds from studios, sells to advertisers via AMC) |
 | Apple | Blends Apple TV+ into "Services"; no disclosed standalone ARPU or churn |
-| Roku | Dual posture via Roku Data Cloud/OneView, same withhold-and-monetize pattern as Amazon; reported investment/distribution tie-in with Fox, still unconfirmed, research as a linked pair |
-| Fox | Ad-dependent Linear Yield Company (Reid's taxonomy, "Live Event Focus"); Fox One premium pricing and the reported Fox-Roku tie-in make it a gatekeeper via rights supply and distribution partnership, not data-withholding |
-| Netflix | Operates largely outside this vendor ecosystem on first-party telemetry; practices the licensing-arbitrage pattern described as the Netflix Paradox; ad-tier growth may be eroding this exception |
+| Roku | Dual posture via the Roku Data Cloud clean room (legacy OneView retired), same withhold-and-monetize pattern as Amazon; being acquired by Fox under a definitive agreement (June 15, 2026, ~$22B EV, close expected H1 2027); see `layers/00-gatekeeper-layer.md` |
+| Fox | Ad-dependent Linear Yield Company (Reid's taxonomy, "Live Event Focus"); Fox One premium pricing plus the definitive agreement to acquire Roku (June 15, 2026) make it a gatekeeper spanning rights supply and, post-close, owned distribution and hardware telemetry |
+| Netflix | Historically operated outside this vendor ecosystem on first-party telemetry; practices the licensing-arbitrage pattern described as the Netflix Paradox; ad-tier scaling, an in-house ad server, and clean-room partnerships have converged it with Amazon and Roku, and the old outside-the-ecosystem framing is now historical |
 | Google/YouTube | YouTube TV (~8M subs) + Sunday Ticket; demonstrated real carriage-dispute leverage over Disney (Nov 2025, ESPN/ABC/FX pulled ~2 weeks, Google held firm); captures more total US TV time than any other platform |
 | Disney | Content Fortress vertically integrating sports distribution (ESPN Unlimited, Fubo acquisition, Fox One bundle, NFL's 10% ESPN equity stake); gatekeeper via bundling/rights-equity opacity, not data-withholding |
-| Paramount Skydance/WBD | Weakest fit of the eight, flagged for stress-testing in the layer prompt rather than asserted; ~$79B combined debt, lost NBA rights to Amazon, looks more acted-upon than acting |
+| Paramount Skydance/WBD | Reclassified by the layer's deep-research pass as a vendor subject, not a gatekeeper (`layers/00-gatekeeper-layer.md`); ~$79B combined debt, US NBA rights conceded to Disney/ESPN, Amazon, and NBCUniversal; the active gatekeeper set is effectively seven |

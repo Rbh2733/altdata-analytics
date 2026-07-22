@@ -1,5 +1,9 @@
 # Streaming Alt-Data Ecosystem Map
 
+## The interactive map
+
+Start with [ecosystem-map.html](https://rbh2733.github.io/altdata-analytics/streaming-altdata-ecosystem/ecosystem-map.html), which renders the eight-layer structure as a clickable stack: Layer 0 as the boundary condition, the seven vendor layers beneath it, company chips per layer, and the open fault lines shown in place. The markdown documents below remain the source of record; the map is a rendering of them.
+
 A research map of the layers that sit between raw consumer behavior and investor-grade measurement in streaming media, and the companies operating at each layer. The premise the whole map hangs on: streaming platforms and Big Tech gatekeepers increasingly withhold granular subscriber, viewership, and engagement data, so studios, advertisers, and analysts pay a stack of specialized vendors to reconstruct ground truth. The map records where each layer sits, what it does, who its customers are, and what is currently threatening it. It documents market structure; it does not make recommendations.
 
 ## How it was built
