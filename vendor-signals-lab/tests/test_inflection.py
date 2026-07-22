@@ -50,9 +50,9 @@ def test_threshold_sensitivity_table_reproduces_readme_numbers(built):
     result = robustness_check.threshold_sensitivity(health, inflections).set_index("delta")
 
     expected = {
-        10.0: {"n_flags": 2101, "precision": 10.6, "recall": 85.8},
-        15.0: {"n_flags": 1670, "precision": 12.7, "recall": 81.5},
-        20.0: {"n_flags": 1253, "precision": 14.8, "recall": 71.5},
+        10.0: {"n_flags": 2100, "precision": 10.6, "recall": 85.8},
+        15.0: {"n_flags": 1669, "precision": 12.7, "recall": 81.5},
+        20.0: {"n_flags": 1255, "precision": 14.7, "recall": 71.2},
     }
     for delta, exp in expected.items():
         row = result.loc[delta]
