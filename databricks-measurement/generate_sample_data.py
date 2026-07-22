@@ -2,11 +2,11 @@
 generate_sample_data.py
 -----------------------
 Synthesizes three DISPARATE raw sources that mirror a real cross-screen
-measurement panel, modeled on the Samba TV JD's own example:
+measurement panel:
 
-  1. ad_exposure.csv   - "ad exposure files from a publisher"
-  2. conversions.csv   - "conversion data from a measurement partner"
-  3. panel.csv         - "panel weights from the Samba measurement panel"
+  1. ad_exposure.csv   - ad exposure log from a publisher
+  2. conversions.csv   - conversion events from a measurement partner
+  3. panel.csv         - household demographics and weights from a measurement panel
 
 The data is intentionally MESSY on purpose, so the notebook's Shape step
 has something real to clean:
@@ -20,7 +20,7 @@ Causal signal baked in (so the drivers analysis has something true to find):
   - "Streaming-heavy" viewers convert better than "Linear-heavy" at equal frequency.
   - One segment ("Cordcutter_HHI_High") is the strongest converter.
 
-Deterministic via SEED so the proof reproduces identically every run.
+Deterministic via SEED so every run reproduces identically.
 """
 
 import csv

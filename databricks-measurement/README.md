@@ -1,38 +1,35 @@
 # Cross-Screen Measurement: Conversion Drivers (PySpark)
 
-A self-contained PySpark workflow that demonstrates the full arc of technical
-measurement-science work on the Samba TV stack: **SQL / Python / Databricks / Spark**.
+A self-contained PySpark workflow that demonstrates cross-screen panel
+measurement engineering on synthetic data: **SQL / Python / Databricks / Spark**.
 
-Built as the Databricks fluency proof for the **Measurement Analyst (Technical
-Measurement Operations)** role. The data model is lifted directly from the job
-description's own example, so the notebook isn't a generic Spark demo: it is the
-literal task the team does, run end to end.
+The problem is industry-generic. Cross-screen ad measurement means joining
+disparate sources that never agreed on a schema: ad exposure files from a
+publisher, conversion data from a measurement partner, and panel weights from a
+household measurement panel. The join key is a household ID, and every source
+spells it slightly differently. This notebook runs that task end to end and
+keeps the failure modes visible instead of editing them out.
 
 ---
 
-## What it proves
+## What it demonstrates
 
-The job asks for *"absolute technical fluency in SQL, Python, Databricks, BigQuery"*
-and the ability to *"perform custom matches and/or joins from disparate sources
-(e.g. ad exposure files from a publisher, conversion data from a measurement
-partner, and panel weights from the Samba measurement panel)."*
+The workflow decomposes into the operations that define technical data analysis
+regardless of tool or buzzword:
 
-This notebook does exactly that, decomposed into the six operations that define
-all technical data analysis regardless of tool or buzzword:
-
-| # | Operation | What it shows | JD line it answers |
-|---|-----------|---------------|--------------------|
-| 1 | **Retrieve** | Read three disparate CSVs into Spark | "extract data from databases" |
+| # | Operation | What it shows | Measurement task it maps to |
+|---|-----------|---------------|------------------------------|
+| 1 | **Retrieve** | Read three disparate CSVs into Spark | extracting data from source systems |
 | 2 | **Link (naive)** | Quantify rows silently lost to key drift | the trap that separates real join fluency |
-| 3 | **Shape** | Normalize keys, dedupe, handle nulls | the unglamorous 70-80% of the job |
-| 4 | **Link (correct)** | Panel-as-spine join, no double-counting | "custom matches and/or joins from disparate sources" |
-| 5 | **Reduce** | Weighted conversion rate by segment + window rank; saturation curve | "conversion rate by audience segment" |
-| 6 | **Infer** | Weighted logistic regression, coefficients as drivers | "drivers analysis... statistical analyses, modeling" |
-| 7 | **Translate** | Two-panel chart for a non-technical reader | "visualize data to make it more accessible" |
+| 3 | **Shape** | Normalize keys, dedupe, handle nulls | the unglamorous 70-80% of the work |
+| 4 | **Link (correct)** | Panel-as-spine join, no double-counting | custom matches and joins across disparate sources |
+| 5 | **Reduce** | Weighted conversion rate by segment + window rank; saturation curve | conversion rate by audience segment |
+| 6 | **Infer** | Weighted logistic regression, coefficients as drivers | drivers analysis via statistical modeling |
+| 7 | **Translate** | Two-panel chart for a non-technical reader | making results accessible beyond the analyst |
 
-The Config block at the top makes the whole thing a **reusable template**, which
-answers the JD's *"turn common requests into repeatable processes (e.g. templates,
-workbooks)."*
+The Config block at the top makes the whole thing a **reusable template**:
+re-point the data path, swap the campaign key, or extend the model formula, and
+the same operations rerun unchanged.
 
 ---
 
@@ -66,7 +63,8 @@ ordering, which is how you know the pipeline works rather than just runs.
 4. Import `measurement_drivers.ipynb`, set `DATA = "/FileStore/measurement"` in
    the Config cell, attach to the free cluster, **Run All**.
 
-This is the most honest version of the proof: it runs *on Databricks*.
+Running it there confirms the workflow on Databricks itself, not just in a
+local Spark session.
 
 ### Option B: Local
 ```bash
@@ -111,6 +109,5 @@ Conversion drivers (by |coefficient|):
 
 ---
 
-*Sibling to `dbt-spotify-project` in the analytics-engineering track of the
-skill-development portfolio. Built June 2026 as targeted gap-closing for the
-Samba TV Measurement Analyst application.*
+*Built June 2026. Synthetic, deterministic data only; a fresh clone reproduces
+every figure above.*
