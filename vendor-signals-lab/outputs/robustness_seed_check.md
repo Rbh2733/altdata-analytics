@@ -10,8 +10,8 @@ Seed 11 (frozen, committed run) vs seed 12 (this check, isolated temp directory,
 
 ## Tier rank-quality gradient (median Spearman by tier)
 
-- seed 11: {'A': 0.6981981981981982, 'B': 0.5103465546801256, 'C': 0.31414379536921255}
-- seed 12: {'A': 0.5493444055944056, 'B': 0.5216979154808502, 'C': 0.27445875482710824}
+- seed 11: {'A': 0.700094831673779, 'B': 0.509816801833908, 'C': 0.3116511005174215}
+- seed 12: {'A': 0.5530594405594406, 'B': 0.5218362237998828, 'C': 0.2786181706978979}
 - both monotonic A>B>C: True / True
 
 ## Pathologies still caught (seed 12 QA report excerpt)
@@ -32,12 +32,12 @@ Seed 11 (frozen, committed run) vs seed 12 (this check, isolated temp directory,
 
 | delta | n_flags | n_events | precision | recall |
 |---|---|---|---|---|
-| 10 | 2101 | 260 | 10.6% | 85.8% |
-| 15 | 1670 | 260 | 12.7% | 81.5% |
-| 20 | 1253 | 260 | 14.8% | 71.5% |
+| 10 | 2100 | 260 | 10.6% | 85.8% |
+| 15 | 1669 | 260 | 12.7% | 81.5% |
+| 20 | 1255 | 260 | 14.7% | 71.2% |
 
 ## Equal-weights composite (1/3 jobs, web, spend vs the frozen 0.35/0.2/0.45, seed 11 frozen outputs)
 
-- frozen weights tier gradient: {'A': 0.6981981981981982, 'B': 0.5103465546801256, 'C': 0.31414379536921255}
-- equal weights tier gradient: {'A': 0.7196112064036592, 'B': 0.4937662537805089, 'C': 0.31414379536921255}
+- frozen weights tier gradient: {'A': 0.700094831673779, 'B': 0.509816801833908, 'C': 0.3116511005174215}
+- equal weights tier gradient: {'A': 0.7196112064036592, 'B': 0.49322686906436014, 'C': 0.3116511005174215}
 

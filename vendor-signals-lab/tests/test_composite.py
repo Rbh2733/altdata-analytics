@@ -75,8 +75,8 @@ def test_equal_weight_check_reproduces_readme_numbers(built):
     tier_gradient = robustness_check.equal_weight_composite_check(health, truth_financials)
 
     assert abs(tier_gradient["A"] - 0.720) < 0.005
-    assert abs(tier_gradient["B"] - 0.494) < 0.005
-    assert abs(tier_gradient["C"] - 0.314) < 0.005
+    assert abs(tier_gradient["B"] - 0.493) < 0.005
+    assert abs(tier_gradient["C"] - 0.312) < 0.005
     # SOURCE_WEIGHTS must be restored to the frozen values afterward
     from estimation import composite
     assert composite.SOURCE_WEIGHTS == {"jobs": 0.35, "web": 0.20, "spend": 0.45}

@@ -1,7 +1,7 @@
 """Repost dedupe changes only the storm vendor's features; the despike
 correction is a no-op off the planted vendor/quarter; the fragmented
-vendor's spend series is continuous post-QA; a unit-level delete-the-
-future check on features_jobs.compute."""
+vendor's spend series is continuous post-QA; unit-level delete-the-
+future checks on features_jobs, features_spend, and features_web."""
 
 import pandas as pd
 
@@ -88,6 +88,65 @@ def test_features_spend_unit_delete_the_future(built):
     cols = ["vendor_id", "quarter", "spend_amount", "spend_txn_count",
             "spend_presence", "spend_growth", "spend_coverage_cliff"]
     a = full[full["quarter"] <= "2025Q1"][cols].sort_values(
+        ["vendor_id", "quarter"]).reset_index(drop=True)
+    b = truncated[cols].sort_values(["vendor_id", "quarter"]).reset_index(drop=True)
+    pd.testing.assert_frame_equal(a, b)
+
+
+def test_features_web_unit_delete_the_future(tmp_path):
+    """Unit-level delete-the-future for features_web.compute's bot-spike
+    corroboration path, on a fixture built so the leak has somewhere to
+    show (the committed world's spike and fragmentation plants land on
+    unrelated vendors, so this path's leak is latent there): V1's June
+    2024 traffic spike (z >> 4) coincides with a descriptor migration
+    whose bridge evidence only accrues after 2024Q2, because the old
+    panelists do not surface on the migrated descriptor until 2024Q3.
+    As of 2024Q2 the resolvable spend shows a collapse (|log growth| >
+    0.35), which corroborates the spike as a real move and leaves it
+    uncorrected; with the hindsight bridge applied the collapse smooths
+    away and the spike gets winsorized instead. A bridge derived once
+    from the final snapshot therefore rewrites 2024Q2's keep-or-correct
+    decision with evidence dated after 2024Q2; compute(shop, '2025Q4')
+    and compute(shop, '2024Q2') must nonetheless agree on 2024Q2 itself.
+    """
+    from estimation import features_web
+    ex = tmp_path / "data" / "exhaust"
+    pub = tmp_path / "data" / "public"
+    ex.mkdir(parents=True)
+    pub.mkdir(parents=True)
+
+    months = [(y, m) for y in (2023, 2024, 2025) for m in range(1, 13)]
+
+    web_rows = ["vendor_id,month,estimated_visits"]
+    for y, m in months:
+        v = 50000 if (y, m) == (2024, 6) else 1000
+        web_rows.append(f"V1,{y}-{m:02d},{v}")
+    (ex / "web_traffic.csv").write_text("\n".join(web_rows) + "\n")
+    (ex / "web_covered_vendors.csv").write_text("vendor_id,covered\nV1,1\n")
+    (ex / "job_postings.csv").write_text(
+        "posting_id,vendor_id,title,posted_date,closed_date,location\n")
+
+    spend_rows = ["descriptor_string,txn_date,amount,panelist_id"]
+    for y, m in months:
+        if (y, m) < (2024, 4):    # dense phase on the known descriptor
+            for day, pan in ((5, "PANA"), (15, "PANB"), (25, "PANC")):
+                spend_rows.append(f"ACME-OLD,{y}-{m:02d}-{day:02d},100.00,{pan}")
+        else:                      # taper: the fade the bridge rule needs
+            spend_rows.append(f"ACME-OLD,{y}-{m:02d}-05,100.00,PANA")
+        if (2024, 4) <= (y, m) <= (2024, 6):   # migration: new panelist only
+            spend_rows.append(f"ACME-NEW,{y}-{m:02d}-05,150.00,PANZ")
+        elif (y, m) > (2024, 6):               # old panelists surface later
+            spend_rows.append(f"ACME-NEW,{y}-{m:02d}-05,150.00,PANA")
+            spend_rows.append(f"ACME-NEW,{y}-{m:02d}-15,150.00,PANB")
+    (ex / "spend_panel.csv").write_text("\n".join(spend_rows) + "\n")
+    (pub / "descriptor_map.csv").write_text("vendor_id,descriptor_string\nV1,ACME-OLD\n")
+
+    shop = ShopData(tmp_path)
+    full = features_web.compute(shop, "2025Q4")
+    truncated = features_web.compute(shop, "2024Q2")
+    cols = ["vendor_id", "quarter", "web_covered", "web_visits",
+            "web_months_observed", "web_growth"]
+    a = full[full["quarter"] <= "2024Q2"][cols].sort_values(
         ["vendor_id", "quarter"]).reset_index(drop=True)
     b = truncated[cols].sort_values(["vendor_id", "quarter"]).reset_index(drop=True)
     pd.testing.assert_frame_equal(a, b)

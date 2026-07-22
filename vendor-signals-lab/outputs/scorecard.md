@@ -6,10 +6,10 @@ Vendors: 420. Scored quarters: 10 (2023Q3 to 2025Q4).
 
 | tier | median spearman |
 |---|---|
-| A | 0.698 |
+| A | 0.700 |
 | B | 0.510 |
-| C | 0.314 |
-| blended (reference only) | 0.480 |
+| C | 0.312 |
+| blended (reference only) | 0.479 |
 
 ## Lead-lag summary (source vs truth inflection)
 
@@ -28,16 +28,16 @@ Vendors: 420. Scored quarters: 10 (2023Q3 to 2025Q4).
 |---|---|---|---|---|---|---|
 | 1 | acceleration | A | 112 | 9 | 8.0% | 100.0% |
 | 1 | acceleration | B | 425 | 30 | 6.6% | 93.3% |
-| 1 | acceleration | C | 310 | 44 | 8.4% | 59.1% |
+| 1 | acceleration | C | 311 | 44 | 8.4% | 59.1% |
 | 1 | stall | A | 109 | 22 | 15.6% | 77.3% |
-| 1 | stall | B | 397 | 59 | 11.6% | 74.6% |
-| 1 | stall | C | 317 | 96 | 17.7% | 60.4% |
+| 1 | stall | B | 396 | 59 | 11.6% | 74.6% |
+| 1 | stall | C | 316 | 96 | 17.7% | 60.4% |
 | 2 | acceleration | A | 112 | 9 | 8.0% | 100.0% |
 | 2 | acceleration | B | 425 | 30 | 7.1% | 100.0% |
-| 2 | acceleration | C | 310 | 44 | 10.3% | 72.7% |
+| 2 | acceleration | C | 311 | 44 | 10.3% | 72.7% |
 | 2 | stall | A | 109 | 22 | 18.3% | 90.9% |
-| 2 | stall | B | 397 | 59 | 13.4% | 88.1% |
-| 2 | stall | C | 317 | 96 | 21.5% | 71.9% |
+| 2 | stall | B | 396 | 59 | 13.4% | 88.1% |
+| 2 | stall | C | 316 | 96 | 21.5% | 71.9% |
 
 ## Outcome validation
 

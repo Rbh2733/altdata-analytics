@@ -462,7 +462,7 @@ V0239,2024Q2,stall,jobs,False,False,,,
 V0239,2024Q2,stall,web,False,False,,,
 V0239,2024Q2,stall,spend,True,True,2023Q4,2.0,4.0
 V0241,2025Q1,stall,jobs,False,False,,,
-V0241,2025Q1,stall,web,True,True,2025Q1,0.0,2.0
+V0241,2025Q1,stall,web,True,True,2025Q3,-2.0,0.0
 V0241,2025Q1,stall,spend,True,True,2024Q3,2.0,4.0
 V0244,2024Q2,acceleration,jobs,False,False,,,
 V0244,2024Q2,acceleration,web,False,False,,,
