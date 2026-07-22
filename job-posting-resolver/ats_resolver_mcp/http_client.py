@@ -11,7 +11,7 @@ import httpx
 
 DEFAULT_TIMEOUT = 20.0
 PROBE_TIMEOUT = 10.0
-USER_AGENT = "ats-resolver-mcp/0.1 (+local)"
+USER_AGENT = "job-posting-resolver/0.1 (+local)"
 HEADERS = {
     "User-Agent": USER_AGENT,
     "Accept": "application/json, text/html;q=0.8, */*;q=0.5",
