@@ -1,0 +1,239 @@
+{
+  "disclosed_acquisition_validation": {
+    "band_hit_rate": 0.4090909090909091,
+    "median_abs_log10_error": 0.23604408317499131,
+    "n": 22,
+    "within_one_band_share": 0.6818181818181818
+  },
+  "funding_validation": {
+    "median_composite_before_round": 50.0,
+    "n_funding_events": 135,
+    "n_scored": 129,
+    "population_median_composite": 50.0
+  },
+  "inflection_precision_recall": [
+    {
+      "k": 1,
+      "n_events": 9,
+      "n_flags": 112,
+      "precision": 0.08035714285714286,
+      "recall": 1.0,
+      "tier": "A",
+      "type": "acceleration"
+    },
+    {
+      "k": 1,
+      "n_events": 30,
+      "n_flags": 425,
+      "precision": 0.06588235294117648,
+      "recall": 0.9333333333333333,
+      "tier": "B",
+      "type": "acceleration"
+    },
+    {
+      "k": 1,
+      "n_events": 44,
+      "n_flags": 310,
+      "precision": 0.08387096774193549,
+      "recall": 0.5909090909090909,
+      "tier": "C",
+      "type": "acceleration"
+    },
+    {
+      "k": 1,
+      "n_events": 22,
+      "n_flags": 109,
+      "precision": 0.1559633027522936,
+      "recall": 0.7727272727272727,
+      "tier": "A",
+      "type": "stall"
+    },
+    {
+      "k": 1,
+      "n_events": 59,
+      "n_flags": 397,
+      "precision": 0.11586901763224182,
+      "recall": 0.7457627118644068,
+      "tier": "B",
+      "type": "stall"
+    },
+    {
+      "k": 1,
+      "n_events": 96,
+      "n_flags": 317,
+      "precision": 0.17665615141955837,
+      "recall": 0.6041666666666666,
+      "tier": "C",
+      "type": "stall"
+    },
+    {
+      "k": 2,
+      "n_events": 9,
+      "n_flags": 112,
+      "precision": 0.08035714285714286,
+      "recall": 1.0,
+      "tier": "A",
+      "type": "acceleration"
+    },
+    {
+      "k": 2,
+      "n_events": 30,
+      "n_flags": 425,
+      "precision": 0.07058823529411765,
+      "recall": 1.0,
+      "tier": "B",
+      "type": "acceleration"
+    },
+    {
+      "k": 2,
+      "n_events": 44,
+      "n_flags": 310,
+      "precision": 0.1032258064516129,
+      "recall": 0.7272727272727273,
+      "tier": "C",
+      "type": "acceleration"
+    },
+    {
+      "k": 2,
+      "n_events": 22,
+      "n_flags": 109,
+      "precision": 0.1834862385321101,
+      "recall": 0.9090909090909091,
+      "tier": "A",
+      "type": "stall"
+    },
+    {
+      "k": 2,
+      "n_events": 59,
+      "n_flags": 397,
+      "precision": 0.13350125944584382,
+      "recall": 0.8813559322033898,
+      "tier": "B",
+      "type": "stall"
+    },
+    {
+      "k": 2,
+      "n_events": 96,
+      "n_flags": 317,
+      "precision": 0.21451104100946372,
+      "recall": 0.71875,
+      "tier": "C",
+      "type": "stall"
+    }
+  ],
+  "leadlag_summary": [
+    {
+      "detection_rate": 0.9090909090909091,
+      "event_type": "acceleration",
+      "iqr_hi": 1.0,
+      "iqr_lo": 0.0,
+      "median_lead_vs_regime_change": 0.0,
+      "median_lead_vs_revenue_realization": 2.0,
+      "n_detected": 30,
+      "n_events": 83,
+      "n_present": 33,
+      "source": "jobs"
+    },
+    {
+      "detection_rate": 0.7014925373134329,
+      "event_type": "stall",
+      "iqr_hi": 0.5,
+      "iqr_lo": 0.0,
+      "median_lead_vs_regime_change": 0.0,
+      "median_lead_vs_revenue_realization": 2.0,
+      "n_detected": 47,
+      "n_events": 177,
+      "n_present": 67,
+      "source": "jobs"
+    },
+    {
+      "detection_rate": 0.88,
+      "event_type": "acceleration",
+      "iqr_hi": 1.0,
+      "iqr_lo": -1.0,
+      "median_lead_vs_regime_change": 0.0,
+      "median_lead_vs_revenue_realization": 2.0,
+      "n_detected": 22,
+      "n_events": 83,
+      "n_present": 25,
+      "source": "spend"
+    },
+    {
+      "detection_rate": 0.9655172413793104,
+      "event_type": "stall",
+      "iqr_hi": 2.0,
+      "iqr_lo": -0.25,
+      "median_lead_vs_regime_change": 1.0,
+      "median_lead_vs_revenue_realization": 3.0,
+      "n_detected": 56,
+      "n_events": 177,
+      "n_present": 58,
+      "source": "spend"
+    },
+    {
+      "detection_rate": 0.9466666666666667,
+      "event_type": "acceleration",
+      "iqr_hi": 2.0,
+      "iqr_lo": 0.0,
+      "median_lead_vs_regime_change": 1.0,
+      "median_lead_vs_revenue_realization": 3.0,
+      "n_detected": 71,
+      "n_events": 83,
+      "n_present": 75,
+      "source": "web"
+    },
+    {
+      "detection_rate": 0.9411764705882353,
+      "event_type": "stall",
+      "iqr_hi": 2.0,
+      "iqr_lo": 0.0,
+      "median_lead_vs_regime_change": 1.0,
+      "median_lead_vs_revenue_realization": 3.0,
+      "n_detected": 144,
+      "n_events": 177,
+      "n_present": 153,
+      "source": "web"
+    }
+  ],
+  "n_scored_quarters": 10,
+  "n_vendors": 420,
+  "rank_quality_blended": 0.4802689668086306,
+  "rank_quality_by_tier": {
+    "A": 0.6981981981981982,
+    "B": 0.5103465546801256,
+    "C": 0.31414379536921255
+  },
+  "shutdown_validation": {
+    "above_50_at_t1": [
+      {
+        "composite_t1": 59.285714285714285,
+        "shutdown_quarter": "2025Q4",
+        "tier": "C",
+        "vendor_id": "V0168"
+      },
+      {
+        "composite_t1": 68.46441230002873,
+        "shutdown_quarter": "2024Q2",
+        "tier": "B",
+        "vendor_id": "V0170"
+      },
+      {
+        "composite_t1": 67.1875,
+        "shutdown_quarter": "2025Q2",
+        "tier": "C",
+        "vendor_id": "V0341"
+      }
+    ],
+    "bottom_quartile_share_at_t2": 0.5652173913043478,
+    "median_composite_at_t1": 25.703185703185703,
+    "n_above_50_at_t1": 3,
+    "n_scored_at_t2": 23,
+    "n_shutdowns": 23,
+    "population_median_composite": 50.0
+  },
+  "tier_mix": {
+    "A": 635,
+    "B": 2154,
+    "C": 2251
+  }
+}
