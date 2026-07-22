@@ -1,9 +1,12 @@
 """Job-posting exhaust: requisitions, coverage skew, title bank, and the
 repost-storm plant (P2).
 
-No function column: inferring engineering/sales/support/other from the
-title text is the tagger's job (estimation/tagger_mock.py,
-estimation/tagger_claude.py).
+No function column: inferring the function (engineering,
+ml_infrastructure, research, sales, support, other) from the title text
+is the tagger's job (estimation/tagger_mock.py, estimation/
+tagger_claude.py). The ml_infrastructure and research banks only ever
+surface through the ai_infrastructure segment's function mix; every
+other segment's mix simply does not reference them.
 """
 
 import numpy as np
@@ -35,12 +38,29 @@ TITLE_BANK = {
         "Office Manager", "Financial Analyst", "Operations Manager",
         "General Counsel", "People Operations Partner", "Data Analyst",
     ],
+    "ml_infrastructure": [
+        "ML Infrastructure Engineer", "Machine Learning Infrastructure Engineer",
+        "AI Infrastructure Engineer", "GPU Cluster Engineer",
+        "Cluster Operations Engineer", "MLOps Engineer",
+        "Distributed Training Engineer", "Inference Platform Engineer",
+        "Datacenter Operations Engineer",
+    ],
+    "research": [
+        "Research Scientist", "Applied Research Scientist",
+        "AI Research Scientist", "Machine Learning Researcher",
+        "Foundation Model Researcher",
+    ],
 }
 # Deliberately ambiguous titles: plausible in more than one function bucket,
-# so a keyword tagger's confusion matrix has real off-diagonal mass.
+# so a keyword tagger's confusion matrix has real off-diagonal mass. The
+# last two joined at the six-segment expansion: "ML Platform Engineer"
+# carries none of the ml_infrastructure phrase anchors, and "Research
+# Engineer" is neither a scientist nor a researcher by keyword, so both
+# fall through to the generic engineer rule by construction.
 AMBIGUOUS_TITLES = [
     "Solutions Engineer", "Developer Advocate",
     "Support Engineering Manager", "Customer Success Engineer",
+    "ML Platform Engineer", "Research Engineer",
 ]
 
 LOCATIONS = ["remote", "us", "eu", "apac"]
@@ -93,6 +113,13 @@ def build_job_postings(vendors, trajectories_by_id, vendor_state, rng,
         vid = v["vendor_id"]
         traj = trajectories_by_id[vid]
         tracked = bool(rng.random() < _tracking_prob(v["initial_headcount"]))
+        # The repost-storm plant needs its vendor in the tracked set; the
+        # override happens after the draw so the random stream is
+        # identical either way. Disclosed in the README as a generator
+        # convenience (the same pattern exhaust_spend.py uses for the
+        # fragmentation vendor's channel membership).
+        if vid == repost_storm_vendor_id:
+            tracked = True
         tracked_rows.append({"vendor_id": vid, "tracked": int(tracked)})
         if not tracked:
             continue

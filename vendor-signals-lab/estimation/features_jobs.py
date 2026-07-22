@@ -28,7 +28,7 @@ def compute(shop, as_of_quarter: str) -> pd.DataFrame:
         counts = deduped.groupby(["vendor_id", "quarter"]).size()
         func_counts = (deduped.groupby(["vendor_id", "quarter", "function"])
                        .size().unstack(fill_value=0))
-        for f in ("engineering", "sales", "support", "other"):
+        for f in tagger_mock.FUNCTIONS:
             if f not in func_counts.columns:
                 func_counts[f] = 0
         func_shares = func_counts.div(func_counts.sum(axis=1), axis=0)
@@ -53,17 +53,16 @@ def compute(shop, as_of_quarter: str) -> pd.DataFrame:
                 had_activity = any(x > 0 for x in n_hist[:qi])
                 if had_activity and n_hist[qi] == 0 and n_hist[qi - 1] == 0:
                     freeze = True
-            func_mix = {"engineering": 0.0, "sales": 0.0, "support": 0.0, "other": 0.0}
+            func_mix = {f: 0.0 for f in tagger_mock.FUNCTIONS}
             if not func_shares.empty and (vid, t) in func_shares.index:
                 r = func_shares.loc[(vid, t)]
                 for k in func_mix:
                     func_mix[k] = float(r.get(k, 0.0))
-            rows.append({
+            row = {
                 "vendor_id": vid, "quarter": t, "jobs_tracked": trk,
                 "jobs_n_reqs": n, "jobs_growth": growth, "jobs_freeze": freeze,
-                "jobs_func_engineering": func_mix["engineering"],
-                "jobs_func_sales": func_mix["sales"],
-                "jobs_func_support": func_mix["support"],
-                "jobs_func_other": func_mix["other"],
-            })
+            }
+            for f in tagger_mock.FUNCTIONS:
+                row[f"jobs_func_{f}"] = func_mix[f]
+            rows.append(row)
     return pd.DataFrame(rows)

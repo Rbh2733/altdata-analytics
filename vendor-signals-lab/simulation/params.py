@@ -17,6 +17,11 @@ SEGMENT_COUNTS = {
     "ai_applications": 95,
     "security": 70,
     "vertical_saas": 80,
+    # Six-segment expansion (2026-07-22): AI infrastructure split out of the
+    # generic AI bucket as its own archetype. Deliberately the smallest
+    # segment: the infrastructure layer is more concentrated than the
+    # application layer it serves.
+    "ai_infrastructure": 60,
 }
 
 # Median initial ARR ($M), lognormal sigma (natural log), floor/cap ($M).
@@ -112,6 +117,14 @@ JOB_FUNCTION_MIX = {
     "ai_applications": {"engineering": 0.50, "sales": 0.18, "support": 0.17, "other": 0.15},
     "security": {"engineering": 0.35, "sales": 0.30, "support": 0.20, "other": 0.15},
     "vertical_saas": {"engineering": 0.35, "sales": 0.25, "support": 0.25, "other": 0.15},
+    # ai_infrastructure is the only segment whose postings draw on the
+    # ml_infrastructure and research title categories: cluster/GPU
+    # operations and applied research hiring is the visible face of a
+    # capex-cycle build-out, while the sales and support motions stay
+    # thin (enterprise contracts, no mass consumer support surface).
+    "ai_infrastructure": {"engineering": 0.25, "ml_infrastructure": 0.30,
+                           "research": 0.15, "sales": 0.10, "support": 0.05,
+                           "other": 0.15},
 }
 JOB_AMBIGUOUS_TITLE_RATE = 0.08  # share of postings drawn from the ambiguous pool
 
@@ -131,6 +144,21 @@ SEGMENT_TRAFFIC_CONSTANT = {
     "ai_applications": 1400.0,
     "security": 400.0,
     "vertical_saas": 700.0,
+    "ai_infrastructure": 300.0,  # B2B, no consumer product surface
+}
+
+# Per-segment web-coverage and web-noise overrides (six-segment expansion).
+# ai_infrastructure's product surface is an API and a cluster, not a
+# website: the traffic panel misses roughly half the segment outright
+# (extra missing probability on top of the size skew), and what traffic
+# does exist (docs, careers, marketing) is only loosely coupled to actual
+# usage, hence the roughly doubled monthly noise sigma. Segments not
+# listed here keep the global behavior.
+WEB_SEGMENT_MISSING_EXTRA = {
+    "ai_infrastructure": 0.45,
+}
+WEB_SEGMENT_NOISE_SIGMA = {
+    "ai_infrastructure": 0.35,
 }
 
 # ---------------------------------------------------------------------------
@@ -143,6 +171,10 @@ SPEND_CHANNEL_PROB = {
     "vertical_saas": 0.35,
     "security": 0.15,
     "data_infrastructure": 0.12,
+    # Below even data_infrastructure: AI infrastructure sells into capex
+    # cycles through enterprise, invoice-billed contracts. A card-panel
+    # rail almost never sees one of these vendors at all.
+    "ai_infrastructure": 0.05,
 }
 SPEND_PANEL_SHARE_RANGE = (0.01, 0.03)     # per-vendor panelist thinning share
 SPEND_GROWTH_NOISE_REL = (0.05, 0.08)      # relative error band on growth

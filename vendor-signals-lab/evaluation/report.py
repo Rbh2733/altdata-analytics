@@ -113,7 +113,8 @@ def render(scored_df: pd.DataFrame, level_bands: pd.DataFrame, truth: dict, out_
                  f"median composite one quarter before a raise: "
                  f"{_fmt(funding_v['median_composite_before_round'])} vs population median "
                  f"{_fmt(funding_v['population_median_composite'])}. Impurity by design: "
-                 f"runway-pressure raises pull this toward the population median from below.")
+                 f"most rounds come from a uniform base hazard unrelated to health, "
+                 f"so a median cannot see the thin accelerator tilt.")
     lines.append(f"- Disclosed acquisitions ({disc_summary['n']} priced): band hit rate "
                  f"{_fmt_pct(disc_summary['band_hit_rate'])}, within-one-band "
                  f"{_fmt_pct(disc_summary['within_one_band_share'])}, median abs log10 error "

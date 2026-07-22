@@ -1,4 +1,4 @@
--- Five analytical cuts over the shop's committed outputs. Shop-side
+-- Six analytical cuts over the shop's committed outputs. Shop-side
 -- only: truth is never registered as a view here, matching (and
 -- restating) panel-estimation-lab's stricter stance versus its own
 -- sibling. Views registered by sql/run_sql.py: directory, coverage,
@@ -133,3 +133,84 @@ SELECT segment, quarter, seg_amount, share,
        share - LAG(share) OVER (PARTITION BY segment ORDER BY quarter) AS share_qoq_delta
 FROM shares
 ORDER BY segment, quarter;
+
+-- @cut: ai_infrastructure_vs_ai_applications
+-- The "so what" cut of the six-segment expansion: the two AI segments
+-- side by side, on (a) coverage-tier mix, (b) per-source presence share,
+-- and (c) which source's own percentile crossed the flagger's
+-- +/-15-point rule first for each flagged vendor-quarter. If the split
+-- is economically real, ai_infrastructure should read darker on spend
+-- and web (enterprise invoice billing, no consumer web surface) and its
+-- flags should be led by jobs, the one exhaust stream a capex-cycle
+-- build-out cannot help emitting. A first-cross tie resolves jobs, then
+-- web, then spend, stated here rather than left to engine ordering.
+WITH cov2 AS (
+    SELECT segment, quarter, tier,
+           CASE WHEN jobs_status IN ('tracked_active', 'tracked_zero') THEN 1.0 ELSE 0.0 END AS jobs_p,
+           CASE WHEN web_status = 'present' THEN 1.0 ELSE 0.0 END AS web_p,
+           CASE WHEN spend_status = 'present' THEN 1.0 ELSE 0.0 END AS spend_p
+    FROM coverage
+    WHERE segment IN ('ai_applications', 'ai_infrastructure')
+),
+tier_mix AS (
+    SELECT 'a_tier_mix_share' AS metric, segment, tier AS key,
+           CAST(ROUND(COUNT(*) * 1.0 / SUM(COUNT(*)) OVER (PARTITION BY segment), 3) AS VARCHAR) AS value
+    FROM cov2 GROUP BY segment, tier
+),
+presence AS (
+    SELECT 'b_source_present_share' AS metric, segment, src AS key,
+           CAST(ROUND(share, 3) AS VARCHAR) AS value
+    FROM (
+        SELECT segment, 'jobs' AS src, AVG(jobs_p) AS share FROM cov2 GROUP BY segment
+        UNION ALL
+        SELECT segment, 'web' AS src, AVG(web_p) AS share FROM cov2 GROUP BY segment
+        UNION ALL
+        SELECT segment, 'spend' AS src, AVG(spend_p) AS share FROM cov2 GROUP BY segment
+    ) s
+),
+two_seg AS (
+    SELECT * FROM health
+    WHERE segment IN ('ai_applications', 'ai_infrastructure')
+),
+deltas AS (
+    SELECT vendor_id, segment, quarter,
+           jobs_pct - AVG(jobs_pct) OVER w2 AS jobs_delta,
+           web_pct - AVG(web_pct) OVER w2 AS web_delta,
+           spend_pct - AVG(spend_pct) OVER w2 AS spend_delta
+    FROM two_seg
+    WINDOW w2 AS (PARTITION BY vendor_id ORDER BY quarter
+                  ROWS BETWEEN 2 PRECEDING AND 1 PRECEDING)
+),
+flagged AS (
+    SELECT vendor_id, segment, quarter AS flag_quarter,
+           CASE WHEN accel_flag THEN 1.0 ELSE -1.0 END AS direction
+    FROM two_seg WHERE accel_flag OR stall_flag
+),
+firsts AS (
+    SELECT f.vendor_id, f.segment, f.flag_quarter,
+           MIN(CASE WHEN d.jobs_delta * f.direction >= 15 THEN d.quarter END) AS jobs_first,
+           MIN(CASE WHEN d.web_delta * f.direction >= 15 THEN d.quarter END) AS web_first,
+           MIN(CASE WHEN d.spend_delta * f.direction >= 15 THEN d.quarter END) AS spend_first
+    FROM flagged f
+    JOIN deltas d ON d.vendor_id = f.vendor_id AND d.quarter <= f.flag_quarter
+    GROUP BY f.vendor_id, f.segment, f.flag_quarter
+),
+first_cross AS (
+    SELECT 'c_first_cross_source' AS metric, segment,
+           CASE
+               WHEN jobs_first IS NOT NULL
+                    AND jobs_first <= COALESCE(web_first, '9999Q9')
+                    AND jobs_first <= COALESCE(spend_first, '9999Q9') THEN 'jobs'
+               WHEN web_first IS NOT NULL
+                    AND web_first <= COALESCE(spend_first, '9999Q9') THEN 'web'
+               WHEN spend_first IS NOT NULL THEN 'spend'
+               ELSE 'none'
+           END AS key,
+           CAST(COUNT(*) AS VARCHAR) AS value
+    FROM firsts
+    GROUP BY segment, key
+)
+SELECT * FROM tier_mix
+UNION ALL SELECT * FROM presence
+UNION ALL SELECT * FROM first_cross
+ORDER BY metric, segment, key;

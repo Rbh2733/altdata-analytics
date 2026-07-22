@@ -4,6 +4,7 @@ a key, and fails loudly if a batch drops a row."""
 
 import json
 import os
+import re
 
 import pandas as pd
 import pytest
@@ -31,7 +32,10 @@ def test_mock_tagger_accuracy_matches_committed(built):
     val = pd.read_csv(built["root"] / "data" / "public" / "tagger_validation_set.csv")
     preds = tagger_mock.tag_titles(val["title"])
     acc = (pd.Series(preds) == val["true_function"]).mean()
-    reported = float(text.split("Accuracy on 150 hand-labeled titles: ")[1].split("%")[0])
+    m = re.search(r"Accuracy on (\d+) hand-labeled titles: ([\d.]+)%", text)
+    assert m is not None
+    assert int(m.group(1)) == len(val)
+    reported = float(m.group(2))
     assert abs(100 * acc - reported) < 0.05
     assert acc >= 0.90
 

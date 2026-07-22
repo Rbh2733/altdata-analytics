@@ -19,7 +19,7 @@ PUBLIC_DIR = DATA_DIR / "public"
 TRUTH_DIR = DATA_DIR / "truth"
 OUTPUT_DIR = ROOT / "outputs"
 
-N_VENDORS = 420
+N_VENDORS = 480
 
 # Calendar: 12 quarters, 2023Q1 .. 2025Q4, months as the underlying grain.
 START_YEAR = 2023
@@ -29,7 +29,7 @@ WARMUP_QUARTERS = QUARTERS[:2]      # 2023Q1, 2023Q2
 SCORED_QUARTERS = QUARTERS[2:]      # 2023Q3 .. 2025Q4 (10 quarters)
 
 SEGMENTS = ["devtools", "data_infrastructure", "ai_applications",
-            "security", "vertical_saas"]
+            "security", "vertical_saas", "ai_infrastructure"]
 
 _DAYS = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30,
          7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}

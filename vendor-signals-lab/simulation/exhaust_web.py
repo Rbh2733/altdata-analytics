@@ -15,10 +15,14 @@ from simulation import exhaust_jobs as jobs_mod  # reuse _active_months
 
 def _coverage_missing_prob(vendor, all_headcounts_sorted) -> float:
     """Missing-coverage probability skewed toward the smallest vendors;
-    averages to roughly 1 - WEB_COVERAGE_RATE across the population."""
+    averages to roughly 1 - WEB_COVERAGE_RATE across the population.
+    Segments listed in WEB_SEGMENT_MISSING_EXTRA carry an additive
+    structural miss on top of the size skew (ai_infrastructure: the
+    panel simply does not see most of these B2B vendors)."""
     hc = vendor["initial_headcount"]
     rank = np.searchsorted(all_headcounts_sorted, hc) / max(len(all_headcounts_sorted) - 1, 1)
-    return float(0.20 * (1.0 - rank))
+    extra = params.WEB_SEGMENT_MISSING_EXTRA.get(vendor["segment"], 0.0)
+    return float(min(0.95, 0.20 * (1.0 - rank) + extra))
 
 
 def build_web_traffic(vendors, trajectories_by_id, vendor_state, rng,
@@ -34,12 +38,20 @@ def build_web_traffic(vendors, trajectories_by_id, vendor_state, rng,
         traj = trajectories_by_id[vid]
         miss_p = _coverage_missing_prob(v, all_hc)
         covered = bool(rng.random() >= miss_p)
+        # The bot-spike plant needs its vendor in the covered set; the
+        # override happens after the draw so the random stream is
+        # identical either way. Disclosed in the README as a generator
+        # convenience.
+        if vid == bot_spike_vendor_id:
+            covered = True
         covered_rows.append({"vendor_id": vid, "covered": int(covered)})
         if not covered:
             continue
 
         level_bias = float(rng.lognormal(0.0, params.WEB_LEVEL_BIAS_SIGMA))
         seg_const = params.SEGMENT_TRAFFIC_CONSTANT[seg]
+        noise_sigma = params.WEB_SEGMENT_NOISE_SIGMA.get(
+            seg, params.WEB_MONTHLY_NOISE_SIGMA)
 
         for i in range(config.N_QUARTERS):
             t = i + 1
@@ -53,7 +65,7 @@ def build_web_traffic(vendors, trajectories_by_id, vendor_state, rng,
                     continue
                 seasonal = 1.0 + params.WEB_SEASONAL_AMPLITUDE * np.sin(
                     2 * np.pi * month[1] / 12.0)
-                noise = float(rng.lognormal(0.0, params.WEB_MONTHLY_NOISE_SIGMA))
+                noise = float(rng.lognormal(0.0, noise_sigma))
                 visits = base_visits * seasonal * noise
 
                 if (vid == bot_spike_vendor_id and q == plant["quarter"]
