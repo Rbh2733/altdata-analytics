@@ -1,0 +1,5 @@
+pathology,vendor_id,quarter,detail
+bot_traffic_spike,V0019,2024Q2,5 weeks x6.0
+job_repost_storm,V0339,2024Q3|2024Q4,raw_multiplier=5.0
+descriptor_fragmentation,V0382,2025Q1,fade_weeks=3
+coverage_cliff,ALL:ai_applications,2025Q2|2025Q3,segment=ai_applications
