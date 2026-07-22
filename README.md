@@ -38,7 +38,7 @@ An entity-resolution and data-reliability tool packaged as a local MCP server: j
 
 ### [streaming-altdata-ecosystem](streaming-altdata-ecosystem/)
 
-A research map of the streaming alternative-data ecosystem: the layers between raw consumer behavior and investor-grade signal, and the companies operating at each one.
+A research map of the streaming alternative-data ecosystem: the layers between raw consumer behavior and investor-grade measurement, and the companies operating at each one. The [interactive ecosystem map](https://rbh2733.github.io/altdata-analytics/streaming-altdata-ecosystem/ecosystem-map.html) renders the eight-layer structure as a clickable stack, with the markdown documents as the source of record.
 
 ### Dashboards and analyses
 

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Streaming Alt-Data Ecosystem Map</title>
+<style>
+:root {
+  --bg: #0B0D11;
+  --surface: rgba(255,255,255,0.025);
+  --surface2: rgba(0,0,0,0.22);
+  --text: #E0DCD4;
+  --dim: rgba(255,255,255,0.5);
+  --faint: rgba(255,255,255,0.28);
+  --border: rgba(255,255,255,0.08);
+  --chipbg: rgba(255,255,255,0.03);
+  --openbg: rgba(201,169,78,0.06);
+  --openborder: rgba(201,169,78,0.35);
+  --opentext: #C9A94E;
+  --l0: #C9A94E;
+  --l1: #4A90D9;
+  --l2: #56A88C;
+  --l3: #C97A44;
+  --l4: #B06EC7;
+  --l5: #D9C24A;
+  --l6: #C94F4F;
+  --l7: #7B8FA1;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #F6F4EF;
+    --surface: rgba(0,0,0,0.02);
+    --surface2: rgba(0,0,0,0.04);
+    --text: #1E2126;
+    --dim: rgba(0,0,0,0.58);
+    --faint: rgba(0,0,0,0.38);
+    --border: rgba(0,0,0,0.12);
+    --chipbg: rgba(0,0,0,0.03);
+    --openbg: rgba(154,120,30,0.07);
+    --openborder: rgba(154,120,30,0.4);
+    --opentext: #8A6A18;
+    --l0: #9A781E;
+    --l1: #2E6DAF;
+    --l2: #2F7C61;
+    --l3: #A05423;
+    --l4: #8546A0;
+    --l5: #8F7B14;
+    --l6: #A33232;
+    --l7: #55677A;
+  }
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:"Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.55; min-height:100vh; }
+.wrap { max-width:920px; margin:0 auto; padding:40px 20px 70px; }
+h1 { font-family:Georgia,"Times New Roman",serif; font-size:32px; font-weight:700; letter-spacing:-0.02em; line-height:1.15; }
+.mono { font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+.sub { font-size:13px; color:var(--dim); margin-top:8px; }
+.asof { font-size:12px; color:var(--faint); margin-top:6px; }
+.rule { height:1px; margin:22px 0 20px; background:linear-gradient(90deg,var(--l0),var(--l1),var(--l4),var(--l7)); opacity:.45; }
+.intro { font-size:13.5px; color:var(--dim); max-width:760px; }
+.toolbar { display:flex; justify-content:flex-end; margin:18px 0 14px; }
+.btn { background:var(--surface2); border:1px solid var(--border); color:var(--dim); padding:7px 16px; border-radius:5px; cursor:pointer; font-size:12px; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; transition:background .2s,color .2s; }
+.btn:hover { color:var(--text); }
+
+.layer { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent,var(--border)); border-radius:8px; margin-bottom:10px; overflow:hidden; }
+.layer.gatekeeper { border:1px dashed var(--l0); border-left:3px solid var(--l0); background:transparent; margin-bottom:22px; }
+summary { list-style:none; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; padding:14px 18px; cursor:pointer; }
+summary::-webkit-details-marker { display:none; }
+summary:focus-visible { outline:2px solid var(--accent,var(--dim)); outline-offset:-2px; }
+.tag { font-weight:700; font-size:11px; letter-spacing:.07em; text-transform:uppercase; padding:3px 10px; border-radius:4px; color:var(--bg); background:var(--accent); flex-shrink:0; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+.lname { font-weight:700; font-size:16px; }
+.tagline { font-size:12.5px; color:var(--dim); font-style:italic; }
+.chev { margin-left:auto; color:var(--faint); font-size:14px; transition:transform .25s; flex-shrink:0; }
+details[open] .chev { transform:rotate(180deg); }
+.body { padding:0 18px 18px; }
+.desc { font-size:13.5px; color:var(--dim); line-height:1.6; max-width:780px; }
+.meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:14px 0; }
+.meta-card { background:var(--surface2); border-radius:6px; padding:10px 12px; border-left:2px solid var(--border); }
+.meta-label { font-weight:700; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); margin-bottom:5px; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+.meta-card p { font-size:12.5px; color:var(--dim); line-height:1.5; }
+.chips { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:8px; margin-top:6px; list-style:none; }
+.chip { background:var(--chipbg); border:1px solid var(--border); border-radius:6px; padding:9px 12px; }
+.chip b { display:block; font-size:13px; margin-bottom:2px; }
+.chip span { font-size:11.5px; color:var(--dim); line-height:1.45; display:block; }
+.open-q { margin-top:14px; padding:10px 14px; background:var(--openbg); border-left:3px solid var(--openborder); border-radius:4px; }
+.open-q .meta-label { color:var(--opentext); }
+.open-q p { font-size:12.5px; color:var(--dim); line-height:1.55; }
+.axis { font-size:11px; color:var(--faint); letter-spacing:.06em; text-transform:uppercase; margin:6px 2px 10px; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+.axis.bottom { margin:10px 2px 0; }
+.footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--border); font-size:11.5px; color:var(--faint); line-height:1.7; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+@media (max-width:600px) {
+  h1 { font-size:24px; }
+  .wrap { padding:24px 14px 50px; }
+  summary { padding:12px 14px; }
+  .body { padding:0 14px 14px; }
+  .chips { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>The Streaming Alt-Data Ecosystem Map</h1>
+    <p class="sub">A map of the vendor and data-layer architecture that grew up around one structural fact: streaming platforms and Big Tech gatekeepers increasingly withhold granular subscriber, viewership, and engagement data, so studios, advertisers, and analysts pay a stack of specialized vendors to reconstruct ground truth. It documents market structure; it does not make recommendations.</p>
+    <p class="asof mono">Point-in-time rendering. Source documents written July 6 to July 14, 2026; eight-layer integration pass July 8, 2026.</p>
+    <div class="rule"></div>
+    <p class="intro">Layer 0 sits apart as the boundary condition: not a vendor layer but the reason the seven below exist. The vendor stack reads top to bottom, from the billing relationship itself down to the identity substrate every other layer matches through. Where the underlying map records a disagreement it could not resolve, the open question is shown in place rather than silently settled. Click any layer to expand it.</p>
+  </header>
+
+  <div class="toolbar"><button class="btn" id="toggle-btn" type="button">Expand all</button></div>
+
+  <details class="layer gatekeeper" style="--accent:var(--l0)">
+    <summary><span class="tag">Layer 0</span><span class="lname">Ecosystem Gatekeepers</span><span class="tagline">Boundary condition, not a vendor layer</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">Eight platforms were rostered above the ecosystem as gatekeepers: each withholds some piece of viewership, subscriber, or engagement telemetry that the seven vendor layers below exist to reconstruct, and several run their own clean rooms monetizing the very data they withhold from studios and licensors. The withholding takes two forms: Amazon, Apple, and Roku withhold granular economics and monetize the data themselves, while Fox, Google/YouTube, and Disney control the rights and carriage architecture that creates the opacity. The layer's deep-research pass reclassified Paramount Skydance/WBD as a vendor subject rather than a gatekeeper, and Fox agreed in June 2026 to acquire Roku outright, so the active gatekeeper set is effectively seven, converging on a combined Fox-Roku entity by H1 2027. Netflix, long the acknowledged exception, is converging with the pack as its ad tier scales. This layer is not a peer of the seven below; it is the demand source they respond to.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Role</div><p>Where withheld data and controlled distribution and rights architecture originate; the reason the seven vendor layers exist at all.</p></div>
+        <div class="meta-card"><div class="meta-label">Legal exposure</div><p>Varies by company; antitrust and carriage disputes (Disney v. Dish, the Fubo/Venu Sports litigation), FCC inquiry into sports-streaming fragmentation.</p></div>
+      </div>
+      <ul class="chips">
+        <li class="chip"><b>Amazon</b><span>Blends standalone streaming economics into "Subscription Services"; dual posture (withholds from studios, sells to advertisers via Amazon Marketing Cloud)</span></li>
+        <li class="chip"><b>Apple</b><span>Blends Apple TV+ into "Services"; no disclosed standalone ARPU or churn</span></li>
+        <li class="chip"><b>Roku</b><span>Dual posture via the Roku Data Cloud clean room (legacy OneView retired), same withhold-and-monetize pattern as Amazon; being acquired by Fox under a definitive agreement (June 15, 2026, ~$22B enterprise value, close expected H1 2027)</span></li>
+        <li class="chip"><b>Fox</b><span>Ad-dependent linear yield company with a live-event focus; Fox One premium pricing plus the definitive agreement to acquire Roku (June 15, 2026) make it a gatekeeper spanning rights supply and, post-close, owned distribution and hardware telemetry</span></li>
+        <li class="chip"><b>Netflix</b><span>Historically operated outside this vendor ecosystem on first-party telemetry; practices the licensing-arbitrage pattern described as the Netflix Paradox; ad-tier scaling, an in-house ad server, and clean-room partnerships have structurally converged it with Amazon and Roku, and the old outside-the-ecosystem framing is now historical</span></li>
+        <li class="chip"><b>Google/YouTube</b><span>YouTube TV (~8M subs) plus Sunday Ticket; demonstrated real carriage-dispute leverage over Disney (Nov 2025); captures more total US TV time than any other platform</span></li>
+        <li class="chip"><b>Disney</b><span>Content Fortress vertically integrating sports distribution (ESPN Unlimited, Fubo acquisition, Fox One bundle, NFL's 10% ESPN equity stake); gatekeeper via bundling and rights-equity opacity, not data-withholding</span></li>
+        <li class="chip"><b>Paramount Skydance/WBD</b><span>Reclassified by the layer's deep-research pass as a vendor subject, not a gatekeeper: ~$79B combined debt, US NBA rights conceded to Disney/ESPN, Amazon, and NBCUniversal, and opacity that is a byproduct of restructuring rather than intentional withholding</span></li>
+      </ul>
+      <div class="open-q"><div class="meta-label mono">Open question</div><p>The flow documented in this layer is predominantly one-way: gatekeepers withhold or control, and the vendor layers respond. What flows back from vendors to gatekeepers (payments, data licenses, measurement contracts) is comparatively undocumented in the source passes and remains an open question.</p></div>
+    </div>
+  </details>
+
+  <p class="axis">The billing relationship itself</p>
+
+  <details class="layer" style="--accent:var(--l1)">
+    <summary><span class="tag">Layer 1</span><span class="lname">Wallet</span><span class="tagline">Subscriber transaction intelligence</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">The ground-truth stratum of the ecosystem: built from aggregated and anonymized card and bank feeds and digital invoice tracking, it isolates the billing relationship itself. Four derived metrics carry the layer's institutional value: cohort survival curves, plan-mix migration, cross-platform wallet mapping, and serial-churner tracking. Its distinguishing legal exposure is financial-transaction consent rather than device consent, which places it directly in the path of CFPB Section 1033 and California's Delete Act.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Card/bank feeds and digital invoice tracking &#8594; cohort survival, plan-mix migration, serial-churner behavior.</p></div>
+        <div class="meta-card"><div class="meta-label">Legal exposure</div><p>Financial-transaction consent; CFPB 1033 and commercial API tolling; California DROP.</p></div>
+        <div class="meta-card"><div class="meta-label">Customers</div><p>Hedge funds, corporate development, studios.</p></div>
+      </div>
+      <ul class="chips">
+        <li class="chip"><b>YipitData</b><span>Broad multi-sector alt-data incumbent; Carlyle-backed; absorbed 1010data (2023); reportedly eyeing a 2026-2027 IPO or exit</span></li>
+        <li class="chip"><b>Consumer Edge</b><span>Multi-sector consolidator; acquired Earnest Analytics (Apr 2025), fusing transaction data with healthcare/pharmacy claims</span></li>
+        <li class="chip"><b>Antenna</b><span>Streaming-specific specialist; BDMI/Raine Ventures-backed; serial-churner tracking and the ACR-plus-transaction "Subscriber Views" product</span></li>
+        <li class="chip"><b>Bloomberg Second Measure</b><span>Multi-sector receipt panel; wholly owned Bloomberg LP subsidiary with feeds integrated into the Bloomberg Terminal</span></li>
+        <li class="chip"><b>M Science</b><span>Quant-focused; raw, unaggregated algorithmic feeds built for hedge-fund ingestion</span></li>
+      </ul>
+      <div class="open-q"><div class="meta-label mono">Open question</div><p>The map records the Disney+/Hulu/Max bundle case study, a Wallet-layer retention measurement, with non-overlapping numbers: one reading gives the pricing architecture and a 38% discount versus taking the services separately, the other a 59% twelve-month survival rate for 2024 sign-ups, roughly 28 percentage points above the standalone services. Neither source gives both numbers; they are held as two separate claims pending verification, not one reconciled data point.</p></div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l2)">
+    <summary><span class="tag">Layer 2</span><span class="lname">Glass</span><span class="tagline">Hardware / ACR, includes attention verification</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">The hardware and telemetry substrate of streaming measurement: chipset-level Automatic Content Recognition embedded in smart TVs and set-top boxes, capturing screen-level viewership regardless of whether the source is linear broadcast, a CTV app, a DVR, or a direct-to-consumer streamer. The data is the raw material of transactable TV-advertising currency, and its consent regime is device-level opt-in, a separate regime from the Wallet layer, with the Video Privacy Protection Act as the dominant statutory exposure. Attention verification (EDO, TVision) is folded in here as a narrow niche riding directly on ACR infrastructure rather than a structurally distinct layer.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Chipset-level Automatic Content Recognition in smart TVs and set-top boxes &#8594; screen-level viewership.</p></div>
+        <div class="meta-card"><div class="meta-label">Legal exposure</div><p>Device-level opt-in consent (separate regime from Wallet); VPPA class-action exposure.</p></div>
+        <div class="meta-card"><div class="meta-label">Customers</div><p>Ad agencies, brand advertisers, network ad sales.</p></div>
+      </div>
+      <ul class="chips">
+        <li class="chip"><b>Nielsen</b><span>Legacy national TV-currency incumbent (~80-90% share); mid-crisis on accreditation and methodology since 2021</span></li>
+        <li class="chip"><b>Comscore (Nasdaq: SCOR)</b><span>Public micro-cap challenger currency; recapitalized 2025-2026</span></li>
+        <li class="chip"><b>VideoAmp</b><span>JIC-certified currency challenger; cross-platform planner (VXP); scaling upfront deal volume</span></li>
+        <li class="chip"><b>iSpot.tv</b><span>JIC-certified challenger; integrated into Paramount and AMC Networks upfront guarantees</span></li>
+        <li class="chip"><b>Samba TV</b><span>Chipset-level ACR, independent of any single TV brand</span></li>
+        <li class="chip"><b>Vizio Inscape</b><span>ACR data unit; Vizio itself was acquired by Walmart in 2024; ownership/independence of Inscape as a standalone data product needs re-confirming</span></li>
+        <li class="chip"><b>EDO Inc.</b><span>Attention verification; links CTV ad exposure to downstream digital outcomes</span></li>
+        <li class="chip"><b>TVision</b><span>Attention verification; infrared-sensor household panels measuring actual eyes-on-screen</span></li>
+      </ul>
+      <div class="open-q"><div class="meta-label mono">Open question</div><p>Nielsen's 2025-2026 crisis is told two different ways in the source passes: one adversarial and scandal-framed (a delayed Gauge report and a Video Advertising Bureau accusation of "indefensible manipulation" ahead of the 2026 upfronts), one procedural (MRC priority fixes, a customer-requested delay to August 31, 2026, accreditation reaffirmed with the 2025 audit left open). Both cite the same underlying fact, adults 25-54 impressions down roughly 10% year over year. The map holds them as two partial views of one ongoing saga pending primary-source reconciliation; the layer file reads them as two tracks of a single story.</p></div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l3)">
+    <summary><span class="tag">Layer 3</span><span class="lname">Shield</span><span class="tagline">Media quality / fraud verification</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">Independently verifies that programmatic advertising actually reaches a human, in a suitable environment, without fraud: not who watched, but whether the ad-serve was real. It stands between advertisers and the publishers and platforms selling them inventory, and its non-negotiable value proposition is independence, since a platform paid to transact media cannot credibly grade that media's quality. Following Integral Ad Science's take-private, DoubleVerify is the sole remaining public proxy in the layer.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Verifies impressions are viewable, brand-safe, and human: not who watched, whether the ad-serve was real.</p></div>
+        <div class="meta-card"><div class="meta-label">Legal exposure</div><p>Ad-fraud and brand-safety compliance; no direct consumer-privacy statute.</p></div>
+        <div class="meta-card"><div class="meta-label">Customers</div><p>Programmatic ad buyers.</p></div>
+      </div>
+      <ul class="chips">
+        <li class="chip"><b>DoubleVerify (NYSE: DV)</b><span>Sole remaining public Shield-layer proxy; CTV fraud and brand-safety verification</span></li>
+        <li class="chip"><b>Integral Ad Science</b><span>DoubleVerify's former public duopoly peer; taken private by Novacap (Dec 2025, ~$1.9B)</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l4)">
+    <summary><span class="tag">Layer 4</span><span class="lname">Demand/Valuation</span><span class="tagline">Audience demand and IP valuation</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">These vendors hold no authorized platform telemetry or hardware-level ACR: they ingest social media activity and sentiment, search query velocity, piracy downloads, and fan wiki engagement, then harmonize those touchpoints into synthetic demand indices that proxy actual viewership. The core financial metric is the implied cost-per-demand-point: an estimated production budget divided by a title's registered demand-expression footprint. As platforms withhold precise metrics, these indices function as the primary quantitative baseline for carriage licensing, contract renewals, and catalog valuation.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Social, search, piracy, and wiki signals &#8594; synthetic demand index &#8594; cost-per-demand-point.</p></div>
+        <div class="meta-card"><div class="meta-label">Legal exposure</div><p>None distinct (aggregates public signals).</p></div>
+        <div class="meta-card"><div class="meta-label">Customers</div><p>Studios, talent agencies, licensing negotiators.</p></div>
+      </div>
+      <ul class="chips">
+        <li class="chip"><b>Parrot Analytics</b><span>Demand-expression index; cost-per-demand-point metric; the Suits licensing case study</span></li>
+        <li class="chip"><b>Ampere Analysis</b><span>European demand-forecasting firm; acquired PlumResearch (May 2026)</span></li>
+        <li class="chip"><b>PlumResearch</b><span>Device-agnostic tracking and behavioral metrics; now part of Ampere Analysis</span></li>
+        <li class="chip"><b>Gracenote</b><span>Nielsen subsidiary; supplies metadata and content ontology rather than competing on demand directly</span></li>
+        <li class="chip"><b>Whip Media (TV Time shut down)</b><span>Consumer app TV Time shut down Jul 15, 2026; owner Blue Torch Capital pivoted resources to Helix, an enterprise B2B SaaS platform; Bingers, launched by TV Time's original founder, is an unaffiliated indie successor</span></li>
+        <li class="chip"><b>Luminate</b><span>Demand and behavior analytics; also powers Walmart Connect's clean room (Identity layer)</span></li>
+        <li class="chip"><b>Diesel Labs</b><span>Content analytics and audience-preference mapping; owned by Forma Group; launched the Diesel AI ("Daisy") natural-language layer (Jul 2024) and PanelAI synthetic focus groups</span></li>
+      </ul>
+      <div class="open-q"><div class="meta-label mono">Open question</div><p>On a specific, named, post-2025 deal or dispute where demand data directly moved a backend compensation outcome, the source passes fall back on historical precedent only (the Tommy Lee Jones v. William Morris Agency arbitration); contemporary agency negotiations remain closely guarded, and this stays the layer's one genuinely open question.</p></div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l5)">
+    <summary><span class="tag">Layer 5</span><span class="lname">Funnel</span><span class="tagline">Downstream intent and discovery</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">Sits at the top of the streaming conversion funnel, upstream of every transaction: search navigation, watchlist additions, and app-store download velocity, all captured before any billing relationship exists. Its analytical value peaks during tentpole launch windows, when tracking upstream intent against ad spend lets analysts reverse-engineer a platform's customer acquisition cost efficiency well before quarterly disclosure. Historically the least documented segment of the map, largely because its vendors present as consumer utilities while their actual enterprise architectures are B2B data licensing and advertising engines.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Search navigation, watchlists, app-store velocity &#8594; leading indicator of customer acquisition cost.</p></div>
+        <div class="meta-card"><div class="meta-label">Legal exposure</div><p>None distinct.</p></div>
+        <div class="meta-card"><div class="meta-label">Customers</div><p>Marketing and CAC modeling teams.</p></div>
+      </div>
+      <ul class="chips">
+        <li class="chip"><b>JustWatch</b><span>Content discovery and search-navigation aggregator</span></li>
+        <li class="chip"><b>Reelgood</b><span>Content discovery and search-navigation aggregator</span></li>
+        <li class="chip"><b>Sensor Tower</b><span>App-store analytics; used as a CAC-efficiency proxy tool</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l6)">
+    <summary><span class="tag">Layer 6</span><span class="lname">Sports-Rights</span><span class="tagline">Live sports sub-vertical</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">The sub-vertical handling what standard SVOD transaction panels cannot: synchronous low-latency delivery, betting-handle correlation, and regional blackout compliance at scale. It is structurally unique within the stack because it runs on exclusive, multi-year league data licensing rather than consumer transaction consent, which is why its vendors hold pricing power no panel vendor has. As broadcast rights costs escalate, the data layer is consolidating into fewer, deeper, longer deals, increasingly laced with direct league equity in the vendors.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Real-time optical tracking, betting-handle correlation, blackout compliance.</p></div>
+        <div class="meta-card"><div class="meta-label">Legal exposure</div><p>Distinct from the SVOD-panel regime; sports-data licensing.</p></div>
+        <div class="meta-card"><div class="meta-label">Customers</div><p>Rights holders, sportsbooks, brands.</p></div>
+      </div>
+      <ul class="chips">
+        <li class="chip"><b>Stats Perform</b><span>FIFA's official betting-data and live-stream distributor (2026 Men's/2027 Women's World Cup); Opta and RunningBall infrastructure</span></li>
+        <li class="chip"><b>Sports Innovation Lab</b><span>"Fluid Fan Graph" transactional fan-behavior data; acquired by Genius Sports (Sep 2025) to supply the transactional half of closed-loop attribution</span></li>
+        <li class="chip"><b>Zoomph</b><span>Real-time social audience intelligence; partnered with Sports Innovation Lab (Apr 2025), a partnership whose endgame was the Genius Sports acquisition</span></li>
+        <li class="chip"><b>Genius Sports (NYSE: GENI)</b><span>NFL exclusive data distribution through 2029, with the league its largest shareholder at ~8.7%; NCAA rights extended through 2032; acquired Sports Innovation Lab (Sep 2025) and the Legend affiliate network (Apr 2026); Q1 2026 revenue $188.0M, up 31%</span></li>
+        <li class="chip"><b>Sportradar (Nasdaq: SRAD)</b><span>Rights across the NBA (through 2030-31), MLB (through 2032, with league equity), NHL, UEFA, and Bundesliga; acquired IMG ARENA (Nov 2025); Kalshi prediction-market data deal (Jun 2026); Q1 2026 revenue &#8364;346.5M, up 11%</span></li>
+      </ul>
+      <div class="open-q"><div class="meta-label mono">Open question</div><p>The NBA-Sportradar rights end date is carried two ways in the corpus: two research passes independently find the deal running through the 2030-31 season, while earlier project framing says 2032, most likely conflating the NBA's date with MLB's separate, confirmed 2032 end date. Both readings are held pending a direct check.</p></div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l7)">
+    <summary><span class="tag">Layer 7</span><span class="lname">Identity / Clean Rooms</span><span class="tagline">Connective substrate</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">The substrate under every other layer: the infrastructure that lets Wallet-layer transaction data get matched to Glass-layer viewership data without either party exchanging raw personally identifiable information. Whoever owns the match keys and the matching environment collects a toll on every data collaboration that crosses it. The layer's defining 2026 event is an ownership change: LiveRamp, the last major independent operator of that toll booth, agreed in May 2026 to be acquired by Publicis Groupe, and the neutral-intermediary model the open-web data economy was built on is being replaced by holding-company ownership on one side and retail walled gardens on the other.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Tokenized matching of Wallet data to Glass data without exchanging raw PII.</p></div>
+        <div class="meta-card"><div class="meta-label">Legal exposure</div><p>Privacy-preserving by design; the chokepoint everything else depends on.</p></div>
+        <div class="meta-card"><div class="meta-label">Customers</div><p>Every layer above; the toll beneath the other tolls.</p></div>
+      </div>
+      <ul class="chips">
+        <li class="chip"><b>LiveRamp</b><span>Primary independent identity toll booth (RampID); being acquired by Publicis Groupe (announced May 2026, ~$2.17B enterprise value)</span></li>
+        <li class="chip"><b>The Trade Desk</b><span>Owns Unified ID 2.0 (UID2), the leading open-source identity alternative to LiveRamp</span></li>
+        <li class="chip"><b>Amazon Marketing Cloud</b><span>Amazon's walled-garden clean room</span></li>
+        <li class="chip"><b>Walmart Connect</b><span>Walmart's walled-garden clean room, powered by Luminate (rebranding to Scintilla); global ad revenue $4.4B in FY2025 and $6.4B in FY2026 per Walmart's SEC 8-K releases</span></li>
+      </ul>
+    </div>
+  </details>
+
+  <p class="axis bottom">The identity substrate everything else matches through</p>
+
+  <div class="footer">
+    Rendered from streaming-altdata-ecosystem.md, company-roster.md, and the eight layer files in layers/ (00-gatekeeper-layer.md through 07-identity-clean-rooms-layer.md), all in this folder. The markdown documents are the source of record; where the roster and a layer file disagree, the layer file (the deeper research pass) governs. One Wallet-layer roster entry is not rendered on this page.<br>
+    Self-contained page: all styles and scripts inline, no external requests, no tracking.
+  </div>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById("toggle-btn");
+  var layers = Array.prototype.slice.call(document.querySelectorAll("details.layer"));
+  function allOpen() { return layers.every(function (d) { return d.open; }); }
+  function refresh() { btn.textContent = allOpen() ? "Collapse all" : "Expand all"; }
+  btn.addEventListener("click", function () {
+    var target = !allOpen();
+    layers.forEach(function (d) { d.open = target; });
+    refresh();
+  });
+  layers.forEach(function (d) { d.addEventListener("toggle", refresh); });
+})();
+</script>
+</body>
+</html>
