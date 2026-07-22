@@ -1,4 +1,4 @@
-# ats-resolver
+# job-posting-resolver
 
 A multi-provider job-posting resolver: an entity-resolution and data-reliability tool packaged as a local MCP server. It was built to answer one question reliably (is this role actually remote) by going to the authoritative source instead of trusting aggregator metadata.
 
@@ -47,7 +47,7 @@ The four supported providers expose public, unauthenticated JSON APIs intended f
 ## Install
 
 ```
-cd ats-resolver
+cd job-posting-resolver
 python -m venv .venv
 .venv\Scripts\Activate.ps1      # Windows PowerShell; Git Bash: . .venv/Scripts/activate; macOS/Linux: . .venv/bin/activate
 pip install -r requirements.txt
@@ -60,10 +60,10 @@ Add to your MCP config (adjust the python path to the venv you installed into):
 ```json
 {
   "mcpServers": {
-    "ats-resolver": {
+    "job-posting-resolver": {
       "command": "python",
       "args": ["-m", "ats_resolver_mcp.server"],
-      "cwd": "/path/to/ats-resolver"
+      "cwd": "/path/to/job-posting-resolver"
     }
   }
 }
@@ -89,7 +89,7 @@ All company names below are fictional.
 21 fixture-based unit tests, offline (no network). Every fixture is a synthetic payload for a fictional company, shaped like the real vendor schemas:
 
 ```
-cd ats-resolver
+cd job-posting-resolver
 python -m pytest -q
 ```
 

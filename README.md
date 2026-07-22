@@ -32,7 +32,7 @@ A dbt-core plus DuckDB warehouse over a synthetic music-streaming catalog: stagi
 
 A reproducible PySpark notebook joining three sources on a household-ID spine and running panel-weighted logistic regression, with the data-quality catches documented rather than hidden. Metrics and the naive-join failure it guards against are in the directory README.
 
-### [ats-resolver](ats-resolver/)
+### [job-posting-resolver](job-posting-resolver/)
 
 An entity-resolution and data-reliability tool packaged as a local MCP server: job postings resolved from lossy aggregator metadata back to the authoritative applicant-tracking-system record (Greenhouse, Lever, Ashby, SmartRecruiters), through an explicit reliability hierarchy in which dedicated API fields beat inference from posting text, which beats a last-resort HTML scrape, and unstated facts resolve to unknown rather than to a guess. A small instance of the general alternative-data problem: the convenient feed is a lossy derivative of the system of record.
 
