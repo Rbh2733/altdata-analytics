@@ -4,35 +4,37 @@ Shop-side only: every rule below is computed from data/exhaust/ and data/public/
 
 ## P1: bot-traffic spike (z > 4 on the monthly log-return, trailing 6 months, no corroborating jobs/spend move)
 
-- Raw z>4 candidates across the population: 51
-- Surviving after the no-corroboration filter: 49
-  - V0019 2024-04: z=8.39
-  - V0278 2025-02: z=6.70
-  - V0265 2024-11: z=5.84
-  - V0319 2024-08: z=5.81
-  - V0016 2025-11: z=5.66
-  - V0241 2025-11: z=5.60
-  - V0157 2023-10: z=5.57
-  - V0327 2025-12: z=5.29
-  - V0167 2025-02: z=5.27
-  - V0327 2023-11: z=5.21
+- Raw z>4 candidates across the population: 66
+- Surviving after the no-corroboration filter: 60
+  - V0031 2025-10: z=6.92
+  - V0259 2024-10: z=6.71
+  - V0381 2025-08: z=6.57
+  - V0221 2025-07: z=6.33
+  - V0318 2025-10: z=6.32
+  - V0421 2024-07: z=6.13
+  - V0072 2025-05: z=5.86
+  - V0119 2025-11: z=5.73
+  - V0170 2025-02: z=5.70
+  - V0363 2024-03: z=5.66
 
 ## P2: job repost storm (unique fingerprints / raw postings < 0.4)
 
-- Vendor-quarters flagged: 2
-  - V0339 2024Q3: raw=102, unique=30, ratio=0.294
-  - V0339 2024Q4: raw=93, unique=32, ratio=0.344
-- Relist-collapse window also absorbed 3683 legitimate background re-lists elsewhere in the population (counted, not hidden).
+- Vendor-quarters flagged: 5
+  - V0208 2025Q2: raw=353, unique=140, ratio=0.397
+  - V0208 2025Q3: raw=418, unique=148, ratio=0.354
+  - V0208 2025Q4: raw=505, unique=155, ratio=0.307
+  - V0290 2024Q3: raw=21, unique=5, ratio=0.238
+  - V0290 2024Q4: raw=18, unique=5, ratio=0.278
+- Relist-collapse window collapsed 5476 postings population-wide beyond first listings, a total that includes the flagged storm quarters (counted, not hidden).
 
 ## P3: descriptor fragmentation (panelist overlap > 0.5, amount ratio >= 0.6, cadence ratio in [0.8, 1.25], all three agree)
 
-- Bridges found: 2
-  - 'KELPDEEP' -> V0382: overlap=1.000, amount_ratio=0.990, cadence_ratio=1.208
-  - 'SQ *KELPDEEP' -> V0382: overlap=1.000, amount_ratio=0.969, cadence_ratio=1.203
+- Bridges found: 1
+  - 'HARBORZONE INC' -> V0347: overlap=1.000, amount_ratio=0.955, cadence_ratio=1.243
 
 ## P4: coverage cliff (segment covered-vendor count drops > 50% vs trailing 4-quarter mean)
 
 - Segment-quarters flagged: 2
-  - ai_applications 2025Q2: n_covered=0, trailing_mean=36.2
-  - ai_applications 2025Q3: n_covered=0, trailing_mean=27.0
+  - ai_applications 2025Q2: n_covered=0, trailing_mean=44.0
+  - ai_applications 2025Q3: n_covered=0, trailing_mean=33.0
 

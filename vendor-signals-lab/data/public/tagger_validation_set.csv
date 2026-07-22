@@ -119,33 +119,93 @@ Staff Data Analyst,other
 Lead Product Manager,other
 Jr. Marketing Manager,other
 Principal Recruiter,other
+ML Infrastructure Engineer,ml_infrastructure
+Senior Machine Learning Infrastructure Engineer,ml_infrastructure
+Staff AI Infrastructure Engineer,ml_infrastructure
+Lead GPU Cluster Engineer,ml_infrastructure
+Jr. Cluster Operations Engineer,ml_infrastructure
+Principal MLOps Engineer,ml_infrastructure
+Associate Distributed Training Engineer,ml_infrastructure
+Inference Platform Engineer II,ml_infrastructure
+Datacenter Operations Engineer,ml_infrastructure
+Senior ML Infrastructure Engineer,ml_infrastructure
+Staff Machine Learning Infrastructure Engineer,ml_infrastructure
+Lead AI Infrastructure Engineer,ml_infrastructure
+Jr. GPU Cluster Engineer,ml_infrastructure
+Principal Cluster Operations Engineer,ml_infrastructure
+Associate MLOps Engineer,ml_infrastructure
+Distributed Training Engineer II,ml_infrastructure
+Inference Platform Engineer,ml_infrastructure
+Senior Datacenter Operations Engineer,ml_infrastructure
+Staff ML Infrastructure Engineer,ml_infrastructure
+Lead Machine Learning Infrastructure Engineer,ml_infrastructure
+Jr. AI Infrastructure Engineer,ml_infrastructure
+Principal GPU Cluster Engineer,ml_infrastructure
+Associate Cluster Operations Engineer,ml_infrastructure
+MLOps Engineer II,ml_infrastructure
+Distributed Training Engineer,ml_infrastructure
+Senior Inference Platform Engineer,ml_infrastructure
+Staff Datacenter Operations Engineer,ml_infrastructure
+Lead ML Infrastructure Engineer,ml_infrastructure
+Jr. Machine Learning Infrastructure Engineer,ml_infrastructure
+Principal AI Infrastructure Engineer,ml_infrastructure
+Research Scientist,research
+Senior Applied Research Scientist,research
+Staff AI Research Scientist,research
+Lead Machine Learning Researcher,research
+Jr. Foundation Model Researcher,research
+Principal Research Scientist,research
+Associate Applied Research Scientist,research
+AI Research Scientist II,research
+Machine Learning Researcher,research
+Senior Foundation Model Researcher,research
+Staff Research Scientist,research
+Lead Applied Research Scientist,research
+Jr. AI Research Scientist,research
+Principal Machine Learning Researcher,research
+Associate Foundation Model Researcher,research
+Research Scientist II,research
+Applied Research Scientist,research
+Senior AI Research Scientist,research
+Staff Machine Learning Researcher,research
+Lead Foundation Model Researcher,research
+Jr. Research Scientist,research
+Principal Applied Research Scientist,research
+Associate AI Research Scientist,research
+Machine Learning Researcher II,research
+Foundation Model Researcher,research
+Senior Research Scientist,research
+Staff Applied Research Scientist,research
+Lead AI Research Scientist,research
+Jr. Machine Learning Researcher,research
+Principal Foundation Model Researcher,research
 Solutions Engineer,engineering
 Senior Developer Advocate,engineering
 Staff Support Engineering Manager,support
 Lead Customer Success Engineer,support
+Jr. ML Platform Engineer,ml_infrastructure
+Principal Research Engineer,research
+Associate Solutions Engineer,engineering
+Developer Advocate II,engineering
+Support Engineering Manager,support
+Senior Customer Success Engineer,support
+Staff ML Platform Engineer,ml_infrastructure
+Lead Research Engineer,research
 Jr. Solutions Engineer,engineering
 Principal Developer Advocate,engineering
 Associate Support Engineering Manager,support
 Customer Success Engineer II,support
+ML Platform Engineer,ml_infrastructure
+Senior Research Engineer,research
+Staff Solutions Engineer,engineering
+Lead Developer Advocate,engineering
+Jr. Support Engineering Manager,support
+Principal Customer Success Engineer,support
+Associate ML Platform Engineer,ml_infrastructure
+Research Engineer II,research
 Solutions Engineer,engineering
 Senior Developer Advocate,engineering
 Staff Support Engineering Manager,support
 Lead Customer Success Engineer,support
-Jr. Solutions Engineer,engineering
-Principal Developer Advocate,engineering
-Associate Support Engineering Manager,support
-Customer Success Engineer II,support
-Solutions Engineer,engineering
-Senior Developer Advocate,engineering
-Staff Support Engineering Manager,support
-Lead Customer Success Engineer,support
-Jr. Solutions Engineer,engineering
-Principal Developer Advocate,engineering
-Associate Support Engineering Manager,support
-Customer Success Engineer II,support
-Solutions Engineer,engineering
-Senior Developer Advocate,engineering
-Staff Support Engineering Manager,support
-Lead Customer Success Engineer,support
-Jr. Solutions Engineer,engineering
-Principal Developer Advocate,engineering
+Jr. ML Platform Engineer,ml_infrastructure
+Principal Research Engineer,research

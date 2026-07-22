@@ -41,8 +41,9 @@ def _write_qa_report(bot_raw, bot_final, storm_flags, dedupe_collapsed,
         for _, r in storm_flags.iterrows():
             lines.append(f"  - {r['vendor_id']} {r['quarter']}: raw={r['raw']}, "
                          f"unique={r['unique']}, ratio={r['ratio']:.3f}")
-    lines.append(f"- Relist-collapse window also absorbed {dedupe_collapsed} legitimate "
-                 "background re-lists elsewhere in the population (counted, not hidden).\n")
+    lines.append(f"- Relist-collapse window collapsed {dedupe_collapsed} postings "
+                 "population-wide beyond first listings, a total that includes the "
+                 "flagged storm quarters (counted, not hidden).\n")
 
     lines.append("## P3: descriptor fragmentation (panelist overlap > 0.5, amount "
                  "ratio >= 0.6, cadence ratio in [0.8, 1.25], all three agree)\n")
@@ -68,13 +69,16 @@ def _write_qa_report(bot_raw, bot_final, storm_flags, dedupe_collapsed,
 
 
 def _write_tagger_report(val_df, preds, out_path):
+    from estimation.tagger_mock import FUNCTIONS
+
     val_df = val_df.copy()
     val_df["pred"] = preds
     acc = float((val_df["pred"] == val_df["true_function"]).mean())
-    funcs = ["engineering", "sales", "support", "other"]
+    funcs = list(FUNCTIONS)
     conf = pd.crosstab(val_df["true_function"], val_df["pred"]).reindex(
         index=funcs, columns=funcs, fill_value=0)
-    lines = ["# Tagger report (mock, default)\n", f"Accuracy on 150 hand-labeled titles: "
+    lines = ["# Tagger report (mock, default)\n",
+             f"Accuracy on {len(val_df)} hand-labeled titles: "
              f"{100 * acc:.1f}%\n", "## Confusion matrix (rows = true, cols = predicted)\n"]
     lines.append("| true \\ pred | " + " | ".join(funcs) + " |")
     lines.append("|---" * (len(funcs) + 1) + "|")

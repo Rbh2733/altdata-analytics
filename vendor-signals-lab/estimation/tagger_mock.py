@@ -2,20 +2,23 @@
 ships the published numbers. This is the default tagger `run_all.py`
 uses; `tagger_claude.py` is a drop-in behind the same interface.
 
-Rule order matters: phrase-level sales/support checks run before the
-generic "engineer" substring catch-all, so most titles resolve
-correctly. One deliberate exception survives by construction: "Support
-Engineering Manager" does not match any of the support phrases (it is
-not "customer support", "technical support", or "support team") so it
-falls through to the generic engineer rule and is mistagged engineering
-against a true label of support. That single template is the tagger's
-one designed confusion; the validation set measures it rather than
-hiding it.
+Rule order matters: phrase-level sales/support checks run first, then the
+ml_infrastructure and research phrase checks, and only then the generic
+"engineer" substring catch-all, so most titles resolve correctly. Three
+deliberate exceptions survive by construction, all falling through to the
+generic engineer rule against a different true label: "Support
+Engineering Manager" (true support) matches none of the support phrases;
+"ML Platform Engineer" (true ml_infrastructure) carries none of the
+ml_infrastructure phrase anchors (no "infrastructure", no "gpu", no
+"cluster"); and "Research Engineer" (true research) is neither a
+"research scientist" nor a "researcher" by whole-word match. The
+validation set measures all three confusions rather than hiding them.
 """
 
 import re
 
-FUNCTIONS = ["engineering", "sales", "support", "other"]
+FUNCTIONS = ["engineering", "ml_infrastructure", "research",
+             "sales", "support", "other"]
 
 _RULES = [
     (re.compile(r"\bsales\b"), "sales"),
@@ -29,6 +32,15 @@ _RULES = [
     (re.compile(r"\bcustomer success\b"), "support"),
     (re.compile(r"\bhelp desk\b"), "support"),
     (re.compile(r"\bimplementation specialist\b"), "support"),
+    (re.compile(r"\b(ml|machine learning|ai) infrastructure\b"), "ml_infrastructure"),
+    (re.compile(r"\bgpu\b"), "ml_infrastructure"),
+    (re.compile(r"\bcluster\b"), "ml_infrastructure"),
+    (re.compile(r"\bmlops\b"), "ml_infrastructure"),
+    (re.compile(r"\bdistributed training\b"), "ml_infrastructure"),
+    (re.compile(r"\binference\b"), "ml_infrastructure"),
+    (re.compile(r"\bdatacenter\b"), "ml_infrastructure"),
+    (re.compile(r"\bresearch scientist\b"), "research"),
+    (re.compile(r"\bresearcher\b"), "research"),
     (re.compile(r"engineer"), "engineering"),
     (re.compile(r"\bdeveloper\b"), "engineering"),
     (re.compile(r"\bsoftware\b"), "engineering"),

@@ -26,7 +26,17 @@ def _write_csv(rows, fieldnames, path: Path):
 
 
 def _pick_plant_vendor(segment, vendors, trajectories_by_id, affected_quarters,
-                        rng, restrict_middle=False):
+                        rng, restrict_middle=False, vendor_state=None,
+                        alive_through=None, min_window_reqs=None):
+    """Plant-vendor selection with apparatus-validity gates (fifth
+    disclosed fix, 2026-07-22): a plant is only a measurable experiment
+    if its vendor is actually emitting in the plant window. alive_through
+    skips vendors shut down on or before (or acquired strictly before)
+    that quarter, since their exhaust is dark when the plant fires;
+    min_window_reqs skips vendors whose organic requisition volume in the
+    affected quarters is too small for a multiplied storm to surface at
+    all. Neither gate consumes randomness, so they only reorder which
+    candidate wins the same permutation."""
     candidates = [v for v in vendors if v["segment"] == segment]
     if restrict_middle:
         candidates = sorted(candidates, key=lambda v: v["initial_headcount"])
@@ -37,8 +47,23 @@ def _pick_plant_vendor(segment, vendors, trajectories_by_id, affected_quarters,
     for idx in order:
         vid = ids[idx]
         infl_quarters = {i["quarter"] for i in trajectories_by_id[vid]["inflections"]}
-        if not (infl_quarters & set(affected_quarters)):
-            return vid
+        if infl_quarters & set(affected_quarters):
+            continue
+        if alive_through is not None and vendor_state is not None:
+            through = config.quarter_index(alive_through) + 1  # 1-based
+            st = vendor_state[vid]
+            sd = st["shutdown_quarter_index"]
+            acq = st["acquired_quarter_index"]
+            if sd is not None and sd <= through:
+                continue  # shutdown truncates its own quarter's exhaust
+            if acq is not None and acq < through:
+                continue  # acquisition darkens exhaust the quarter after
+        if min_window_reqs is not None:
+            total = sum(trajectories_by_id[vid]["requisitions_target"][
+                config.quarter_index(q)] for q in affected_quarters)
+            if total < min_window_reqs:
+                continue
+        return vid
     return ids[0]
 
 
@@ -47,12 +72,17 @@ AMBIGUOUS_TRUE_FUNCTION = {
     "Developer Advocate": "engineering",
     "Support Engineering Manager": "support",
     "Customer Success Engineer": "support",
+    "ML Platform Engineer": "ml_infrastructure",
+    "Research Engineer": "research",
 }
 MODIFIERS = ["", "Senior ", "Staff ", "Lead ", "Jr. ", "Principal ",
              "Associate ", "II"]
 
 
 def _build_tagger_validation_set(rng: np.random.Generator):
+    """30 template rows per title-bank function plus 30 ambiguous rows
+    (210 total at six functions). The ambiguous rows are where the
+    designed confusions live and get measured."""
     rows = []
     per_func = 30
     for func, bank in exhaust_jobs.TITLE_BANK.items():
@@ -63,14 +93,14 @@ def _build_tagger_validation_set(rng: np.random.Generator):
             if mod == "II":
                 title = f"{base} II"
             rows.append({"title": title, "true_function": func})
-    ambiguous_total = 150 - len(rows)
+    ambiguous_total = 30
     amb_titles = list(AMBIGUOUS_TRUE_FUNCTION.keys())
     for i in range(ambiguous_total):
         base = amb_titles[i % len(amb_titles)]
         mod = MODIFIERS[i % len(MODIFIERS)]
         title = f"{base} II" if mod == "II" else f"{mod}{base}"
         rows.append({"title": title, "true_function": AMBIGUOUS_TRUE_FUNCTION[base]})
-    return rows[:150]
+    return rows
 
 
 def main(root=None, verbose=True, seed=None):
@@ -87,13 +117,26 @@ def main(root=None, verbose=True, seed=None):
 
     bot_spike_vendor = _pick_plant_vendor(
         params.PLANT_BOT_SPIKE["segment"], vendors, trajectories_by_id,
-        [params.PLANT_BOT_SPIKE["quarter"]], rng, restrict_middle=True)
+        [params.PLANT_BOT_SPIKE["quarter"]], rng, restrict_middle=True,
+        vendor_state=vendor_state,
+        alive_through=params.PLANT_BOT_SPIKE["quarter"])
+    # restrict_middle plus a minimal organic-volume gate for the storm
+    # (fifth disclosed fix, 2026-07-22): the plant multiplies whatever
+    # the vendor organically posts, so a near-zero-requisition vendor
+    # storms invisibly. Same size rationale as the bot-spike restriction.
     repost_storm_vendor = _pick_plant_vendor(
         params.PLANT_REPOST_STORM["segment"], vendors, trajectories_by_id,
-        params.PLANT_REPOST_STORM["quarters"], rng)
+        params.PLANT_REPOST_STORM["quarters"], rng, restrict_middle=True,
+        vendor_state=vendor_state,
+        alive_through=params.PLANT_REPOST_STORM["quarters"][-1],
+        min_window_reqs=10)
+    # The migrated descriptors are the fragmentation vendor's permanent
+    # state, so it must keep emitting through the end of the calendar for
+    # the bridge to have anything to work with.
     fragmentation_vendor = _pick_plant_vendor(
         params.PLANT_DESCRIPTOR_FRAGMENTATION["segment"], vendors, trajectories_by_id,
-        [params.PLANT_DESCRIPTOR_FRAGMENTATION["quarter"]], rng)
+        [params.PLANT_DESCRIPTOR_FRAGMENTATION["quarter"]], rng,
+        vendor_state=vendor_state, alive_through=config.QUARTERS[-1])
 
     postings, tracked_rows = exhaust_jobs.build_job_postings(
         vendors, trajectories_by_id, vendor_state, rng,

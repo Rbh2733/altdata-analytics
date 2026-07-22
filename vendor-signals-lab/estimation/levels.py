@@ -28,10 +28,12 @@ ASSUMED_EMPLOYEES_PER_OPEN_ROLE = 12.0
 ASSUMED_REV_PER_EMPLOYEE = {
     "devtools": 220_000, "data_infrastructure": 200_000,
     "ai_applications": 250_000, "security": 230_000, "vertical_saas": 200_000,
+    "ai_infrastructure": 300_000,  # compute revenue scales without linear headcount
 }
 ASSUMED_DOLLARS_PER_VISIT_ANNUAL = {
     "devtools": 32.0, "data_infrastructure": 40.0, "ai_applications": 24.0,
     "security": 48.0, "vertical_saas": 28.0,
+    "ai_infrastructure": 60.0,  # B2B traffic is scarce; each visit carries more revenue
 }
 
 

@@ -17,8 +17,11 @@ MODEL = "claude-opus-4-8"
 
 _SYSTEM = (
     "Classify each job title into exactly one function: engineering, "
-    "sales, support, or other. Respond with a JSON array of objects "
-    "{\"id\": <int>, \"function\": <one of the four>}, one object per "
+    "ml_infrastructure, research, sales, support, or other. "
+    "ml_infrastructure covers ML/AI infrastructure, GPU/cluster, and "
+    "datacenter operations roles; research covers scientist and "
+    "researcher roles. Respond with a JSON array of objects "
+    "{\"id\": <int>, \"function\": <one of the six>}, one object per "
     "input row, in the same order, covering every id exactly once. "
     "No prose, JSON only."
 )
