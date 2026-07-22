@@ -1,6 +1,6 @@
-# Streaming Alt-Data Ecosystem — Company Roster
+# Streaming Alt-Data Ecosystem: Company Roster
 
-> Flat reference list, one line per company, organized by the same eight layers as `streaming-altdata-ecosystem.md`. Purpose: a lookup for scoping future deep research and for deciding what earns a `companies/` subfolder. Not a scoring or conviction document, no ratings, no verdicts. The `layers/` deep-research prompt docs will be linked backward into this roster and the overview map once all eight have been run, this file is a starting scope, not a finished one.
+> Flat reference list, one line per company, organized by the same eight layers as `streaming-altdata-ecosystem.md`. Purpose: a lookup for scoping deep research passes. Not a scoring document, no ratings, no verdicts.
 
 ---
 
