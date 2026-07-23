@@ -1,17 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=./the-lineup.html">
-    <link rel="canonical" href="./the-lineup.html">
-    <title>The Lineup | Reid Nelson</title>
-    <style>
-        body { background: #081230; color: #93A7D9; font-family: Arial, Helvetica, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        a { color: #E8B84B; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reid Nelson | altdata-analytics</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0C0C0F; color:#E7E4DC; font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif; line-height:1.55; min-height:100vh; }
+.wrap { max-width:860px; margin:0 auto; padding:52px 22px 70px; }
+header h1 { font-family:Georgia,"Times New Roman",serif; font-size:34px; font-weight:700; letter-spacing:-0.01em; }
+header .dek { color:#A8A396; font-size:14.5px; margin-top:8px; max-width:640px; }
+header .links { margin-top:14px; font-size:12.5px; font-family:ui-monospace,Consolas,Menlo,monospace; }
+header .links a { color:#C9A94E; text-decoration:none; margin-right:18px; }
+header .links a:hover { text-decoration:underline; }
+.cards { margin-top:36px; display:flex; flex-direction:column; gap:16px; }
+a.card { display:block; text-decoration:none; border-radius:4px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); transition:transform .15s, border-color .15s; }
+a.card:hover { transform:translateY(-2px); border-color:rgba(255,255,255,0.28); }
+.card .inner { padding:22px 24px 24px; }
+.card .kicker { font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; font-family:ui-monospace,Consolas,Menlo,monospace; margin-bottom:8px; }
+.card h2 { font-size:22px; line-height:1.2; }
+.card p { font-size:13.5px; margin-top:8px; max-width:640px; }
+
+/* Card 1: The Lineup, cable-guide skin */
+.card.lineup { background:#081230; border-top:5px double #E8B84B; }
+.card.lineup .kicker { color:#E8B84B; }
+.card.lineup h2 { color:#E8B84B; font-family:"Arial Narrow","Helvetica Neue Condensed",Arial,sans-serif; text-transform:uppercase; letter-spacing:.06em; font-weight:700; }
+.card.lineup p { color:#93A7D9; }
+
+/* Card 2: The Toll Matrix, print-editorial skin */
+.card.matrix { background:#F7F1E5; }
+.card.matrix .rulebar { height:6px; border-top:3px solid #211D16; border-bottom:1px solid #211D16; margin:0 24px; }
+.card.matrix .inner { padding-top:16px; }
+.card.matrix .kicker { color:#7A2E2E; }
+.card.matrix h2 { color:#211D16; font-family:Georgia,"Times New Roman",serif; }
+.card.matrix p { color:#4C463B; }
+
+/* Card 3: Ecosystem map, video-store skin */
+.card.store { background:#10182E; }
+.card.store .awning { height:10px; background:repeating-linear-gradient(-45deg, #F2B33D 0 14px, #10182E 14px 28px); border-bottom:2px solid #F2B33D; }
+.card.store .kicker { color:#F2B33D; }
+.card.store h2 { color:#F2B33D; font-family:"Arial Rounded MT Bold",ui-rounded,"Segoe UI",Verdana,sans-serif; font-style:italic; text-transform:uppercase; letter-spacing:.02em; font-weight:800; }
+.card.store p { color:#B9B29E; }
+
+.also { margin-top:38px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.12); font-size:12.5px; color:#A8A396; line-height:1.8; }
+.also a { color:#C9A94E; text-decoration:none; }
+.also a:hover { text-decoration:underline; }
+.foot { margin-top:26px; font-size:11px; color:#6E6A60; font-family:ui-monospace,Consolas,Menlo,monospace; }
+@media (max-width:600px) { header h1 { font-size:26px; } .wrap { padding:32px 14px 50px; } }
+</style>
 </head>
 <body>
-    <p>Opening <a href="./the-lineup.html">The Lineup</a>, the subscription platform economics dashboard.</p>
+<div class="wrap">
+  <header>
+    <h1>Reid Nelson</h1>
+    <p class="dek">Independent TMT research, Austin, TX. Three interactive research artifacts live here, each styled as the medium its subject replaced; the labs and pipelines behind them live in the repository.</p>
+    <p class="links">
+      <a href="https://github.com/Rbh2733/altdata-analytics">github repository</a>
+      <a href="https://reidn33.substack.com">substack</a>
+      <a href="mailto:reidnelson3363@outlook.com">email</a>
+    </p>
+  </header>
+
+  <div class="cards">
+    <a class="card lineup" href="./the-lineup.html">
+      <div class="inner">
+        <div class="kicker">CH 01 &#183; Subscription platform economics</div>
+        <h2>The Lineup</h2>
+        <p>Eight companies across premium SVOD, audio, and broadband: coverage universe, growth deceleration, bundle penetration, churn, and operating-margin comparisons. Market figures re-verified July 2026. Styled as the cable channel guide the streaming bundle replaced.</p>
+      </div>
+    </a>
+
+    <a class="card matrix" href="./toll-matrix.html">
+      <div class="rulebar"></div>
+      <div class="inner">
+        <div class="kicker">AI and technology coverage grid</div>
+        <h2>The Toll Matrix</h2>
+        <p>Seven sub-sectors crossed against seven altitude layers of the compute stack, from the physical substrate to the application layer, with 36 named public occupants and the mechanism recorded at each intersection. Styled as a print research journal.</p>
+      </div>
+    </a>
+
+    <a class="card store" href="./streaming-altdata-ecosystem/ecosystem-map.html">
+      <div class="awning"></div>
+      <div class="inner">
+        <div class="kicker">Streaming measurement vendors, eight layers</div>
+        <h2>The Streaming Alt-Data Ecosystem Map</h2>
+        <p>The vendor and data-layer architecture built to reconstruct what streaming platforms withhold: from the billing relationship down to the identity substrate, with the open questions shown in place. Styled as an homage to the video-store era it replaced.</p>
+      </div>
+    </a>
+  </div>
+
+  <p class="also">
+    Also in the repository: two measurement labs with knowable ground truth (<a href="https://github.com/Rbh2733/altdata-analytics/tree/main/panel-estimation-lab">panel-estimation-lab</a>, <a href="https://github.com/Rbh2733/altdata-analytics/tree/main/vendor-signals-lab">vendor-signals-lab</a>), two data pipelines, a dbt warehouse, an entity-resolution MCP server, <a href="./media-tiered-taxonomy-great-sorting.html">an interactive media taxonomy</a>, and three analysis PDFs. Every number in the lab READMEs reproduces from a clean copy.
+  </p>
+  <p class="foot">Self-contained page: styles inline, no external requests, no tracking. This site documents research method; it does not make recommendations.</p>
+</div>
 </body>
 </html>
