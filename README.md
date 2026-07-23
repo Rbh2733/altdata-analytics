@@ -38,13 +38,14 @@ An entity-resolution and data-reliability tool packaged as a local MCP server: j
 
 ### [streaming-altdata-ecosystem](streaming-altdata-ecosystem/)
 
-A research map of the streaming alternative-data ecosystem: the layers between raw consumer behavior and investor-grade measurement, and the companies operating at each one. The [interactive ecosystem map](https://rbh2733.github.io/altdata-analytics/streaming-altdata-ecosystem/ecosystem-map.html) renders the eight-layer structure as a clickable stack, with the markdown documents as the source of record.
+A research map of the streaming alternative-data ecosystem: the layers between raw consumer behavior and investor-grade measurement, and the companies operating at each one. The [interactive ecosystem map](https://rbh2733.github.io/altdata-analytics/streaming-altdata-ecosystem/ecosystem-map.html) renders the eight-layer structure as a clickable stack, with the markdown documents as the source of record. Its AI-side sibling, [The Toll Matrix](https://rbh2733.github.io/altdata-analytics/toll-matrix.html), lives at the repository root as `toll-matrix.html`.
 
 ### Dashboards and analyses
 
 - [Subscription Economy Research dashboard](https://rbh2733.github.io/altdata-analytics/), served from `index.html`: coverage universe, growth deceleration, bundle penetration, and operating-margin comparisons across the major subscription platforms.
 - Three analysis PDFs at the repository root (SVOD ad-tier inflection, competitive positioning, competitive architecture).
 - `media-tiered-taxonomy-great-sorting.html`, an interactive rendering of the media taxonomy the published essays are built on.
+- [The Toll Matrix](https://rbh2733.github.io/altdata-analytics/toll-matrix.html), served from `toll-matrix.html`: a two-axis grid of AI and technology research coverage, seven sub-sectors crossed against seven altitude layers of the compute stack. Cells record structural mechanism; company names appear only where citable from public knowledge; one row is marked not mapped rather than forced onto the axis.
 
 ## Method, in one paragraph
 
