@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Toll Matrix</title>
+<style>
+:root {
+  --bg: #0B0D11;
+  --surface: rgba(255,255,255,0.025);
+  --surface2: rgba(0,0,0,0.22);
+  --text: #E0DCD4;
+  --dim: rgba(255,255,255,0.5);
+  --faint: rgba(255,255,255,0.28);
+  --border: rgba(255,255,255,0.08);
+  --chipbg: rgba(255,255,255,0.03);
+  --openbg: rgba(201,169,78,0.06);
+  --openborder: rgba(201,169,78,0.35);
+  --opentext: #C9A94E;
+  --l0: #C9A94E;
+  --l1: #4A90D9;
+  --l2: #56A88C;
+  --l3: #C97A44;
+  --l4: #B06EC7;
+  --l5: #D9C24A;
+  --l6: #C94F4F;
+  --l7: #7B8FA1;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #F6F4EF;
+    --surface: rgba(0,0,0,0.02);
+    --surface2: rgba(0,0,0,0.04);
+    --text: #1E2126;
+    --dim: rgba(0,0,0,0.58);
+    --faint: rgba(0,0,0,0.38);
+    --border: rgba(0,0,0,0.12);
+    --chipbg: rgba(0,0,0,0.03);
+    --openbg: rgba(154,120,30,0.07);
+    --openborder: rgba(154,120,30,0.4);
+    --opentext: #8A6A18;
+    --l0: #9A781E;
+    --l1: #2E6DAF;
+    --l2: #2F7C61;
+    --l3: #A05423;
+    --l4: #8546A0;
+    --l5: #8F7B14;
+    --l6: #A33232;
+    --l7: #55677A;
+  }
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:"Segoe UI",system-ui,-apple-system,sans-serif; line-height:1.55; min-height:100vh; }
+.wrap { max-width:920px; margin:0 auto; padding:40px 20px 70px; }
+h1 { font-family:Georgia,"Times New Roman",serif; font-size:32px; font-weight:700; letter-spacing:-0.02em; line-height:1.15; }
+h2 { font-family:Georgia,"Times New Roman",serif; font-size:20px; font-weight:700; margin:34px 0 10px; }
+.mono { font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+.sub { font-size:13px; color:var(--dim); margin-top:8px; }
+.asof { font-size:12px; color:var(--faint); margin-top:6px; }
+.rule { height:1px; margin:22px 0 20px; background:linear-gradient(90deg,var(--l3),var(--l2),var(--l0),var(--l1),var(--l4),var(--l5),var(--l6)); opacity:.45; }
+.intro { font-size:13.5px; color:var(--dim); max-width:780px; }
+.toolbar { display:flex; justify-content:flex-end; margin:18px 0 14px; }
+.btn { background:var(--surface2); border:1px solid var(--border); color:var(--dim); padding:7px 16px; border-radius:5px; cursor:pointer; font-size:12px; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; transition:background .2s,color .2s; }
+.btn:hover { color:var(--text); }
+
+.matrix-scroll { overflow-x:auto; margin:26px 0 6px; padding-bottom:4px; }
+.matrix { display:grid; grid-template-columns:148px repeat(7,minmax(84px,1fr)); gap:4px; min-width:760px; }
+.mhead { font-size:9.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); text-align:center; padding:6px 3px 8px; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; align-self:end; line-height:1.35; }
+.mhead b { display:block; color:var(--dim); font-size:10px; }
+.rowlab { font-size:12.5px; font-weight:600; padding:8px 10px 8px 2px; line-height:1.3; align-self:center; }
+.rowlab span { display:block; font-weight:400; font-size:10.5px; color:var(--faint); font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; margin-top:2px; }
+.cell { border:1px solid var(--border); border-radius:6px; min-height:56px; background:var(--chipbg); position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px 4px; font-family:inherit; color:var(--dim); }
+.cell.blank { background:transparent; border-style:solid; border-color:rgba(127,127,127,0.06); }
+button.cell { cursor:pointer; transition:border-color .2s, background .2s; }
+button.cell:hover, button.cell:focus-visible { border-color:var(--accent); color:var(--text); outline:none; }
+.cell .mark { font-size:15px; line-height:1; color:var(--accent); }
+.cell .who { font-size:9.5px; line-height:1.3; text-align:center; color:var(--dim); font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+.cell .wraps { position:absolute; top:4px; right:5px; display:flex; gap:3px; }
+.cell .wraps i { font-style:normal; font-size:8.5px; font-weight:700; color:var(--bg); background:var(--l7); border-radius:3px; padding:1px 3px; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+.cell.notmapped { grid-column:2 / -1; border:1px dashed var(--openborder); background:var(--openbg); color:var(--opentext); font-size:11px; letter-spacing:.05em; text-transform:uppercase; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; flex-direction:row; gap:8px; }
+.legend { font-size:11px; color:var(--faint); letter-spacing:.02em; margin:8px 2px 0; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; line-height:1.8; }
+.legend .mark { color:var(--dim); }
+
+dialog { background:var(--bg); color:var(--text); border:1px solid var(--border); border-radius:10px; padding:0; max-width:560px; width:calc(100% - 40px); }
+dialog::backdrop { background:rgba(0,0,0,0.55); }
+.dlg-head { display:flex; align-items:baseline; gap:10px; padding:16px 20px 4px; }
+.dlg-title { font-family:Georgia,"Times New Roman",serif; font-size:17px; font-weight:700; }
+.dlg-close { margin-left:auto; background:none; border:none; color:var(--faint); font-size:18px; cursor:pointer; padding:2px 6px; }
+.dlg-close:hover { color:var(--text); }
+.dlg-body { padding:6px 20px 20px; }
+.dlg-body p { font-size:13px; color:var(--dim); line-height:1.6; margin-bottom:10px; }
+.dlg-body .lens { font-size:11.5px; color:var(--faint); font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; margin-bottom:10px; }
+.dlg-body .chips { display:grid; grid-template-columns:1fr; gap:8px; margin-top:4px; list-style:none; }
+.chip { background:var(--chipbg); border:1px solid var(--border); border-radius:6px; padding:9px 12px; }
+.chip b { display:block; font-size:13px; margin-bottom:2px; }
+.chip span { font-size:11.5px; color:var(--dim); line-height:1.45; display:block; }
+
+.layer { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent,var(--border)); border-radius:8px; margin-bottom:10px; overflow:hidden; }
+summary { list-style:none; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; padding:14px 18px; cursor:pointer; }
+summary::-webkit-details-marker { display:none; }
+summary:focus-visible { outline:2px solid var(--accent,var(--dim)); outline-offset:-2px; }
+.tag { font-weight:700; font-size:11px; letter-spacing:.07em; text-transform:uppercase; padding:3px 10px; border-radius:4px; color:var(--bg); background:var(--accent); flex-shrink:0; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+.lname { font-weight:700; font-size:16px; }
+.tagline { font-size:12.5px; color:var(--dim); font-style:italic; }
+.chev { margin-left:auto; color:var(--faint); font-size:14px; transition:transform .25s; flex-shrink:0; }
+details[open] .chev { transform:rotate(180deg); }
+.body { padding:0 18px 18px; }
+.desc { font-size:13.5px; color:var(--dim); line-height:1.6; max-width:780px; }
+.meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:14px 0 0; }
+.meta-card { background:var(--surface2); border-radius:6px; padding:10px 12px; border-left:2px solid var(--border); }
+.meta-label { font-weight:700; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); margin-bottom:5px; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+.meta-card p { font-size:12.5px; color:var(--dim); line-height:1.5; }
+
+.feature { border:1px dashed var(--l0); border-left:3px solid var(--l0); border-radius:8px; padding:16px 18px; margin:14px 0; background:transparent; }
+.feature h3 { font-family:Georgia,"Times New Roman",serif; font-size:16px; margin-bottom:8px; }
+.feature p { font-size:13.5px; color:var(--dim); line-height:1.6; max-width:780px; margin-bottom:8px; }
+.feature p:last-child { margin-bottom:0; }
+.open-q { margin:10px 0; padding:10px 14px; background:var(--openbg); border-left:3px solid var(--openborder); border-radius:4px; }
+.open-q .meta-label { color:var(--opentext); }
+.open-q p { font-size:12.5px; color:var(--dim); line-height:1.55; }
+.footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--border); font-size:11.5px; color:var(--faint); line-height:1.7; font-family:ui-monospace,Consolas,"Cascadia Mono",Menlo,monospace; }
+@media (max-width:600px) {
+  h1 { font-size:24px; }
+  .wrap { padding:24px 14px 50px; }
+  summary { padding:12px 14px; }
+  .body { padding:0 14px 14px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>The Toll Matrix</h1>
+    <p class="sub">A two-axis grid of an independent AI and technology research corpus: seven coverage sub-sectors crossed against seven altitude layers of one compute stack, from the physical substrate that creates compute to the applications that spend it. It documents structural coverage breadth; it does not make recommendations.</p>
+    <p class="asof mono">Point-in-time rendering, July 22, 2026. Underlying framework authored June 2026; classification pass July 2026.</p>
+    <div class="rule"></div>
+    <p class="intro">Rows are sub-sectors as the source research groups them, 57 company write-ups in total. Columns are altitudes: where in the flow of compute an occupant actually collects. The two axes are deliberately independent, and the tension between them is the point: a write-up filed under enterprise software can sit at the bottom of the physical substrate, and one sub-sector's governing economics refuse to map onto the axis at all, which the grid says honestly instead of forcing a fit. Cells record the mechanism at each intersection. The grid names a company only where one actor is the canonical public illustration of a mechanism; everywhere else the mechanism stands alone, and every company description on this page was written from public knowledge. Click any marked cell for the methodology that placed it.</p>
+  </header>
+
+  <div class="matrix-scroll">
+    <div class="matrix">
+      <div class="mhead" style="text-align:left"></div>
+      <div class="mhead"><b>Physical substrate</b>creating compute</div>
+      <div class="mhead"><b>Compute landlord</b>renting capacity</div>
+      <div class="mhead"><b>Compute execution</b>addressing silicon</div>
+      <div class="mhead"><b>Data</b>quality and gravity</div>
+      <div class="mhead"><b>Model weights</b>the thin layer</div>
+      <div class="mhead"><b>Routing and control</b>connectivity</div>
+      <div class="mhead"><b>Application</b>the end task</div>
+
+      <div class="rowlab">Semiconductors<span>12 write-ups</span></div>
+      <button class="cell" style="--accent:var(--l3)" data-cell="t-semi-sub" data-title="Semiconductors &#215; Physical substrate" aria-label="Semiconductors at physical substrate, open methodology"><span class="mark">&#9679;</span><span class="who">Arm &#183; Fabrinet</span></button>
+      <div class="cell blank" aria-hidden="true"></div>
+      <button class="cell" style="--accent:var(--l0)" data-cell="t-semi-exec" data-title="Semiconductors &#215; Compute execution" aria-label="Semiconductors at compute execution, the hinge, open methodology"><span class="mark">&#9733;</span><span class="who">the hinge &#183; contested</span></button>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+
+      <div class="rowlab">Optical interconnect<span>8 write-ups</span></div>
+      <button class="cell" style="--accent:var(--l3)" data-cell="t-opt-sub" data-title="Optical interconnect &#215; Physical substrate" aria-label="Optical interconnect at physical substrate, open methodology"><span class="mark">&#9675;</span></button>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+
+      <div class="rowlab">Physical infrastructure<span>12 write-ups</span></div>
+      <button class="cell" style="--accent:var(--l3)" data-cell="t-inf-sub" data-title="Physical infrastructure &#215; Physical substrate" aria-label="Physical infrastructure at physical substrate, open methodology"><span class="mark">&#9679;</span><span class="who">Eaton</span></button>
+      <button class="cell" style="--accent:var(--l2)" data-cell="t-inf-land" data-title="Physical infrastructure &#215; Compute landlord" aria-label="Physical infrastructure at compute landlord, open methodology"><span class="mark">&#9675;</span></button>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+
+      <div class="rowlab">Hyperscalers<span>3 write-ups</span></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <button class="cell" style="--accent:var(--l2)" data-cell="t-hyp-land" data-title="Hyperscalers &#215; Compute landlord" aria-label="Hyperscalers at compute landlord, open methodology"><span class="wraps"><i>P</i></span><span class="mark">&#9675;</span></button>
+      <div class="cell blank" aria-hidden="true"></div>
+      <button class="cell" style="--accent:var(--l1)" data-cell="t-hyp-data" data-title="Hyperscalers &#215; Data" aria-label="Hyperscalers at data, open methodology"><span class="mark">&#9675;</span></button>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+
+      <div class="rowlab">AI labs<span>1 write-up</span></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <button class="cell" style="--accent:var(--l1)" data-cell="t-lab-data" data-title="AI labs &#215; Data" aria-label="AI labs at data, open methodology"><span class="wraps"><i>C</i></span><span class="mark">&#9675;</span></button>
+      <button class="cell" style="--accent:var(--l4)" data-cell="t-lab-model" data-title="AI labs &#215; Model weights" aria-label="AI labs at model weights, open methodology"><span class="mark">&#9679;</span><span class="who">Anthropic</span></button>
+      <button class="cell" style="--accent:var(--l5)" data-cell="t-lab-route" data-title="AI labs &#215; Routing and control" aria-label="AI labs at routing and control, open methodology"><span class="mark">&#9679;</span><span class="who">Anthropic</span></button>
+      <div class="cell blank" aria-hidden="true"></div>
+
+      <div class="rowlab">Enterprise software<span>17 write-ups</span></div>
+      <button class="cell" style="--accent:var(--l3)" data-cell="t-sw-sub" data-title="Enterprise software &#215; Physical substrate" aria-label="Enterprise software at physical substrate, open methodology"><span class="mark">&#9675;</span><span class="who">placed by function</span></button>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <div class="cell blank" aria-hidden="true"></div>
+      <button class="cell" style="--accent:var(--l6)" data-cell="t-sw-app" data-title="Enterprise software &#215; Application" aria-label="Enterprise software at application, open methodology"><span class="wraps"><i>P</i><i>M</i></span><span class="mark">&#9675;</span></button>
+
+      <div class="rowlab">Industrial AI<span>4 write-ups</span></div>
+      <button class="cell notmapped" data-cell="t-ind-nm" data-title="Industrial AI: not mapped" aria-label="Industrial AI row, not mapped, open methodology">not mapped &#183; by design</button>
+    </div>
+  </div>
+  <p class="legend"><span class="mark">&#9679;</span> mechanism with a named public illustration &nbsp; <span class="mark">&#9675;</span> structural: mechanism recorded &nbsp; <span class="mark">&#9733;</span> the hinge (contested) &nbsp; badges: P perimeter &#183; C content gate &#183; M meter and governance &nbsp; click any marked cell</p>
+
+  <h2>The hinge: two standards, opposite directions</h2>
+  <div class="feature">
+    <p>The compute execution layer and the routing layer run the same play: author a standard, let everyone build on it, and let the accumulated gravity do the selling. Arm runs the version one floor down, licensing processor architecture into most of the world's smartphones and roughly a third of all processor chips. But the two software chokepoints run the play in opposite directions.</p>
+    <p>CUDA, NVIDIA's programming platform, locks compute in. In practice the dominant path to the GPU for AI workloads runs through the programming model, so the switching cost points down toward the silicon and the toll is collected on every training and inference cycle. The Model Context Protocol, authored by Anthropic and donated in December 2025 to the Agentic AI Foundation (a directed fund under the Linux Foundation), lets data out: it collapses M-by-N integration work to M-plus-N, commoditizes the connectors, and pushes competition up to model quality. One toll is a wall; the other is a door.</p>
+    <p>Open compiler paths (PyTorch 2.x, Triton, ROCm) challenge the training-side lock, while deployment runtimes (TensorRT and version-pinned inference engines) deepen the serving-side lock at exactly the moment a product ships and latency starts to matter. The grid records both dynamics. Which prevails is a question it deliberately does not answer.</p>
+  </div>
+
+  <h2>Two fault lines the grid records but does not resolve</h2>
+  <div class="open-q"><div class="meta-label mono">Fault line 1: metered gate versus flat license</div><p>The content gate splits on billing form. A per-crawl meter collects in proportion to use (TollBit operates this model between publishers and AI crawlers); a flat license collects once regardless of use. The two forms allocate usage risk differently between buyer and seller; the grid records the split as structural and stops there.</p></div>
+  <div class="open-q"><div class="meta-label mono">Fault line 2: the execution-layer contest</div><p>Challenge at training, deepening lock at serving, as described in the hinge note above. Both readings are carried simultaneously; the column is carried as contested (see the Altitude 3 key) rather than silently resolved in either direction.</p></div>
+
+  <h2>Column key</h2>
+  <div class="toolbar"><button class="btn" id="toggle-btn" type="button">Expand all</button></div>
+
+  <details class="layer" style="--accent:var(--l3)">
+    <summary><span class="tag">Altitude 1</span><span class="lname">Physical substrate</span><span class="tagline">The tax on creating compute</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">A chain of narrow markets, most with one, two, or three credible suppliers: chip-design software, architecture licensing, lithography and wafer-fab equipment, foundry and advanced packaging, high-bandwidth memory, and the power, cooling, and optical assembly that make rack density physically possible. Optimization does not shrink this toll: compressing the per-token cost of inference expands the workloads run on top of it (the Jevons pattern), which increases load on downstream memory and storage. A published NVIDIA research method compressing attention KV caches roughly 20x with model weights unchanged (KVTC, arXiv:2511.01815, accepted to ICLR 2026) is the current reference case for how fast that compression is moving.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Every chip that exists paid this column first; the toll is collected on creation, not on use.</p></div>
+        <div class="meta-card"><div class="meta-label">Binding constraint</div><p>Physics and installed capacity. You cannot code around lithography, thermodynamics, or packaging throughput.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l2)">
+    <summary><span class="tag">Altitude 2</span><span class="lname">Compute landlord</span><span class="tagline">The tax on renting standing capacity</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">Rent on the metal: the building, the power contract, the racks, sold as raw accelerator capacity or as capacity plus an inference platform. The landlord's economics are real-estate economics priced in compute, which is why the growth ceiling is grid build velocity rather than AI demand.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Instance-hour billing on standing capacity; the toll survives model churn because the tenant changes and the building does not.</p></div>
+        <div class="meta-card"><div class="meta-label">Binding constraint</div><p>Energization speed: how fast contracted power becomes connected power.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l0)">
+    <summary><span class="tag">Altitude 3</span><span class="lname">Compute execution</span><span class="tagline">The tax on addressing the silicon; the hinge</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">The seam between the hardware and software halves of the stack. Whoever owns the programming model that addresses the accelerator collects on every FLOP that crosses it, which makes this layer simultaneously the top of the silicon story and the floor of the software story: a multi-layer resident, not a filing ambiguity. Full treatment in the hinge note above.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>The programming model as gravity: everything built on it deepens it.</p></div>
+        <div class="meta-card"><div class="meta-label">Binding constraint</div><p>Contested by design: challenged at training, deepening at serving.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l1)">
+    <summary><span class="tag">Altitude 4</span><span class="lname">Data</span><span class="tagline">The tax on quality, not speed</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">Extraction and preparation of raw corporate documents into AI-ready form, streaming and operational stores, and retrieval optimization between the store and the model. The toll is real because bad data induces failure: enterprises must structure their pipelines before agents can be trusted with them. It is not uniformly a clean toll; pricing models built for pre-agent query volumes can be squeezed as agentic workloads change consumption patterns.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Data gravity plus correctness: traffic routes through whoever makes the corpus usable and keeps it that way.</p></div>
+        <div class="meta-card"><div class="meta-label">Binding constraint</div><p>Correctness at scale; the content gate wraps this column hardest.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l4)">
+    <summary><span class="tag">Altitude 5</span><span class="lname">Model weights</span><span class="tagline">The thinnest toll in the building</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">The one stretch of the stack that everyone mistakes for the destination. Substitution is one API pointer away, open-weight releases keep compressing per-token pricing toward marginal cost, and no constraint at this altitude is durable by itself. Occupants of this layer often also appear one column to the right, in routing and standards, where the structural mechanics differ; the grid records both placements.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Per-token pricing on frontier quality, eroded continuously by open-weight parity.</p></div>
+        <div class="meta-card"><div class="meta-label">Binding constraint</div><p>None durable; that is the finding, not a gap in it.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l5)">
+    <summary><span class="tag">Altitude 6</span><span class="lname">Routing and control</span><span class="tagline">The tax on connectivity and orchestration</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">Protocols, gateways, sandboxes, and the payment rails agents use to pay for external services. Gateways that store every model's API keys and cache upstream calls have quietly become critical infrastructure; a supply-chain compromise at one popular open-source gateway in 2026 promoted the category from utility router to security perimeter in a single incident. One recurring structural pattern at this altitude is authoring a standard rather than owning a product.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Standards gravity and chokepoint custody: connectivity must route through something, and the something accumulates.</p></div>
+        <div class="meta-card"><div class="meta-label">Binding constraint</div><p>Trust and standardization; the meter and governance wrap concentrates here and in the application column.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l6)">
+    <summary><span class="tag">Altitude 7</span><span class="lname">Application</span><span class="tagline">The tax on the end task</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">The altitude where the toll is hardest to keep. Agents erode seat pricing, so survival runs through owning the system of record beneath the agent and re-pricing from seats to hybrid metering that passes compute cost through rather than absorbing it. Most application software does not carry a durable toll; the survivors own the record the agent must write back to.</p>
+      <div class="meta">
+        <div class="meta-card"><div class="meta-label">Mechanism</div><p>Metered work on the end task, collected only where the system of record underneath is owned.</p></div>
+        <div class="meta-card"><div class="meta-label">Binding constraint</div><p>Seat erosion; the pass-through test decides who keeps pricing.</p></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="layer" style="--accent:var(--l7)">
+    <summary><span class="tag">Wraps</span><span class="lname">The three cross-cutting tolls</span><span class="tagline">Collected at every altitude, shown as badges</span><span class="chev">&#9660;</span></summary>
+    <div class="body">
+      <p class="desc">Three tolls wrap the stack rather than sitting at one altitude, so the grid shows them as per-cell badges instead of columns. Perimeter (P): security as a non-discretionary risk tax that grows with machine identities, because every agent is an endpoint to authenticate. Content gate (C): metered or licensed access to legally cleared corpus, split down the middle by billing form (fault line 1 above). Meter and governance (M): observing and governing agentic flow, because you cannot manage what you cannot trace.</p>
+    </div>
+  </details>
+
+  <template id="t-semi-sub">
+    <p>The substrate taxes the creation of compute through a chain of narrow markets: chip-design software, architecture licensing, lithography and wafer-fab equipment, foundry and advanced packaging, high-bandwidth memory, and the optical assembly that ties racks together. Most links in the chain are one-, two-, or three-supplier markets, which is what makes the toll real rather than rhetorical.</p>
+    <p class="lens">Placement lens: the four-part toll test (can the ecosystem run 48 hours without you; must traffic route through you; are you pre-provisioned rather than a discretionary purchase; do you pass your costs through).</p>
+    <ul class="chips">
+      <li class="chip"><b>Arm</b><span>Licenses processor architectures and IP into most of the world's smartphones and roughly a third of all processor chips, collecting license fees and per-chip royalties; the standard-authorship play run at the architecture layer (and, as of 2026, shipping its first first-party chip while remaining fabless)</span></li>
+      <li class="chip"><b>Fabrinet</b><span>Contract manufacturer of precision optical components; a large share of the high-speed optical modules that move data between AI racks is assembled on its lines. Commonly classified as a semiconductor supply-chain company, placed here by function: the same label-versus-altitude tension the grid exists to record</span></li>
+    </ul>
+  </template>
+
+  <template id="t-semi-exec">
+    <p>The execution layer is where the silicon meets its programming model, and it belongs to whoever owns that model. It is simultaneously the top of the hardware half of the stack and the floor of the software half: a multi-layer resident, not a filing ambiguity to resolve.</p>
+    <p class="lens">Placement lens: standards gravity. Full treatment in the hinge note below the grid.</p>
+  </template>
+
+  <template id="t-opt-sub">
+    <p>Interconnect is the substrate's bandwidth sub-layer: moving data between accelerators and between racks within power and latency budgets that electrical links cannot meet at distance. Component classes here concentrate into one or two credible suppliers with long capacity lead times.</p>
+    <p>The write-ups in this row are classified onto the substrate column by function. The row label describes the market; the column records the altitude.</p>
+    <p class="lens">Placement lens: the four-part toll test, applied at the component level.</p>
+  </template>
+
+  <template id="t-inf-sub">
+    <p>Power is part of the substrate, not an afterthought to it: the switchgear, distribution, and backup equipment between the grid connection and the rack, plus the thermal systems that keep modern rack density physically possible. This equipment is pre-provisioned and non-discretionary, specified and booked before the first accelerator arrives.</p>
+    <p class="lens">Placement lens: the four-part toll test; this cell passes the toll test on pre-provisioning and necessity.</p>
+    <ul class="chips">
+      <li class="chip"><b>Eaton</b><span>Power management: switchgear, distribution, and backup equipment between the utility connection and the rack</span></li>
+    </ul>
+  </template>
+
+  <template id="t-inf-land">
+    <p>The landlord collects rent on standing capacity: the building, the power contract, the racks. Its binding constraint is energization speed, how fast contracted power becomes connected power; the growth ceiling is grid build velocity, not AI demand.</p>
+    <p>This sub-sector deliberately spans two columns. Equipment sits in the substrate; landlord economics sit here; collapsing the two into one archetype would misstate both. The grid records the split.</p>
+    <p class="lens">Placement lens: the four-part toll test, pass-through check in particular.</p>
+  </template>
+
+  <template id="t-hyp-land">
+    <p>Hyperscale platforms occupy the landlord column when they rent raw accelerator capacity, and they carry a second, quieter toll: identity. Enterprise agents authenticate through platform identity services, a system-of-record chokepoint that persists no matter whose model runs on the metal.</p>
+    <p class="lens">Placement lens: system-of-record necessity; perimeter wrap badge, because every agent is a machine identity.</p>
+  </template>
+
+  <template id="t-hyp-data">
+    <p>Managed data platforms give the landlord a second altitude: gravity. Data accumulates where the compute already is, and moving it out costs more than staying.</p>
+    <p class="lens">Placement lens: data gravity as routing necessity.</p>
+  </template>
+
+  <template id="t-lab-data">
+    <p>Training-corpus access is where the content gate wraps the stack. Whether access to legally cleared text is metered per crawl or sold as a flat license determines who actually carries the toll; the two forms distribute the toll differently.</p>
+    <p class="lens">Placement lens: the content gate wrap; see fault line 1 below the grid.</p>
+  </template>
+
+  <template id="t-lab-model">
+    <p>The model layer is the thinnest toll in the building. Substitution is one API pointer away, open-weight releases keep compressing per-token pricing toward marginal cost, and no constraint at this altitude is durable by itself. Activity at this layer frequently pairs with standard-authorship activity one column to the right; the grid records both placements.</p>
+    <p class="lens">Placement lens: the four-part toll test, which this altitude mostly fails; that is the finding.</p>
+    <ul class="chips">
+      <li class="chip"><b>Anthropic</b><span>Developer of the Claude model family; a private company as of this rendering. Cited here as the layer's reference occupant; it also appears in the routing column as the author of the Model Context Protocol</span></li>
+    </ul>
+  </template>
+
+  <template id="t-lab-route">
+    <p>Routing taxes connectivity: protocols, gateways, sandboxes, agent payment rails. A recurring move at this altitude is authoring the standard rather than owning the product. The Model Context Protocol collapsed M-by-N integration work to M-plus-N, commoditized the connectors, and pushed competition up to model quality; its author collects gravity, not license fees.</p>
+    <p class="lens">Placement lens: standard-authorship gravity; see the hinge note.</p>
+    <ul class="chips">
+      <li class="chip"><b>Anthropic</b><span>Authored the Model Context Protocol and donated it in December 2025 to the Agentic AI Foundation, a directed fund under the Linux Foundation</span></li>
+    </ul>
+  </template>
+
+  <template id="t-sw-sub">
+    <p>Chip-design software is conventionally labeled enterprise software, and this row's label follows that convention. The grid places design tooling at the bottom of the substrate instead: it is a precondition for compute to exist, not an application of it. Same conventional label, different altitude.</p>
+    <p>This is the clearest case of the grid overruling a filing convention, and the kind of reclassification a flat vendor list cannot express.</p>
+    <p class="lens">Placement lens: the four-part toll test; necessity outranks the label.</p>
+  </template>
+
+  <template id="t-sw-app">
+    <p>The application layer taxes the end task, and it is the altitude where the toll is hardest to keep. Survival runs through owning the system of record beneath the agent and re-pricing from seats to hybrid metering that passes compute cost through rather than absorbing it.</p>
+    <p>The wraps concentrate here: security spend scales with machine identities (P), and observability meters what the agents actually did (M).</p>
+    <p class="lens">Placement lens: system-of-record survival plus the pass-through check.</p>
+  </template>
+
+  <template id="t-ind-nm">
+    <p>Not mapped, and honestly so. The governing economics of industrial AI run through equipment fleets, dealer networks, and aftermarket attach: a structural-necessity story in which the machine is the distribution channel. That logic does not decompose onto a compute-stack altitude axis, and forcing a placement into these cells would manufacture a mapping where none exists.</p>
+    <p class="lens">Placement lens: structural necessity, which runs on a different axis than altitude; recorded as not mapped rather than forced onto the axis.</p>
+    <ul class="chips">
+      <li class="chip"><b>Deere</b><span>Agricultural and construction equipment; precision agriculture and autonomy programs monetized through machines, software subscriptions, and a dealer network rather than through the compute stack. The reference case for why this row does not map</span></li>
+    </ul>
+  </template>
+
+  <dialog id="cell-dialog" aria-labelledby="dlg-title">
+    <div class="dlg-head"><span class="dlg-title" id="dlg-title"></span><button class="dlg-close" type="button" aria-label="Close">&#215;</button></div>
+    <div class="dlg-body" id="dlg-body"></div>
+  </dialog>
+
+  <div class="footer">
+    Rendered from a private two-axis research framework of the AI compute stack (authored June 2026) that is not published in this repository; this page is a simplified public rendering of its structural layer. Every company description on this page was written from public knowledge; no private research prose is reproduced beyond the structural definitions summarized here. The grid documents structural coverage breadth; it does not make recommendations.<br>
+    Self-contained page: all styles and scripts inline, no external requests, no tracking.
+  </div>
+</div>
+
+<script>
+(function () {
+  var dlg = document.getElementById("cell-dialog");
+  var dlgTitle = document.getElementById("dlg-title");
+  var dlgBody = document.getElementById("dlg-body");
+  var cells = Array.prototype.slice.call(document.querySelectorAll("button.cell"));
+  cells.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var tpl = document.getElementById(btn.getAttribute("data-cell"));
+      if (!tpl) return;
+      dlgTitle.innerHTML = btn.getAttribute("data-title");
+      dlgBody.innerHTML = "";
+      dlgBody.appendChild(tpl.content.cloneNode(true));
+      dlg.showModal();
+    });
+  });
+  dlg.querySelector(".dlg-close").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+
+  var btn = document.getElementById("toggle-btn");
+  var layers = Array.prototype.slice.call(document.querySelectorAll("details.layer"));
+  function allOpen() { return layers.every(function (d) { return d.open; }); }
+  function refresh() { btn.textContent = allOpen() ? "Collapse all" : "Expand all"; }
+  btn.addEventListener("click", function () {
+    var target = !allOpen();
+    layers.forEach(function (d) { d.open = target; });
+    refresh();
+  });
+  layers.forEach(function (d) { d.addEventListener("toggle", refresh); });
+})();
+</script>
+</body>
+</html>
