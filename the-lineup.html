@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lineup | Subscription Platform Economics | Reid Nelson</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg: #081230;
+            --surface: #122350;
+            --surface-hover: #1A2F6B;
+            --border: #2C4485;
+            --text: #EEF2FF;
+            --text-muted: #93A7D9;
+            --accent: #E8B84B;
+            --accent-light: #F2CB6E;
+            --green: #3F9E52;
+            --red: #E06552;
+            --amber: #C4861B;
+            --blue: #4A78C2;
+            --purple: #8A6BC9;
+            --cyan: #2FA3BF;
+            --pink: #C25490;
+            --orange: #E06552;
+            --radius: 2px;
+            --cond: "Arial Narrow", "Helvetica Neue Condensed", "Liberation Sans Narrow", Arial, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Arial, Helvetica, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+            border-top: 6px double var(--accent);
+        }
+
+        .dashboard {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .header-left h1 {
+            font-family: var(--cond);
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 4px;
+            line-height: 1.05;
+        }
+
+        .header-left p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: var(--radius);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-family: 'SF Mono', Consolas, monospace;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .badge strong { color: var(--accent); }
+
+        /* Tabs: the channel row */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 24px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 11px 20px;
+            border-radius: 0;
+            border: none;
+            border-right: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-family: var(--cond);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+
+        .tab .ch { font-family: 'SF Mono', Consolas, monospace; font-size: 10px; color: var(--accent); margin-right: 7px; }
+        .tab:hover { color: var(--text); background: var(--surface-hover); }
+        .tab.active { background: var(--accent); color: var(--bg); }
+        .tab.active .ch { color: var(--bg); }
+
+        /* Tab content */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .kpi-card .label {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            font-family: 'SF Mono', Consolas, monospace;
+            margin-bottom: 8px;
+        }
+
+        .kpi-card .value {
+            font-family: var(--cond);
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 0;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .kpi-card .delta {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .kpi-card .delta.up { color: var(--green); }
+        .kpi-card .delta.down { color: var(--red); }
+        .kpi-card .delta.neutral { color: var(--amber); }
+
+        /* Chart containers */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .chart-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .chart-card.full { grid-column: 1 / -1; }
+
+        .chart-card h3 {
+            font-family: var(--cond);
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .chart-card .subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .chart-wrap {
+            position: relative;
+            width: 100%;
+            height: 280px;
+        }
+
+        .chart-wrap.tall { height: 340px; }
+
+        /* Data table */
+        .table-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-family: var(--cond);
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        th:hover { color: var(--text); }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: var(--surface-hover); }
+
+        .mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; }
+        .text-green { color: var(--green); }
+        .text-red { color: var(--red); }
+        .text-amber { color: var(--amber); }
+        .text-muted { color: var(--text-muted); }
+
+        .platform-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .tag-nflx { background: #e50914; color: white; }
+        .tag-dis { background: #0051c3; color: white; }
+        .tag-spot { background: #1db954; color: white; }
+        .tag-cmcsa { background: #6937ff; color: white; }
+        .tag-wbd { background: #0033a0; color: white; }
+        .tag-para { background: #0064ff; color: white; }
+        .tag-nyt { background: #1a1a1a; color: white; }
+        .tag-lion { background: #c8102e; color: white; }
+
+        /* Methodology note */
+        .method-note {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-top: 24px;
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .method-note strong { color: var(--text); }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 32px 0 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .footer a { color: var(--accent-light); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chart-grid { grid-template-columns: 1fr; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .header { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <h1>The Lineup</h1>
+            <p>Subscription platform economics, independently researched: 8 companies across Premium SVOD, audio, and broadband</p>
+        </div>
+        <div class="header-right">
+            <span class="badge"><strong>8 Companies</strong> Tracked</span>
+            <span class="badge"><strong>50,000+</strong> Words Published</span>
+            <span class="badge">Updated Jul 23, 2026</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('overview')"><span class="ch">CH 01</span>Market Overview</button>
+        <button class="tab" onclick="switchTab('revenue')"><span class="ch">CH 02</span>Platform Economics</button>
+        <button class="tab" onclick="switchTab('retention')"><span class="ch">CH 03</span>Bundle & Retention</button>
+        <button class="tab" onclick="switchTab('events')"><span class="ch">CH 04</span>Content Events</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1: MARKET OVERVIEW -->
+    <!-- ============================================================ -->
+    <div id="tab-overview" class="tab-content active">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="label">Premium SVOD YoY Growth</div>
+                <div class="value">7%</div>
+                <div class="delta down">First time in single digits</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Bundle Penetration</div>
+                <div class="value">27%</div>
+                <div class="delta up">+13pp from Q4 2023</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Category Avg Monthly Churn</div>
+                <div class="value">4.6%</div>
+                <div class="delta neutral">Netflix at 2.0%, ~2.3x better (Antenna, Dec 2025)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Win-Back Rate (12mo)</div>
+                <div class="value">42%</div>
+                <div class="delta up">2024 cancel cohorts resubscribing (Antenna)</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Premium SVOD Growth Deceleration</h3>
+                <div class="subtitle">Year-over-year growth rate approaching maturity inflection (Antenna series, through Q4 2025; latest published)</div>
+                <div class="chart-wrap"><canvas id="chart-growth"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Bundle Penetration Trajectory</h3>
+                <div class="subtitle">Share of total subscriptions held in multi-service bundles (Antenna series, through Q4 2025; latest published)</div>
+                <div class="chart-wrap"><canvas id="chart-bundles"></canvas></div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Research Coverage Universe</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Platform</th>
+                        <th>Research Focus</th>
+                        <th>Key Metric Tracked</th>
+                        <th>Analytical Output</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="platform-tag tag-nflx">NFLX</span></td>
+                        <td>Subscriber economics, ad-tier growth, M&A viability</td>
+                        <td class="mono">$12.56B Q2 2026 rev, 2.0% churn</td>
+                        <td>10,000-word acquisition analysis + quarterly model</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td>Bundle retention, ESPN DTC launch, parks yield</td>
+                        <td class="mono">$29.99/mo ESPN, $1.33B DTC income</td>
+                        <td>Bundle retention model + content event tracker</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-spot">SPOT</span></td>
+                        <td>Gross margin expansion, pricing power, format mix</td>
+                        <td class="mono">33.0% GM (Q1 2026), targeting 35-40%</td>
+                        <td>Margin trajectory model + price sensitivity</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td>Versant spin-off, broadband retention, Peacock scaling</td>
+                        <td class="mono">68/32 segment mix post-spin</td>
+                        <td>RemainCo re-rating thesis + spin analysis</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-wbd">WBD</span></td>
+                        <td>Acquisition target analysis, content library valuation</td>
+                        <td class="mono">~$111B PSKY deal pending; TRO Jul 20</td>
+                        <td>Netflix-WBD viability analysis (10,000 words)</td>
+                        <td class="text-amber">Pending PSKY close</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-para">PSKY</span></td>
+                        <td>Content-driven acquisition, bundle conversion (Paramount+)</td>
+                        <td class="mono">2.9M sign-ups (Landman S1, Antenna)</td>
+                        <td>Content event impact tracking</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-nyt">NYT</span></td>
+                        <td>Subscription platform economics, perception lag</td>
+                        <td class="mono">13.1M subscribers (Q1 2026)</td>
+                        <td>Perception Lag framework case study</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-lion">LION</span></td>
+                        <td>Post-Starz SOTP, frustrated bidder dynamics</td>
+                        <td class="mono">Content library arbitrage</td>
+                        <td>SOTP valuation + M&A scenario model</td>
+                        <td class="text-green">Active</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2: PLATFORM ECONOMICS -->
+    <!-- ============================================================ -->
+    <div id="tab-revenue" class="tab-content">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="label">Netflix Q2 2026 Revenue</div>
+                <div class="value">$12.56B</div>
+                <div class="delta up">+13.4% YoY (reported Jul 16, 2026)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Netflix 2026 Ad Revenue Guide</div>
+                <div class="value">~$3B</div>
+                <div class="delta up">FY25 grew 2.5x to $1.5B+; ~2x guide reaffirmed Jul 2026</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Spotify Gross Margin</div>
+                <div class="value">33.0%</div>
+                <div class="delta up">Q1 2026; targeting 35-40%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Disney DTC Operating Income</div>
+                <div class="value">$1.33B</div>
+                <div class="delta up">FY2025; FQ2-26 streaming margin hit 10.6%</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Operating Margin Comparison</h3>
+                <div class="subtitle">Netflix structural advantage vs. legacy media peers</div>
+                <div class="chart-wrap"><canvas id="chart-margins"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Spotify Margin Expansion Trajectory</h3>
+                <div class="subtitle">Gross margin path from podcast/audiobook economics</div>
+                <div class="chart-wrap"><canvas id="chart-spotify-margin"></canvas></div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card full">
+                <h3>Netflix Content Investment Mix</h3>
+                <div class="subtitle">Content spend as competitive moat (author's estimated allocation, Q1 2026 vintage)</div>
+                <div class="chart-wrap tall"><canvas id="chart-nflx-revenue"></canvas></div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Platform Pricing Landscape</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Platform</th>
+                        <th>Base Tier</th>
+                        <th>Premium Tier</th>
+                        <th>Bundle Offer</th>
+                        <th>Recent Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="platform-tag tag-nflx">NFLX</span></td>
+                        <td class="mono">$8.99 (ads)</td>
+                        <td class="mono">$26.99</td>
+                        <td>N/A (standalone)</td>
+                        <td>All US tiers raised Mar 26, 2026 (~11% avg)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td class="mono">$11.99 (D+ w/ ads)</td>
+                        <td class="mono">$29.99 (ESPN Unltd)</td>
+                        <td>Trio w/ ESPN Unltd $35.99 ($29.99 was launch promo)</td>
+                        <td>Oct 2025 price increase; ESPN DTC live since Aug 2025</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-spot">SPOT</span></td>
+                        <td class="mono">Free (ad-supported)</td>
+                        <td class="mono">$12.99 (Individual)</td>
+                        <td>Audiobooks 15hr included</td>
+                        <td>Feb 2026 hike ($11.99 to $12.99); NA subs dipped after</td>
+                    </tr>
+                    <tr>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td class="mono">$10.99 (Premium w/ ads)</td>
+                        <td class="mono">$16.99 (Premium Plus)</td>
+                        <td>Xfinity broadband bundle; Select tier $7.99</td>
+                        <td>Jul 2025 price increase; NBA rights ($2.45B/yr)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3: BUNDLE & RETENTION -->
+    <!-- ============================================================ -->
+    <div id="tab-retention" class="tab-content">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="label">Netflix Monthly Churn</div>
+                <div class="value">2.0%</div>
+                <div class="delta up">~2.3x better than category avg (4.6%, Antenna)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Netflix Subscriber LTV (US)</div>
+                <div class="value">$388</div>
+                <div class="delta up">Industry avg ~$140</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Bundle Churn Reduction</div>
+                <div class="value">59%</div>
+                <div class="delta up">Multi-service vs. standalone</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">3+ Format Engagement LTV</div>
+                <div class="value">$647</div>
+                <div class="delta up">+67% vs. single-format users</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Churn Rate by Platform</h3>
+                <div class="subtitle">Monthly churn (lower = stickier); Antenna estimates, mid-2026 readings (Peacock peaked ~9% in Q1 2026)</div>
+                <div class="chart-wrap"><canvas id="chart-churn"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Netflix LTV by Engagement Depth</h3>
+                <div class="subtitle">Subscriber lifetime value scales with multi-format usage (author's model, Q1 2026 vintage)</div>
+                <div class="chart-wrap"><canvas id="chart-ltv"></canvas></div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card full">
+                <h3>12-Month Survival Curves: Bundle vs. Standalone</h3>
+                <div class="subtitle">Modeled retention trajectory showing bundle attach rate impact on subscriber longevity (author's model, Q1 2026 vintage)</div>
+                <div class="chart-wrap tall"><canvas id="chart-survival"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- TAB 4: CONTENT EVENTS -->
+    <!-- ============================================================ -->
+    <div id="tab-events" class="tab-content">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="label">Landman S1 Sign-Ups (90 days)</div>
+                <div class="value">2.9M</div>
+                <div class="delta up">Paramount+ content-driven acquisition (Antenna); S2 added 915K</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Spotify Video Re-Stream Lift</div>
+                <div class="value">+34%</div>
+                <div class="delta up">Post-music-video engagement</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Comcast Feb 2026 Trifecta</div>
+                <div class="value">~$2.2B</div>
+                <div class="delta up">Incremental Media revenue reported Q1 2026; ad rev +135%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="label">Hulu+Live TV / Fubo Combined Subs</div>
+                <div class="value">~6M</div>
+                <div class="delta neutral">Closed Oct 2025; Disney holds ~70%</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Content-Driven Acquisition Events</h3>
+                <div class="subtitle">Sign-ups within 90 days of premiere; Landman S1 per Antenna, others author's estimates</div>
+                <div class="chart-wrap"><canvas id="chart-content-events"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Rapid-Response Analysis Coverage</h3>
+                <div class="subtitle">Breaking market events requiring same-week analytical turnaround</div>
+                <div class="chart-wrap"><canvas id="chart-events-timeline"></canvas></div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Breaking Event Analysis Log</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Event</th>
+                        <th>Platform(s)</th>
+                        <th>Impact Assessment</th>
+                        <th>Analysis Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mono">Aug 2025</td>
+                        <td>ESPN Unlimited Launch ($29.99)</td>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td>DTC burn-the-boats moment; 47,000 live events</td>
+                        <td>Pricing + cannibalization model</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Sep 2025</td>
+                        <td>Jimmy Kimmel Controversy</td>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td>Churn spike from politically-driven cancellations</td>
+                        <td>Content risk + churn event analysis</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Oct 2025</td>
+                        <td>Hulu+Live TV / Fubo Combination Closes</td>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td>Disney holds ~70% of combined company; ~6M NA subscribers</td>
+                        <td>M&A impact + bundle analysis</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jan 2026</td>
+                        <td>Comcast-Versant Spin-Off</td>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td>RemainCo re-rating: 68/32 segment mix unlocked; VSNT trading Jan 5</td>
+                        <td>Spin-off thesis + SOTP model</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Feb 2026</td>
+                        <td>PSKY-WBD Definitive Agreement ($31/share)</td>
+                        <td><span class="platform-tag tag-wbd">WBD</span> <span class="platform-tag tag-nflx">NFLX</span></td>
+                        <td>~$111B all-asset deal; PSKY paid Netflix's $2.8B termination fee from the broken Dec 2025 agreement</td>
+                        <td>Deal analysis + NFLX windfall impact</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Feb 2026</td>
+                        <td>Comcast "Legendary February"</td>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td>SB LX + Milan Cortina + NBA ASG delivered ~$2.2B incremental Media revenue (vs $1.48B 2022 baseline); ad revenue +135%</td>
+                        <td>Revenue comp vs. 2022, closed out with Q1 actuals</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Feb 2026</td>
+                        <td>Spotify Price Increase ($11.99 to $12.99)</td>
+                        <td><span class="platform-tag tag-spot">SPOT</span></td>
+                        <td>~$648M annual revenue uplift (author's estimate); NA Premium subs declined post-hike</td>
+                        <td>Price sensitivity + margin model update</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Mar 2026</td>
+                        <td>Netflix Raises All US Tiers (~11% avg)</td>
+                        <td><span class="platform-tag tag-nflx">NFLX</span></td>
+                        <td>First-ever ad-tier increase (+$1 to $8.99); Standard $19.99, Premium $26.99</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Apr 2026</td>
+                        <td>Netflix Q1 2026 Earnings</td>
+                        <td><span class="platform-tag tag-nflx">NFLX</span></td>
+                        <td>Revenue $12.25B +16%; EPS doubled on the $2.8B PSKY termination fee; Hastings exits board; stock -9%</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Apr 2026</td>
+                        <td>WBD Shareholders Approve PSKY Deal</td>
+                        <td><span class="platform-tag tag-wbd">WBD</span></td>
+                        <td>1.743B shares for vs 16.3M against; exec exit pay rejected; Q3 2026 target close</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Apr 2026</td>
+                        <td>Spotify Q1 2026 Earnings</td>
+                        <td><span class="platform-tag tag-spot">SPOT</span></td>
+                        <td>293M Premium (+3M), record operating income; NA subs contracted post-hike; stock -13.5%</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">May 2026</td>
+                        <td>Disney FY26 Q2 Earnings</td>
+                        <td><span class="platform-tag tag-dis">DIS</span></td>
+                        <td>Disney+/Hulu operating income +88% to $582M; first double-digit streaming margin (10.6%)</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jun 2026</td>
+                        <td>Fox to Acquire Roku ($160/share, ~$22B EV)</td>
+                        <td>Fox / Roku</td>
+                        <td>Content-plus-CTV-platform consolidation; Tubi + Roku Channel ad scale; close expected H1 2027</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jun 2026</td>
+                        <td>Comcast to Spin Off NBCUniversal + Sky</td>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td>Second structural separation in six months; Peacock exits the cable parent (~1-year timeline)</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jul 2026</td>
+                        <td>Netflix Q2 2026 Earnings</td>
+                        <td><span class="platform-tag tag-nflx">NFLX</span></td>
+                        <td>Revenue $12.56B +13.4% (slight miss), light Q3 guide, fewer engagement metrics; 52-week low</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jul 2026</td>
+                        <td>World Cup Final Sets US Streaming Records</td>
+                        <td>Fox / Peacock / Telemundo</td>
+                        <td>62.8M combined US viewers; Peacock/Telemundo streaming +297% vs 2022; drove Peacock's first profit</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jul 2026</td>
+                        <td>12 State AGs Sue to Block PSKY-WBD; 14-Day TRO</td>
+                        <td><span class="platform-tag tag-wbd">WBD</span></td>
+                        <td>Federal judge pauses close; hearing Aug 3; state antitrust now the binding constraint</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jul 2026</td>
+                        <td>EU Clears PSKY-WBD With Concessions</td>
+                        <td><span class="platform-tag tag-wbd">WBD</span></td>
+                        <td>International approvals complete; close now gated on US state litigation</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                    <tr>
+                        <td class="mono">Jul 2026</td>
+                        <td>Comcast Q2 2026: Peacock's First Profit</td>
+                        <td><span class="platform-tag tag-cmcsa">CMCSA</span></td>
+                        <td>Peacock $189M EBITDA, +2M subs to 48M, revenue $1.9B on the World Cup</td>
+                        <td>Tracked (Jul 2026 refresh)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Methodology Note -->
+    <div class="method-note">
+        <strong>Methodology:</strong> This dashboard represents an independent research practice maintained since early 2025.
+        Data sources include company earnings releases, SEC filings, syndicated industry reports (including Antenna's Premium SVOD 2025 Year in Review),
+        and original modeling. All subscriber economics models use publicly available quarterly disclosures as inputs.
+        Python pipelines (pandas, API integrations) automate data collection from financial APIs with quarterly refresh cadences.
+        Market figures were re-verified against company reports and published Antenna data on July 23, 2026; modeled series (LTV, survival curves, content-spend allocation) carry their vintage in their chart subtitles, and event-log rows added in the July 2026 refresh are labeled as tracked rather than claimed as published analyses.
+        <br><br>
+        <strong>Coverage:</strong> 8 companies tracked with documented assumptions, defined review criteria, and structured analytical output
+        totaling 50,000+ words across thesis documents, viability analyses, and event-driven research.
+        <br><br>
+        <strong>Contact:</strong> Reid Nelson | reidnelson3363@outlook.com | Austin, TX
+    </div>
+
+    <div class="footer">
+        The Lineup | Built with Chart.js | Independent Research Portfolio | <a href="mailto:reidnelson3363@outlook.com">reidnelson3363@outlook.com</a>
+    </div>
+
+</div>
+
+<script>
+// ============================================================
+// CHART DEFAULTS
+// ============================================================
+Chart.defaults.color = '#93A7D9';
+Chart.defaults.borderColor = '#2C4485';
+Chart.defaults.font.family = "Arial, Helvetica, 'Segoe UI', sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.elements.line.borderWidth = 2;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyle = 'circle';
+Chart.defaults.plugins.legend.labels.padding = 16;
+Chart.defaults.plugins.tooltip.backgroundColor = '#122350';
+Chart.defaults.plugins.tooltip.borderColor = '#2C4485';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.padding = 12;
+Chart.defaults.plugins.tooltip.cornerRadius = 2;
+
+// Guide palette, validated against the card surface (#122350): OKLCH
+// dark band, chroma floor, CVD and normal-vision adjacent separation,
+// and 3:1 contrast all pass. orange intentionally aliases red; the two
+// never appear in the same chart.
+const COLORS = {
+    accent: '#C4861B', green: '#3F9E52', red: '#E06552', amber: '#C4861B',
+    blue: '#4A78C2', purple: '#8A6BC9', cyan: '#2FA3BF', pink: '#C25490', orange: '#E06552'
+};
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function switchTab(tabId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    event.target.closest('.tab').classList.add('active');
+
+    // Lazy-init charts on first view
+    if (tabId === 'revenue' && !window._revenueInit) { initRevenueCharts(); window._revenueInit = true; }
+    if (tabId === 'retention' && !window._retentionInit) { initRetentionCharts(); window._retentionInit = true; }
+    if (tabId === 'events' && !window._eventsInit) { initEventsCharts(); window._eventsInit = true; }
+}
+
+// ============================================================
+// TAB 1: OVERVIEW CHARTS
+// ============================================================
+new Chart(document.getElementById('chart-growth'), {
+    type: 'line',
+    data: {
+        labels: ['Q1 2022', 'Q2 2022', 'Q3 2022', 'Q4 2022', 'Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025'],
+        datasets: [{
+            label: 'Premium SVOD YoY Growth',
+            data: [24, 21, 19, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8.5, 8, 7.5, 7],
+            borderColor: COLORS.accent,
+            backgroundColor: 'rgba(196,134,27,0.12)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 3,
+            pointHoverRadius: 6,
+        }, {
+            label: 'Single-Digit Threshold',
+            data: Array(16).fill(10),
+            borderColor: COLORS.red,
+            borderDash: [6, 4],
+            pointRadius: 0,
+            borderWidth: 1,
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+            tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '%' } }
+        },
+        scales: {
+            y: { ticks: { callback: v => v + '%' }, min: 0, max: 28, grid: { color: '#20356E' } },
+            x: { ticks: { maxRotation: 45 }, grid: { display: false } }
+        }
+    }
+});
+
+new Chart(document.getElementById('chart-bundles'), {
+    type: 'bar',
+    data: {
+        labels: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025'],
+        datasets: [{
+            label: 'Bundle Penetration (%)',
+            data: [12, 13, 13.5, 14, 16, 17.5, 19, 21, 22.5, 24, 25.5, 27],
+            backgroundColor: 'rgba(196,134,27,0.72)',
+            borderColor: COLORS.accent,
+            borderWidth: 1,
+            borderRadius: 4,
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+            tooltip: { callbacks: { label: ctx => ctx.parsed.y + '% of total subscriptions' } }
+        },
+        scales: {
+            y: { ticks: { callback: v => v + '%' }, min: 0, max: 32, grid: { color: '#20356E' } },
+            x: { ticks: { maxRotation: 45 }, grid: { display: false } }
+        }
+    }
+});
+
+// ============================================================
+// TAB 2: PLATFORM ECONOMICS CHARTS (lazy)
+// ============================================================
+function initRevenueCharts() {
+    new Chart(document.getElementById('chart-margins'), {
+        type: 'bar',
+        data: {
+            labels: ['Netflix', 'Spotify', 'Disney DTC', 'Legacy Media Avg', 'Comcast (RemainCo)'],
+            datasets: [{
+                label: 'Operating Margin',
+                data: [29, 13.6, 8, 12, 18],
+                backgroundColor: [COLORS.accent, COLORS.green, COLORS.blue, COLORS.red, COLORS.purple],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => ctx.parsed.x + '% operating margin' } }
+            },
+            scales: {
+                x: { ticks: { callback: v => v + '%' }, grid: { color: '#20356E' } },
+                y: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chart-spotify-margin'), {
+        type: 'line',
+        data: {
+            labels: ['Q1 24', 'Q2 24', 'Q3 24', 'Q4 24', 'Q1 25', 'Q2 25', 'Q3 25', 'Q1 26', '2026E', '2027E', 'Target'],
+            datasets: [{
+                label: 'Gross Margin',
+                data: [27.6, 29.2, 30.1, 30.8, 31.0, 31.3, 31.6, 33.0, 34, 36, 38],
+                borderColor: COLORS.green,
+                backgroundColor: 'rgba(63,158,82,0.12)',
+                fill: true, tension: 0.3, pointRadius: 4, pointHoverRadius: 7,
+            }, {
+                label: 'Long-Term Target Range',
+                data: [null, null, null, null, null, null, null, null, null, null, 40],
+                borderColor: COLORS.amber, borderDash: [6, 4],
+                pointRadius: 6, pointStyle: 'triangle', pointHoverRadius: 9,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '%' } } },
+            scales: {
+                y: { ticks: { callback: v => v + '%' }, min: 25, max: 42, grid: { color: '#20356E' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chart-nflx-revenue'), {
+        type: 'bar',
+        data: {
+            labels: ['Scripted Originals', 'Licensed Content', 'Unscripted/Reality', 'Live Sports', 'Podcasts', 'Gaming', 'Documentaries'],
+            datasets: [{
+                label: 'Annual Content Investment ($B)',
+                data: [8.5, 4.5, 2.0, 0.65, 0.18, 0.5, 1.0],
+                backgroundColor: [
+                    COLORS.accent, COLORS.blue, COLORS.pink,
+                    COLORS.green, COLORS.orange, COLORS.cyan, COLORS.purple
+                ],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.y + 'B annual spend' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => '$' + v + 'B' }, grid: { color: '#20356E' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+}
+
+// ============================================================
+// TAB 3: RETENTION CHARTS (lazy)
+// ============================================================
+function initRetentionCharts() {
+    new Chart(document.getElementById('chart-churn'), {
+        type: 'bar',
+        data: {
+            labels: ['Netflix', 'Disney+', 'Paramount+', 'Peacock', 'Category Avg'],
+            datasets: [{
+                label: 'Monthly Churn Rate',
+                data: [2.0, 3.0, 5.0, 7.0, 4.6],
+                backgroundColor: [COLORS.green, COLORS.blue, COLORS.purple, COLORS.accent, COLORS.red],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => ctx.parsed.y + '% monthly churn' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => v + '%' }, max: 8, grid: { color: '#20356E' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chart-ltv'), {
+        type: 'bar',
+        data: {
+            labels: ['1 Format Only\n(50% of base)', '2 Formats\n(30% of base)', '3+ Formats\n(20% of base)', 'Industry Average'],
+            datasets: [{
+                label: 'Subscriber LTV',
+                data: [310, 450, 647, 140],
+                backgroundColor: [COLORS.blue, COLORS.accent, COLORS.green, COLORS.red],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => '$' + ctx.parsed.y + ' lifetime value' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => '$' + v }, grid: { color: '#20356E' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Survival curve
+    const months = Array.from({length: 13}, (_, i) => 'M' + i);
+    const bundleSurvival = [100, 96, 92.5, 89.5, 87, 84.5, 82.5, 80.5, 79, 77.5, 76, 75, 74];
+    const standaloneSurvival = [100, 94.5, 89.3, 84.5, 80, 75.8, 71.8, 68.1, 64.6, 61.3, 58.2, 55.2, 52.5];
+    const promoSurvival = [100, 88, 78, 70, 63, 57, 52, 47.5, 43.5, 40, 37, 34.5, 32];
+
+    new Chart(document.getElementById('chart-survival'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Bundle Subscribers',
+                data: bundleSurvival,
+                borderColor: COLORS.green, backgroundColor: 'rgba(63,158,82,0.10)',
+                fill: true, tension: 0.3, pointRadius: 3,
+            }, {
+                label: 'Standalone (Organic)',
+                data: standaloneSurvival,
+                borderColor: COLORS.blue, backgroundColor: 'rgba(74,120,194,0.10)',
+                fill: true, tension: 0.3, pointRadius: 3,
+            }, {
+                label: 'Promotional Cohort',
+                data: promoSurvival,
+                borderColor: COLORS.red, backgroundColor: 'rgba(224,101,82,0.10)',
+                borderDash: [7, 4],
+                fill: true, tension: 0.3, pointRadius: 3,
+            }, {
+                label: '42% Win-Back Line',
+                data: [null, null, null, null, null, null, null, null, null, null, null, null, 42],
+                pointRadius: 8, pointStyle: 'star', pointHoverRadius: 12,
+                borderColor: COLORS.amber, showLine: false,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '% retained' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => v + '%' }, min: 20, max: 100, grid: { color: '#20356E' } },
+                x: { title: { display: true, text: 'Months Since Subscription Start', color: '#93A7D9' }, grid: { display: false } }
+            }
+        }
+    });
+}
+
+// ============================================================
+// TAB 4: CONTENT EVENTS CHARTS (lazy)
+// ============================================================
+function initEventsCharts() {
+    new Chart(document.getElementById('chart-content-events'), {
+        type: 'bar',
+        data: {
+            labels: ['Landman\n(Paramount+)', 'NFL Christmas\n(Netflix)', 'WWE Raw\n(Netflix)', 'Squid Game S2\n(Netflix)', 'Avatar: F&A\n(Disney)'],
+            datasets: [{
+                label: 'Estimated Sign-Up Impact',
+                data: [2900, 850, 620, 950, 480],
+                backgroundColor: [COLORS.purple, COLORS.accent, COLORS.pink, COLORS.green, COLORS.blue],
+                borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => (ctx.parsed.y / 1000).toFixed(1) + 'M sign-ups (est.)' } }
+            },
+            scales: {
+                y: { ticks: { callback: v => (v/1000).toFixed(1) + 'M' }, grid: { color: '#20356E' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chart-events-timeline'), {
+        type: 'bar',
+        data: {
+            labels: ['Sep 2025', 'Oct 2025', 'Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026'],
+            datasets: [{
+                label: 'Analyses Published',
+                data: [2, 1, 2, 3, 5, 4, 2],
+                backgroundColor: 'rgba(196,134,27,0.72)',
+                borderColor: COLORS.accent,
+                borderWidth: 1,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => ctx.parsed.y + ' rapid-response analyses' } }
+            },
+            scales: {
+                y: { ticks: { stepSize: 1 }, grid: { color: '#20356E' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+}
+</script>
+
+</body>
+</html>
