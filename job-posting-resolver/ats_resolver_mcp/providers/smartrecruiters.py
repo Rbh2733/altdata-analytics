@@ -49,7 +49,13 @@ class SmartRecruiters(ATSProvider):
         for slug in candidates:
             data = await probe_json(f"{API}/{slug}/postings", params={"limit": 1})
             if isinstance(data, dict) and "content" in data:
-                return BoardRef(platform=self.name, token=slug)
+                # totalFound is the discriminator. This API answers 200 with
+                # {"content": [], "totalFound": 0} for ANY string, real board or not.
+                n = data.get("totalFound")
+                if n is None:
+                    n = len(data.get("content") or [])
+                return BoardRef(platform=self.name, token=slug, observed_count=int(n),
+                                confidence="high" if int(n) > 0 else "low")
         return None
 
     def from_url(self, url: str) -> Optional[BoardRef]:

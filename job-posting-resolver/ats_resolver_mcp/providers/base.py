@@ -19,13 +19,26 @@ from ..models import Posting
 
 
 class BoardRef(BaseModel):
-    """Points at one company's board on one ATS."""
+    """Points at one company's board on one ATS.
+
+    observed_count / confidence exist to stop a silent false negative. Several ATS APIs
+    answer HTTP 200 with a well-formed but EMPTY envelope for a slug that does not exist
+    (SmartRecruiters returns {"content": [], "totalFound": 0} for any string). Detecting on
+    envelope shape alone therefore "resolves" every unknown company to whichever provider is
+    probed last, and the caller then reports "no postings matched" for a board that was never
+    real. Providers now record how many postings the probe actually saw, and the registry
+    prefers a board with postings over an empty one. A board that resolves with zero postings
+    is still returned, because a real company can genuinely have nothing open, but it is
+    marked low confidence so callers can say "unresolved" instead of "empty".
+    """
     model_config = ConfigDict(extra="ignore")
 
     platform: str                 # greenhouse | lever | ashby | smartrecruiters | careers_page
     token: str                    # board slug
     extra: dict = {}              # platform-specific extras
     detected_via: str = "slug"    # slug | hint_url
+    observed_count: Optional[int] = None   # postings seen during detection probe
+    confidence: str = "high"      # high = probe saw postings; low = valid envelope, zero postings
 
 
 class ATSProvider(ABC):

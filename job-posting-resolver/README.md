@@ -22,9 +22,17 @@ Not all reads are equal. The chain is ordered by reliability, highest first:
 
 Every provider normalizes into one canonical `Posting` model, so the caller never has to know which ATS a listing came from.
 
-### Why Workday is deliberately out of scope
+### iCIMS and Workday (added 2026-07-25, tier 2 by design)
 
-The four supported providers expose public, unauthenticated JSON APIs intended for exactly this use. Workday does not: reading it means hitting an undocumented per-tenant endpoint whose tenant, site, and datacenter are not discoverable from a company name. There is no public API contract, and per-tenant endpoints are not a stable interface, so a Workday provider would be the least reliable component pretending to be a tier-1 source. It is excluded on purpose; a Workday careers link found by the scraper is still surfaced so a human can follow it.
+Both were previously out of scope. A live coverage measurement changed that: across a 90-company scan, 49 companies could not be resolved at all, and the two platforms accounted for most of them. Excluding them was not neutrality, it was a silent hole.
+
+They are deliberately last in the detection chain and are honest about being weaker reads than the four JSON APIs.
+
+**iCIMS** exposes no public JSON API, so this is an HTML read of the compact iframe view of the public board (`/jobs/search?ss=1&in_iframe=1`). Board tokens are predictable (`careers-{token}.icims.com`), so detection works from a company name. Rows carry labelled `Job Locations` and `Title` fields, which is enough for title, location, id and url; there is no posted date and no department. Pagination is hard-capped at 12 pages and stops as soon as a page repeats or under-fills, so it reads a listing page and never crawls.
+
+**Workday** does expose a usable public endpoint, the CXS job-search API (`POST /wday/cxs/{tenant}/{site}/jobs`), which returns title, location text, posted-on string and an external path. The real obstacle was never the payload, it is the address: a board is identified by three unknowns (tenant, `wdN` shard, and site name), and guessing all three from a company name is unreliable. So `from_url` is exact and is the intended path, while `detect` runs a deliberately small best-effort matrix over the most common shards and site names and gives up rather than probing dozens of URLs. When it fails it now says UNRESOLVED, which is the honest answer.
+
+The original objection still holds and is worth keeping in mind: neither is a published API contract, so both are more likely to break than the tier-1 four. That is why they sit last, why their parse logic is isolated in pure functions with fixture tests, and why a low-confidence result from either reports as unresolved rather than empty.
 
 ## Tools
 
@@ -96,6 +104,20 @@ python -m pytest -q
 ## Extending (registry pattern)
 
 Add a provider by implementing `ATSProvider` (detect / from_url / list_jobs) in `ats_resolver_mcp/providers/` and registering it in `providers/registry.py`. Parse logic lives in module-level pure functions so new providers get fixture tests for free.
+
+## Disclosed fixes
+
+**2026-07-25, the empty-envelope false negative (found in live use, not by the test suite).**
+
+All four providers detected a board by checking that the response *envelope* was well formed, for example `"content" in data` or `"jobs" in data`, never that it contained anything. Several of these APIs answer HTTP 200 with a valid but empty payload for a slug that does not exist. SmartRecruiters returns `{"content": [], "totalFound": 0}` for literally any string, verified against a nonsense slug returning byte-identical output to four real companies.
+
+Because SmartRecruiters is probed last, it acted as a catch-all: every company the first three could not resolve was "resolved" to a SmartRecruiters board that was never real, and `ats_list_jobs` then reported **"No postings matched"**, which reads as *this company has no openings* rather than *the lookup failed*. In a live target-list run this produced silent false negatives on Comscore, Parrot Analytics, Numerator, Placer.ai, Vista Equity Partners, and SailPoint. A false negative is worse than an error here, because an error prompts a retry and an empty result ends the search.
+
+The fix, in three parts. Providers now record `observed_count` from the detection probe and set `confidence` to `high` or `low`. The registry no longer stops at the first shape-valid answer; an empty hit is held as a fallback while the rest of the chain is probed, so a real board with postings always wins over an empty envelope. And a low-confidence board reports `UNRESOLVED` with next steps rather than an empty result set.
+
+An empty board is still returned rather than discarded, because a real company can legitimately have zero openings. The distinction the caller needs is *unresolved* versus *empty*, and that distinction is now carried explicitly instead of being collapsed.
+
+Six regression tests cover it (`tests/test_providers.py`), including the registry preferring a populated board over an empty one and the all-empty case still returning low confidence.
 
 ## Limitations
 

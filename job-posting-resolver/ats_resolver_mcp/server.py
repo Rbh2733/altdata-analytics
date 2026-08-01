@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ats_resolver_mcp: resolve a company's ATS and read authoritative role data.
 
-Chain: aggregator hit -> ATS (Greenhouse/Lever/Ashby/SmartRecruiters)
+Chain: aggregator hit -> ATS (Greenhouse/Lever/Ashby/SmartRecruiters/iCIMS/Workday)
                        -> company careers page (last-resort HTML scrape).
 
 Tools:
@@ -47,6 +47,15 @@ _NO_ATS = (
     "company careers link, or (2) use ats_scrape_careers_page on the company careers URL."
 )
 
+_LOW_CONFIDENCE = (
+    "UNRESOLVED for '{company}'. A {platform} board answered for slug '{token}' but the probe "
+    "saw zero postings, and several ATS APIs return an empty-but-valid response for any slug. "
+    "Treat this as 'slug probably wrong', NOT as 'this company has no openings'. "
+    "Next steps: (1) call again with hint_url set to the real board URL, or "
+    "(2) use ats_scrape_careers_page on the company careers URL. "
+    "Workday needs a tenant, shard and site, so it is only reliably resolved from a hint_url."
+)
+
 
 def _dump(postings: List[Posting]) -> list:
     return [p.model_dump() for p in postings]
@@ -87,8 +96,9 @@ async def ats_resolve(params: ResolveAtsInput) -> str:
     """Detect which ATS a company uses and return its board token.
 
     Tries, in order: a hint_url (exact, instant) then slug-probing Greenhouse, Lever,
-    Ashby, SmartRecruiters. This is the first move in the
-    aggregator -> ATS -> company-site chain.
+    Ashby, SmartRecruiters, then iCIMS and Workday last (heavier probes; iCIMS is an HTML
+    read, Workday needs a tenant/shard/site triple and is best resolved from a hint_url).
+    This is the first move in the aggregator -> ATS -> company-site chain.
 
     Args:
         params (ResolveAtsInput): company (name or slug) and optional hint_url.
@@ -143,12 +153,18 @@ async def ats_list_jobs(params: ListJobsInput) -> str:
             return json.dumps({
                 "company": params.company,
                 "platform": board.platform,
+                "board_confidence": board.confidence,
+                "board_observed_count": board.observed_count,
                 "count": len(postings),
                 "postings": _dump(postings),
             }, indent=2)
         if not postings:
+            if board.confidence == "low":
+                return _LOW_CONFIDENCE.format(company=params.company, platform=board.platform,
+                                              token=board.token)
             return (f"No postings matched for '{params.company}' on {board.platform} "
-                    f"(query={params.query!r}, location={params.location!r}).")
+                    f"(board has {board.observed_count} live posting(s); "
+                    f"query={params.query!r}, location={params.location!r}).")
         return postings_to_markdown(postings, f"{params.company} via {board.platform}")
     except Exception as e:
         return http_error_message(e, "list_jobs")

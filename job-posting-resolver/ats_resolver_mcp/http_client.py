@@ -56,6 +56,42 @@ async def probe_json(url: str, params: Optional[dict] = None, timeout: float = P
         return None
 
 
+async def post_json(url: str, payload: dict, timeout: float = DEFAULT_TIMEOUT) -> Any:
+    """POST JSON and return parsed JSON. Workday's CXS jobs endpoint is POST-only."""
+    async with _client(timeout) as client:
+        resp = await client.post(url, json=payload)
+        resp.raise_for_status()
+        return resp.json()
+
+
+async def probe_post_json(url: str, payload: dict, timeout: float = PROBE_TIMEOUT) -> Optional[Any]:
+    """POST detection probe. Returns None on any non-200 or non-JSON, same contract as probe_json."""
+    try:
+        async with _client(timeout) as client:
+            resp = await client.post(url, json=payload)
+            if resp.status_code != 200:
+                return None
+            return resp.json()
+    except (httpx.HTTPError, ValueError):
+        return None
+
+
+async def probe_text(url: str, params: Optional[dict] = None,
+                     timeout: float = PROBE_TIMEOUT) -> Optional[str]:
+    """Return response text if the endpoint returns 200, else None.
+
+    HTML-board detection (iCIMS) needs this, because those boards expose no JSON API.
+    """
+    try:
+        async with _client(timeout) as client:
+            resp = await client.get(url, params=params)
+            if resp.status_code != 200:
+                return None
+            return resp.text
+    except httpx.HTTPError:
+        return None
+
+
 def http_error_message(e: Exception, context: str = "") -> str:
     """Consistent, actionable error text."""
     prefix = f"Error ({context}): " if context else "Error: "

@@ -44,7 +44,9 @@ class Lever(ATSProvider):
         for slug in candidates:
             data = await probe_json(f"{API}/{slug}", params={"mode": "json"})
             if isinstance(data, list):
-                return BoardRef(platform=self.name, token=slug)
+                n = len(data)
+                return BoardRef(platform=self.name, token=slug, observed_count=n,
+                                confidence="high" if n > 0 else "low")
         return None
 
     def from_url(self, url: str) -> Optional[BoardRef]:

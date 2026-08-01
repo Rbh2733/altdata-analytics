@@ -14,8 +14,13 @@ from .greenhouse import Greenhouse
 from .lever import Lever
 from .ashby import Ashby
 from .smartrecruiters import SmartRecruiters
+from .icims import ICIMS
+from .workday import Workday
 
-_PROVIDERS: List[ATSProvider] = [Greenhouse(), Lever(), Ashby(), SmartRecruiters()]
+# JSON APIs first (cheap, exact). iCIMS and Workday last: iCIMS is an HTML read and
+# Workday needs a 3-part address (tenant/shard/site), so both cost more per probe.
+_PROVIDERS: List[ATSProvider] = [Greenhouse(), Lever(), Ashby(), SmartRecruiters(),
+                                 ICIMS(), Workday()]
 
 
 def all_providers() -> List[ATSProvider]:
@@ -39,14 +44,30 @@ def from_any_url(url: str) -> Optional[BoardRef]:
 
 
 async def detect_ats(company: str, hint_url: Optional[str] = None) -> Optional[BoardRef]:
-    """Resolve a company to an ATS board: hint_url first (exact), then slug probing."""
+    """Resolve a company to an ATS board: hint_url first (exact), then slug probing.
+
+    A provider that answers with a well-formed but empty envelope is NOT allowed to end the
+    chain. Several ATS APIs return 200 plus an empty list for a slug that does not exist, so
+    stopping at the first shape-valid response resolved every unknown company to whichever
+    provider sits last in _PROVIDERS (SmartRecruiters), which then reported "no postings
+    matched" for a board that never existed. Empty hits are held as a fallback while the rest
+    of the chain is probed, and only returned (marked low confidence) if nothing better turns
+    up, since a real company can legitimately have zero open roles.
+    """
     if hint_url:
         ref = from_any_url(hint_url)
         if ref:
             return ref
     candidates = slug_candidates(company)
+    fallback: Optional[BoardRef] = None
     for p in _PROVIDERS:
         ref = await p.detect(candidates)
-        if ref:
+        if not ref:
+            continue
+        if (ref.observed_count or 0) > 0:
             return ref
-    return None
+        if fallback is None:
+            fallback = ref
+    if fallback is not None:
+        fallback.confidence = "low"
+    return fallback
