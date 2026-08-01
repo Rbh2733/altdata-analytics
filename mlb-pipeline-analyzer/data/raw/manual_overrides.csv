@@ -1,0 +1,3 @@
+cohort,rank,player,mlbam_id,reason
+2022,91,Greg Jones,675659,"two real Greg Joneses; ranking row is OF/SS age 28, id 675659 born 1998-03-07 LF (debut 2024-06-06) matches; the alternative 429983 is a pitcher born 1976. Verified against live API 2026-08-01."
+2024,68,Jacob Wilson,805779,"two real Jacob Wilsons; ranking row is SS age 24, id 805779 born 2002-03-30 SS (debut 2024-07-19) matches; the alternative 607111 is a 2B born 1990. Verified against live API 2026-08-01."

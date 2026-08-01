@@ -1,0 +1,784 @@
+mlbam_id,player,season,n_stints,n_scored,volume,volume_all,base_war,age_credit_war,adj_war,rate_per_600,verdict,truncated
+657746,Joe Ryan,2018,1,1,147,147,-0.5,0.01,-0.49,-1.99,scored,False
+657746,Joe Ryan,2019,3,2,427,481,-0.31,0.32,0.01,0.01,scored,False
+657746,Joe Ryan,2021,1,1,249,249,1.4,0.31,1.71,4.12,scored,True
+660644,Vidal Bruján,2016,2,1,223,232,-0.94,0.54,-0.4,-1.07,scored,False
+660644,Vidal Bruján,2017,1,1,302,302,-0.9,0.88,-0.03,-0.05,scored,False
+660644,Vidal Bruján,2018,2,2,548,548,0.23,1.81,2.04,2.23,scored,False
+660644,Vidal Bruján,2019,2,2,429,429,-0.43,2.13,1.7,2.37,scored,False
+660644,Vidal Bruján,2021,1,1,216,216,0.63,0.85,1.48,4.1,scored,True
+663698,Joey Bart,2018,2,1,203,228,0.34,0.13,0.47,1.38,scored,False
+663698,Joey Bart,2019,2,2,338,338,0.6,0.97,1.57,2.78,scored,False
+664350,Sixto Sánchez,2016,1,1,194,194,-0.94,0.56,-0.38,-1.19,scored,False
+664350,Sixto Sánchez,2017,2,2,375,375,-0.66,1.63,0.97,1.56,scored,False
+664350,Sixto Sánchez,2018,1,1,188,188,0.07,0.9,0.97,3.11,scored,False
+664350,Sixto Sánchez,2019,2,1,411,457,-0.04,1.17,1.12,1.64,scored,False
+665795,Edward Cabrera,2016,1,1,201,201,-0.87,0.43,-0.44,-1.32,scored,False
+665795,Edward Cabrera,2017,1,1,165,165,-0.56,0.45,-0.11,-0.38,scored,False
+665795,Edward Cabrera,2018,1,1,440,440,-1.46,1.23,-0.23,-0.32,scored,False
+665795,Edward Cabrera,2019,2,2,383,383,-0.72,1.42,0.7,1.1,scored,False
+665795,Edward Cabrera,2021,3,2,226,249,0.66,0.38,1.04,2.76,scored,True
+665833,Oneil Cruz,2017,1,1,438,438,-1.32,1.76,0.44,0.61,scored,False
+665833,Oneil Cruz,2018,1,1,443,443,0.19,1.62,1.81,2.45,scored,False
+665833,Oneil Cruz,2019,3,2,281,292,0.37,1.5,1.87,3.99,scored,False
+665833,Oneil Cruz,2021,2,1,273,302,1.25,1.39,2.64,5.81,scored,True
+666139,Josh Lowe,2016,1,1,214,214,-0.83,0.51,-0.31,-0.87,scored,False
+666139,Josh Lowe,2017,1,1,507,507,-1.69,2.04,0.35,0.41,scored,False
+666139,Josh Lowe,2018,1,1,455,455,-1.07,2.39,1.32,1.74,scored,False
+666139,Josh Lowe,2019,1,1,519,519,0.11,2.96,3.07,3.55,scored,False
+666139,Josh Lowe,2021,1,1,412,412,2.21,1.62,3.84,5.59,scored,True
+666157,Nick Lodolo,2019,1,0,0,28,0,0,0,,"insufficient_sample (0 of 28 PA+BF scored, need 100)",False
+666157,Nick Lodolo,2021,2,1,173,201,0.85,0.28,1.13,3.92,scored,False
+666310,Bo Naylor,2018,1,1,139,139,-0.11,0.32,0.21,0.91,scored,False
+666310,Bo Naylor,2019,1,1,453,453,-0.53,1.81,1.28,1.69,scored,False
+666310,Bo Naylor,2021,1,1,356,356,-0.18,2.3,2.13,3.59,scored,False
+666310,Bo Naylor,2022,2,2,510,510,3.66,2.49,6.15,7.23,scored,True
+666374,Matt Brash,2019,2,0,0,20,0,0,0,,"insufficient_sample (0 of 20 PA+BF scored, need 100)",False
+666374,Matt Brash,2021,2,2,405,405,0.81,0.54,1.35,2.0,scored,False
+668390,Cole Winn,2019,1,1,298,298,-1.27,1.06,-0.2,-0.41,scored,False
+668390,Cole Winn,2021,2,1,296,332,0.62,0.88,1.5,3.04,scored,False
+668390,Cole Winn,2022,1,1,573,573,1.41,0.79,2.2,2.3,scored,False
+668390,Cole Winn,2023,1,1,493,493,0.66,0.66,1.32,1.61,scored,False
+668390,Cole Winn,2024,1,0,0,29,0,0,0,,"insufficient_sample (0 of 29 PA+BF scored, need 100)",True
+668472,Nick Pratto,2017,1,1,230,230,-1.32,0.48,-0.84,-2.18,scored,False
+668472,Nick Pratto,2018,1,1,537,537,-1.51,1.97,0.45,0.51,scored,False
+668472,Nick Pratto,2019,1,1,472,472,-3.05,2.36,-0.68,-0.87,scored,False
+668472,Nick Pratto,2021,2,2,545,545,2.31,2.47,4.78,5.26,scored,False
+668472,Nick Pratto,2022,1,1,337,337,1.18,1.35,2.53,4.5,scored,True
+668709,JJ Bleday,2019,1,1,151,151,-0.5,0.56,0.06,0.24,scored,False
+668709,JJ Bleday,2021,1,1,468,468,-0.62,1.47,0.85,1.09,scored,False
+668709,JJ Bleday,2022,1,1,367,367,1.43,1.3,2.73,4.46,scored,True
+668881,Hunter Greene,2017,1,0,0,21,0,0,0,,"insufficient_sample (0 of 21 PA+BF scored, need 100)",False
+668881,Hunter Greene,2018,1,1,294,294,-0.56,1.12,0.56,1.13,scored,False
+668881,Hunter Greene,2021,2,2,438,438,1.24,0.89,2.13,2.92,scored,False
+668885,Austin Martin,2021,1,1,418,418,1.48,2.55,4.03,5.78,scored,False
+668885,Austin Martin,2022,2,1,406,416,0.88,1.61,2.49,3.67,scored,False
+668885,Austin Martin,2023,3,1,252,282,1.08,1.07,2.15,5.12,scored,False
+668904,Royce Lewis,2017,2,2,239,239,-0.3,0.77,0.47,1.19,scored,False
+668904,Royce Lewis,2018,2,2,535,535,0.4,2.4,2.81,3.15,scored,False
+668904,Royce Lewis,2019,2,2,566,566,-1.18,2.94,1.76,1.86,scored,False
+668904,Royce Lewis,2022,1,1,107,107,1.09,0.43,1.52,8.53,scored,True
+668909,Gavin Williams,2022,2,2,450,450,1.2,0.75,1.95,2.6,scored,False
+668909,Gavin Williams,2023,2,1,183,236,1.02,0.3,1.32,4.33,scored,True
+668939,Adley Rutschman,2019,3,2,139,155,-0.13,0.13,-0.01,-0.02,scored,False
+668939,Adley Rutschman,2021,2,2,543,543,3.19,2.04,5.24,5.79,scored,False
+668939,Adley Rutschman,2022,3,1,53,84,0.33,0.21,0.54,,"insufficient_sample (53 of 84 PA+BF scored, need 100)",True
+669004,MJ Melendez,2017,1,1,198,198,-0.29,0.45,0.16,0.5,scored,False
+669004,MJ Melendez,2018,1,1,472,472,0.3,1.82,2.12,2.69,scored,False
+669004,MJ Melendez,2019,1,1,419,419,-1.25,2.1,0.85,1.22,scored,False
+669004,MJ Melendez,2021,2,2,531,531,4.14,2.61,6.75,7.63,scored,False
+669004,MJ Melendez,2022,1,1,91,91,0.05,0.36,0.41,,"insufficient_sample (91 of 91 PA+BF scored, need 100)",True
+669022,MacKenzie Gore,2017,1,1,84,84,-0.28,0.18,-0.1,,"insufficient_sample (84 of 84 PA+BF scored, need 100)",False
+669022,MacKenzie Gore,2018,1,1,261,261,-0.48,0.99,0.51,1.16,scored,False
+669022,MacKenzie Gore,2019,2,2,378,378,-0.51,1.78,1.27,2.01,scored,False
+669022,MacKenzie Gore,2021,4,2,160,223,-0.1,0.02,-0.08,-0.29,scored,False
+669022,MacKenzie Gore,2022,1,0,0,16,0,0,0,,"insufficient_sample (0 of 16 PA+BF scored, need 100)",True
+669084,DL Hall,2017,1,0,0,49,0,0,0,,"insufficient_sample (0 of 49 PA+BF scored, need 100)",False
+669084,DL Hall,2018,1,1,391,391,-1.03,1.38,0.36,0.55,scored,False
+669084,DL Hall,2019,1,1,346,346,-0.7,1.56,0.86,1.48,scored,False
+669084,DL Hall,2021,1,1,128,128,0.24,0.28,0.52,2.44,scored,False
+669084,DL Hall,2022,3,1,317,345,1.41,0.45,1.87,3.53,scored,True
+669127,Shea Langeliers,2019,1,1,239,239,-0.54,0.26,-0.28,-0.71,scored,False
+669127,Shea Langeliers,2021,2,1,370,384,1.44,1.18,2.63,4.26,scored,False
+669127,Shea Langeliers,2022,1,1,402,402,2.87,1.44,4.31,6.43,scored,True
+669134,Luis Campusano,2017,1,1,151,151,-0.35,0.31,-0.03,-0.13,scored,False
+669134,Luis Campusano,2018,1,1,284,284,-0.09,1.03,0.94,1.98,scored,False
+669134,Luis Campusano,2019,1,1,487,487,1.53,2.44,3.97,4.89,scored,False
+669224,Austin Wells,2021,2,2,469,469,1.31,0.84,2.16,2.76,scored,False
+669224,Austin Wells,2022,3,2,368,402,2.13,1.29,3.42,5.57,scored,False
+669224,Austin Wells,2023,3,2,409,429,1.23,1.25,2.48,3.63,scored,True
+669304,Jose F Miranda,2016,1,1,213,213,-1.07,0.6,-0.46,-1.31,scored,False
+669304,Jose F Miranda,2017,1,1,247,247,-0.75,0.44,-0.3,-0.74,scored,False
+669304,Jose F Miranda,2018,2,2,552,552,-0.9,2.04,1.14,1.24,scored,False
+669304,Jose F Miranda,2019,2,1,478,483,-1.35,2.26,0.91,1.14,scored,False
+669304,Jose F Miranda,2021,2,2,591,591,3.87,2.45,6.33,6.42,scored,False
+669304,Jose F Miranda,2022,1,1,95,95,0.14,0.38,0.52,,"insufficient_sample (95 of 95 PA+BF scored, need 100)",True
+669357,Nolan Gorman,2018,2,2,274,274,-0.18,0.85,0.67,1.47,scored,False
+669357,Nolan Gorman,2019,2,2,512,512,-0.81,2.28,1.46,1.72,scored,False
+669357,Nolan Gorman,2021,2,2,523,523,1.43,2.55,3.98,4.57,scored,False
+669357,Nolan Gorman,2022,1,1,147,147,1.42,0.59,2.01,8.19,scored,True
+669358,Shane Baz,2017,1,1,105,105,-0.58,0.23,-0.35,-2.01,scored,False
+669358,Shane Baz,2018,1,1,244,244,-0.91,0.26,-0.65,-1.6,scored,False
+669358,Shane Baz,2019,1,1,342,342,-1.24,1.06,-0.17,-0.3,scored,False
+669358,Shane Baz,2021,2,2,298,298,1.39,0.67,2.06,4.15,scored,True
+669370,Asa Lacy,2021,1,1,237,237,-0.2,0.52,0.32,0.81,scored,False
+669370,Asa Lacy,2022,2,1,105,152,-0.28,0.15,-0.14,-0.77,scored,False
+669391,Owen White,2021,2,1,135,141,0.1,0.12,0.22,0.97,scored,False
+669391,Owen White,2022,2,2,328,328,0.66,0.44,1.1,2.02,scored,False
+669391,Owen White,2023,1,1,213,213,0.07,0.23,0.3,0.84,scored,True
+669461,Matthew Liberatore,2018,1,1,127,127,-0.51,0.21,-0.3,-1.41,scored,False
+669461,Matthew Liberatore,2019,1,1,332,332,-0.98,1.19,0.21,0.38,scored,False
+669461,Matthew Liberatore,2021,1,1,520,520,1.48,0.81,2.29,2.64,scored,False
+669461,Matthew Liberatore,2022,1,1,162,162,0.81,0.26,1.07,3.96,scored,True
+669923,George Kirby,2021,2,2,274,274,0.86,0.23,1.09,2.39,scored,False
+669923,George Kirby,2022,1,1,93,93,0.36,0.06,0.42,,"insufficient_sample (93 of 93 PA+BF scored, need 100)",True
+671213,Triston Casas,2018,1,0,0,5,0,0,0,,"insufficient_sample (0 of 5 PA+BF scored, need 100)",False
+671213,Triston Casas,2019,2,1,493,500,-1.65,1.95,0.3,0.37,scored,False
+671213,Triston Casas,2021,2,2,371,371,0.65,2.29,2.95,4.77,scored,False
+671213,Triston Casas,2022,2,1,317,334,0.97,1.27,2.24,4.24,scored,True
+671289,Tyler Freeman,2017,1,1,144,144,-0.31,0.4,0.09,0.38,scored,False
+671289,Tyler Freeman,2018,1,1,301,301,0.23,0.99,1.21,2.42,scored,False
+671289,Tyler Freeman,2019,2,2,547,547,-0.04,2.22,2.18,2.39,scored,False
+671289,Tyler Freeman,2021,1,1,180,180,0.62,1.16,1.78,5.94,scored,False
+671289,Tyler Freeman,2022,1,1,343,343,1.23,1.37,2.6,4.55,scored,True
+671655,George Valera,2018,1,0,0,22,0,0,0,,"insufficient_sample (0 of 22 PA+BF scored, need 100)",False
+671655,George Valera,2019,2,1,188,214,-0.63,0.61,-0.02,-0.08,scored,False
+671655,George Valera,2021,2,2,363,363,0.78,2.21,2.99,4.94,scored,False
+671655,George Valera,2022,2,2,566,566,1.15,3.33,4.49,4.76,scored,False
+671655,George Valera,2023,2,1,312,338,-0.05,1.32,1.27,2.44,scored,False
+671655,George Valera,2024,1,1,374,374,0.76,1.51,2.27,3.64,scored,False
+671655,George Valera,2025,2,2,170,170,0.28,0.16,0.44,1.56,scored,True
+671737,Taj Bradley,2018,1,1,116,116,-0.42,0.26,-0.16,-0.82,scored,False
+671737,Taj Bradley,2021,2,2,397,397,-0.12,1.54,1.42,2.14,scored,False
+671737,Taj Bradley,2022,2,2,532,532,2.17,1.23,3.39,3.83,scored,False
+671737,Taj Bradley,2023,1,0,0,30,0,0,0,,"insufficient_sample (0 of 30 PA+BF scored, need 100)",True
+671739,Michael Harris II,2019,2,2,212,212,-0.95,0.62,-0.33,-0.94,scored,False
+671739,Michael Harris II,2021,1,1,420,420,0.04,2.5,2.54,3.62,scored,False
+671739,Michael Harris II,2022,1,1,196,196,0.67,1.33,2.0,6.12,scored,True
+672012,Tyler Black,2021,2,1,103,115,-0.41,0.27,-0.14,-0.8,scored,False
+672012,Tyler Black,2022,1,1,283,283,0.05,0.89,0.94,1.98,scored,False
+672012,Tyler Black,2023,2,2,558,558,2.16,2.54,4.7,5.06,scored,False
+672012,Tyler Black,2024,1,1,117,117,0.51,0.47,0.98,5.04,scored,True
+672282,Reid Detmers,2021,2,1,225,247,0.41,0.61,1.02,2.73,scored,True
+672356,Gabriel Arias,2017,2,2,232,232,-1.07,0.83,-0.24,-0.62,scored,False
+672356,Gabriel Arias,2018,1,1,504,504,-1.38,2.02,0.64,0.76,scored,False
+672356,Gabriel Arias,2019,1,1,511,511,0.02,2.56,2.58,3.03,scored,False
+672356,Gabriel Arias,2021,1,1,483,483,1.66,1.9,3.56,4.42,scored,False
+672356,Gabriel Arias,2022,1,1,40,40,0.2,0.16,0.36,,"insufficient_sample (40 of 40 PA+BF scored, need 100)",True
+672515,Gabriel Moreno,2018,1,1,167,167,0.13,0.38,0.51,1.84,scored,False
+672515,Gabriel Moreno,2019,1,1,341,341,0.16,1.36,1.52,2.67,scored,False
+672515,Gabriel Moreno,2021,3,1,145,159,1.33,0.94,2.26,9.36,scored,False
+672515,Gabriel Moreno,2022,1,1,150,150,0.84,0.6,1.44,5.74,scored,True
+672710,Roansy Contreras,2017,1,1,145,145,-0.73,0.35,-0.38,-1.58,scored,False
+672710,Roansy Contreras,2018,2,2,250,250,-0.9,0.95,0.05,0.11,scored,False
+672710,Roansy Contreras,2019,1,1,536,536,-2.06,2.01,-0.05,-0.06,scored,False
+672710,Roansy Contreras,2021,2,1,218,234,0.65,0.62,1.27,3.48,scored,True
+672724,Oswald Peraza,2017,1,1,213,213,-0.61,0.72,0.11,0.31,scored,False
+672724,Oswald Peraza,2018,1,1,159,159,-0.46,0.42,-0.04,-0.14,scored,False
+672724,Oswald Peraza,2019,2,2,293,293,-0.7,1.1,0.41,0.83,scored,False
+672724,Oswald Peraza,2021,3,2,480,511,1.65,2.93,4.59,5.73,scored,False
+672724,Oswald Peraza,2022,1,1,429,429,2.01,1.72,3.73,5.21,scored,True
+673962,Josh Jung,2019,2,1,179,198,-0.32,0.25,-0.07,-0.24,scored,False
+673962,Josh Jung,2021,2,2,342,342,2.32,1.3,3.62,6.35,scored,False
+673962,Josh Jung,2022,2,1,106,135,0.5,0.41,0.91,5.17,scored,True
+675659,Greg Jones,2021,2,2,317,317,0.6,0.39,0.99,1.88,scored,False
+675659,Greg Jones,2022,1,1,358,358,0.2,0.58,0.77,1.29,scored,False
+675659,Greg Jones,2023,2,2,281,281,0.25,0.5,0.75,1.6,scored,False
+675659,Greg Jones,2024,2,1,89,100,0.35,0.14,0.49,,"insufficient_sample (89 of 100 PA+BF scored, need 100)",True
+676059,Jordan Westburg,2021,3,3,506,506,1.18,1.51,2.69,3.19,scored,False
+676059,Jordan Westburg,2022,2,2,622,622,3.02,2.44,5.46,5.26,scored,False
+676059,Jordan Westburg,2023,1,1,301,301,1.97,1.28,3.25,6.47,scored,True
+676106,Emerson Hancock,2021,2,1,124,179,0.04,0.31,0.35,1.7,scored,False
+676106,Emerson Hancock,2022,1,1,413,413,0.22,0.72,0.94,1.37,scored,False
+676106,Emerson Hancock,2023,1,1,411,411,0.6,0.36,0.95,1.39,scored,True
+676272,Bobby Miller,2021,2,1,188,230,0.34,0.42,0.76,2.41,scored,False
+676272,Bobby Miller,2022,2,2,469,469,1.84,0.75,2.6,3.32,scored,False
+676272,Bobby Miller,2023,1,1,61,61,0.2,0.09,0.29,,"insufficient_sample (61 of 61 PA+BF scored, need 100)",True
+676440,Tanner Bibee,2022,2,2,516,516,1.67,0.58,2.25,2.62,scored,False
+676440,Tanner Bibee,2023,1,1,61,61,0.53,0.1,0.63,,"insufficient_sample (61 of 61 PA+BF scored, need 100)",True
+676475,Alec Burleson,2021,3,3,503,503,0.22,2.3,2.52,3.0,scored,False
+676475,Alec Burleson,2022,1,1,470,470,2.55,1.88,4.43,5.65,scored,True
+676917,Cade Cavalli,2021,3,3,522,522,1.49,0.84,2.33,2.68,scored,False
+676917,Cade Cavalli,2022,1,1,401,401,2.52,0.63,3.15,4.72,scored,True
+676974,Max Meyer,2021,2,1,416,454,0.7,1.07,1.77,2.55,scored,False
+676974,Max Meyer,2022,2,1,229,240,1.36,0.38,1.74,4.55,scored,True
+677008,Heston Kjerstad,2022,2,2,284,284,0.17,-0.04,0.13,0.27,scored,False
+677008,Heston Kjerstad,2023,2,2,543,543,1.96,1.73,3.7,4.08,scored,True
+677587,Brayan Rocchio,2018,1,1,158,158,-0.21,0.52,0.31,1.17,scored,False
+677587,Brayan Rocchio,2019,1,1,295,295,-1.01,0.96,-0.05,-0.11,scored,False
+677587,Brayan Rocchio,2021,2,2,491,491,0.99,3.02,4.01,4.9,scored,False
+677587,Brayan Rocchio,2022,2,2,584,584,1.3,3.53,4.84,4.97,scored,False
+677587,Brayan Rocchio,2023,1,1,164,164,1.07,0.69,1.76,6.45,scored,True
+677594,Julio Rodríguez,2019,2,2,367,367,0.04,1.54,1.58,2.58,scored,False
+677594,Julio Rodríguez,2021,2,2,340,340,1.8,2.13,3.93,6.94,scored,False
+677595,Ronny Mauricio,2018,1,1,247,247,-0.96,0.85,-0.11,-0.27,scored,False
+677595,Ronny Mauricio,2019,1,1,504,504,-1.95,2.01,0.06,0.08,scored,False
+677595,Ronny Mauricio,2021,2,1,420,453,-0.4,2.5,2.1,3.0,scored,False
+677595,Ronny Mauricio,2022,1,1,541,541,0.61,3.66,4.28,4.74,scored,False
+677595,Ronny Mauricio,2023,1,1,532,532,2.1,2.25,4.36,4.92,scored,True
+677649,Ezequiel Duran,2018,1,1,235,235,-1.12,0.33,-0.79,-2.01,scored,False
+677649,Ezequiel Duran,2019,1,1,277,277,-0.58,0.58,-0.01,-0.01,scored,False
+677649,Ezequiel Duran,2021,1,1,471,471,0.54,1.42,1.96,2.49,scored,False
+677649,Ezequiel Duran,2022,1,1,200,200,1.1,0.87,1.97,5.91,scored,True
+677950,Alek Thomas,2018,1,1,272,272,-0.68,0.68,0.0,0.0,scored,False
+677950,Alek Thomas,2019,2,2,506,506,-0.83,2.12,1.29,1.53,scored,False
+677950,Alek Thomas,2021,2,2,495,495,2.35,2.78,5.14,6.23,scored,False
+677950,Alek Thomas,2022,1,1,116,116,0.47,0.46,0.93,4.84,scored,True
+677951,Bobby Witt Jr.,2019,1,1,180,180,-0.7,0.23,-0.47,-1.57,scored,False
+677951,Bobby Witt Jr.,2021,2,2,564,564,3.4,2.93,6.33,6.73,scored,False
+677954,Jordan Groshans,2018,1,1,207,207,-0.51,0.41,-0.1,-0.29,scored,False
+677954,Jordan Groshans,2019,1,1,96,96,0.07,0.36,0.43,,"insufficient_sample (96 of 96 PA+BF scored, need 100)",False
+677954,Jordan Groshans,2021,1,1,316,316,0.72,2.04,2.77,5.25,scored,False
+677954,Jordan Groshans,2022,2,1,412,432,0.84,1.65,2.48,3.62,scored,True
+678246,Miguel Vargas,2018,2,2,229,229,-0.25,0.63,0.39,1.01,scored,False
+678246,Miguel Vargas,2019,2,2,559,559,-0.23,2.39,2.16,2.32,scored,False
+678246,Miguel Vargas,2021,2,2,542,542,2.06,3.08,5.14,5.69,scored,False
+678246,Miguel Vargas,2022,1,1,437,437,2.58,1.75,4.33,5.94,scored,True
+678554,Curtis Mead,2018,1,0,0,6,0,0,0,,"insufficient_sample (0 of 6 PA+BF scored, need 100)",False
+678554,Curtis Mead,2019,1,1,175,175,-0.56,0.3,-0.26,-0.89,scored,False
+678554,Curtis Mead,2021,3,2,444,458,0.71,2.0,2.71,3.66,scored,False
+678554,Curtis Mead,2022,2,2,331,331,1.84,2.0,3.84,6.97,scored,False
+678554,Curtis Mead,2023,2,1,211,225,0.71,0.89,1.6,4.55,scored,True
+678662,Ezequiel Tovar,2019,1,1,243,243,-0.91,0.79,-0.12,-0.3,scored,False
+678662,Ezequiel Tovar,2021,2,2,469,469,0.13,2.22,2.35,3.01,scored,False
+678662,Ezequiel Tovar,2022,2,1,295,318,1.9,2.0,3.9,7.93,scored,True
+678882,Ceddanne Rafaela,2019,2,1,176,188,-0.8,0.28,-0.53,-1.79,scored,False
+678882,Ceddanne Rafaela,2021,1,1,432,432,-1.09,1.23,0.13,0.18,scored,False
+678882,Ceddanne Rafaela,2022,2,2,522,522,1.28,2.83,4.11,4.72,scored,False
+678882,Ceddanne Rafaela,2023,2,2,485,485,1.43,2.26,3.69,4.57,scored,True
+678894,Liover Peguero,2018,1,1,71,71,-0.39,0.23,-0.16,,"insufficient_sample (71 of 71 PA+BF scored, need 100)",False
+678894,Liover Peguero,2019,1,1,93,93,-0.28,0.3,0.02,,"insufficient_sample (93 of 93 PA+BF scored, need 100)",False
+678894,Liover Peguero,2021,1,1,417,417,0.5,2.48,2.98,4.28,scored,False
+678894,Liover Peguero,2022,1,1,236,236,0.66,1.6,2.26,5.75,scored,True
+679529,Spencer Torkelson,2021,3,3,530,530,1.22,2.57,3.79,4.29,scored,False
+679822,Justin Foscue,2021,3,2,254,267,0.9,1.01,1.9,4.49,scored,False
+679822,Justin Foscue,2022,1,1,460,460,1.51,1.76,3.28,4.27,scored,False
+679822,Justin Foscue,2023,1,1,563,563,2.59,2.39,4.98,5.3,scored,False
+679822,Justin Foscue,2024,1,0,0,15,0,0,0,,"insufficient_sample (0 of 15 PA+BF scored, need 100)",True
+680570,Grayson Rodriguez,2018,1,1,80,80,-0.27,0.13,-0.14,,"insufficient_sample (80 of 80 PA+BF scored, need 100)",False
+680570,Grayson Rodriguez,2019,1,1,377,377,-0.95,1.44,0.49,0.78,scored,False
+680570,Grayson Rodriguez,2021,2,2,398,398,1.13,1.2,2.33,3.52,scored,False
+680570,Grayson Rodriguez,2022,3,1,271,298,2.48,0.45,2.93,6.5,scored,False
+680570,Grayson Rodriguez,2023,1,0,0,21,0,0,0,,"insufficient_sample (0 of 21 PA+BF scored, need 100)",True
+680574,Matt McLain,2021,2,1,119,126,0.31,0.41,0.72,3.61,scored,False
+680574,Matt McLain,2022,1,1,452,452,1.88,2.17,4.05,5.38,scored,False
+680574,Matt McLain,2023,1,1,173,173,2.16,0.73,2.9,10.04,scored,True
+680695,Brennen Davis,2018,1,1,72,72,-0.2,0.14,-0.06,,"insufficient_sample (72 of 72 PA+BF scored, need 100)",False
+680695,Brennen Davis,2019,1,1,204,204,-0.11,0.75,0.64,1.9,scored,False
+680695,Brennen Davis,2021,3,2,384,416,0.95,2.31,3.26,5.1,scored,False
+680695,Brennen Davis,2022,3,1,174,214,-0.16,0.7,0.54,1.85,scored,False
+680695,Brennen Davis,2023,3,1,257,293,-0.86,1.09,0.23,0.53,scored,False
+680695,Brennen Davis,2024,2,1,181,217,0.56,0.68,1.24,4.12,scored,False
+680695,Brennen Davis,2025,3,1,142,198,0.6,0.34,0.94,3.97,scored,False
+680695,Brennen Davis,2026,1,1,205,205,0.92,0.28,1.2,3.51,scored,False
+680776,Jarren Duran,2018,2,2,302,302,-0.16,0.17,0.02,0.03,scored,False
+680776,Jarren Duran,2019,2,2,578,578,-0.28,1.91,1.63,1.7,scored,False
+680776,Jarren Duran,2021,1,1,219,219,1.21,0.7,1.9,5.21,scored,True
+680779,Henry Davis,2021,2,0,0,31,0,0,0,,"insufficient_sample (0 of 31 PA+BF scored, need 100)",False
+680779,Henry Davis,2022,4,2,236,255,1.03,0.85,1.87,4.76,scored,False
+680779,Henry Davis,2023,2,2,232,232,1.73,0.72,2.44,6.32,scored,True
+681082,Bryson Stott,2019,2,1,182,193,-0.28,0.06,-0.22,-0.71,scored,False
+681082,Bryson Stott,2021,3,3,487,487,2.01,1.18,3.18,3.92,scored,False
+681297,Colton Cowser,2021,2,1,124,149,0.12,0.25,0.38,1.82,scored,False
+681297,Colton Cowser,2022,3,3,626,626,2.14,2.57,4.71,4.52,scored,False
+681297,Colton Cowser,2023,1,1,257,257,1.87,1.09,2.96,6.9,scored,True
+681351,Logan O'Hoppe,2018,1,1,124,124,0.1,0.28,0.38,1.85,scored,False
+681351,Logan O'Hoppe,2019,1,1,177,177,-0.49,0.51,0.01,0.04,scored,False
+681351,Logan O'Hoppe,2021,3,2,415,438,0.86,1.96,2.82,4.07,scored,False
+681351,Logan O'Hoppe,2022,1,1,447,447,3.3,2.66,5.96,8.0,scored,True
+681624,Andy Pages,2018,1,0,0,34,0,0,0,,"insufficient_sample (0 of 34 PA+BF scored, need 100)",False
+681624,Andy Pages,2021,1,1,538,538,1.18,3.2,4.37,4.88,scored,False
+681624,Andy Pages,2022,1,1,571,571,0.77,3.86,4.63,4.87,scored,False
+681624,Andy Pages,2023,2,1,142,146,0.51,0.78,1.3,5.48,scored,False
+681624,Andy Pages,2024,1,1,73,73,0.79,0.29,1.08,,"insufficient_sample (73 of 73 PA+BF scored, need 100)",True
+682243,Bryce Miller,2021,1,0,0,45,0,0,0,,"insufficient_sample (0 of 45 PA+BF scored, need 100)",False
+682243,Bryce Miller,2022,3,2,520,543,1.08,0.1,1.18,1.36,scored,False
+682243,Bryce Miller,2023,1,1,85,85,-0.1,0.01,-0.09,,"insufficient_sample (85 of 85 PA+BF scored, need 100)",True
+682616,Diego Cartaya,2019,1,1,150,150,-0.28,0.4,0.13,0.51,scored,False
+682616,Diego Cartaya,2021,1,1,137,137,0.56,0.6,1.16,5.09,scored,False
+682616,Diego Cartaya,2022,2,2,445,445,1.63,1.91,3.55,4.78,scored,False
+682616,Diego Cartaya,2023,1,1,403,403,-0.09,2.67,2.59,3.85,scored,False
+682616,Diego Cartaya,2024,2,2,400,400,0.73,1.7,2.43,3.65,scored,False
+682616,Diego Cartaya,2025,2,1,69,87,-0.38,0.28,-0.1,,"insufficient_sample (69 of 87 PA+BF scored, need 100)",False
+682616,Diego Cartaya,2026,1,0,0,35,0,0,0,,"insufficient_sample (0 of 35 PA+BF scored, need 100)",False
+682617,Marco Luciano,2019,2,1,178,216,-0.01,0.48,0.47,1.59,scored,False
+682617,Marco Luciano,2021,2,2,453,453,0.19,2.21,2.4,3.18,scored,False
+682617,Marco Luciano,2022,2,1,230,257,0.43,1.21,1.64,4.28,scored,False
+682617,Marco Luciano,2023,2,1,242,269,0.59,1.61,2.19,5.44,scored,True
+682619,Orelvis Martinez,2019,1,1,163,163,-0.37,0.48,0.11,0.39,scored,False
+682619,Orelvis Martinez,2021,2,2,451,451,0.43,2.27,2.71,3.6,scored,False
+682619,Orelvis Martinez,2022,1,1,492,492,0.27,3.33,3.6,4.38,scored,False
+682619,Orelvis Martinez,2023,2,2,538,538,1.4,2.98,4.38,4.88,scored,False
+682619,Orelvis Martinez,2024,1,1,269,269,1.28,1.08,2.37,5.28,scored,True
+682622,Noelvi Marte,2021,2,1,478,511,0.07,2.17,2.24,2.81,scored,False
+682622,Noelvi Marte,2022,1,1,520,520,1.0,2.82,3.83,4.41,scored,False
+682622,Noelvi Marte,2023,3,2,389,399,1.12,2.18,3.3,5.09,scored,True
+682626,Francisco Alvarez,2019,1,0,0,31,0,0,0,,"insufficient_sample (0 of 31 PA+BF scored, need 100)",False
+682626,Francisco Alvarez,2021,2,2,400,400,1.68,2.29,3.98,5.97,scored,False
+682626,Francisco Alvarez,2022,2,2,495,495,3.0,2.8,5.8,7.03,scored,True
+682634,Kevin Alcántara,2019,1,1,128,128,-0.8,0.44,-0.36,-1.68,scored,False
+682634,Kevin Alcántara,2021,1,1,138,138,-0.16,0.27,0.11,0.48,scored,False
+682634,Kevin Alcántara,2022,1,1,495,495,-0.31,1.97,1.66,2.01,scored,False
+682634,Kevin Alcántara,2023,3,1,408,435,-0.15,2.05,1.9,2.79,scored,False
+682634,Kevin Alcántara,2024,2,2,473,473,0.81,2.53,3.34,4.23,scored,True
+682641,Luis Matos,2019,1,0,0,20,0,0,0,,"insufficient_sample (0 of 20 PA+BF scored, need 100)",False
+682641,Luis Matos,2021,1,1,491,491,-0.26,2.34,2.07,2.53,scored,False
+682641,Luis Matos,2022,2,1,407,415,-1.3,2.29,0.99,1.47,scored,False
+682641,Luis Matos,2023,2,2,249,249,1.51,1.37,2.88,6.94,scored,True
+682668,Luisangel Acuña,2021,1,1,473,473,-0.08,2.25,2.18,2.76,scored,False
+682668,Luisangel Acuña,2022,2,2,409,409,1.21,2.49,3.71,5.44,scored,False
+682668,Luisangel Acuña,2023,1,1,569,569,1.54,3.78,5.32,5.61,scored,False
+682668,Luisangel Acuña,2024,1,1,587,587,0.26,2.36,2.62,2.68,scored,True
+682829,Elly De La Cruz,2021,2,2,265,265,0.02,1.07,1.1,2.48,scored,False
+682829,Elly De La Cruz,2022,2,2,513,513,2.94,3.12,6.06,7.09,scored,False
+682829,Elly De La Cruz,2023,1,1,186,186,1.58,0.79,2.37,7.65,scored,True
+682848,Endy Rodríguez,2019,1,1,90,90,-0.07,0.11,0.04,,"insufficient_sample (90 of 90 PA+BF scored, need 100)",False
+682848,Endy Rodríguez,2021,1,1,434,434,0.99,1.01,2.01,2.78,scored,False
+682848,Endy Rodríguez,2022,3,2,508,531,3.33,1.96,5.28,6.24,scored,False
+682848,Endy Rodríguez,2023,1,1,315,315,1.12,1.33,2.46,4.68,scored,True
+682928,CJ Abrams,2019,2,1,156,165,0.1,0.25,0.35,1.35,scored,False
+682928,CJ Abrams,2021,1,1,183,183,0.54,1.18,1.72,5.65,scored,False
+682982,Daniel Espino,2019,2,0,0,98,0,0,0,,"insufficient_sample (0 of 98 PA+BF scored, need 100)",False
+682982,Daniel Espino,2021,2,2,375,375,0.29,1.43,1.72,2.76,scored,False
+682982,Daniel Espino,2022,1,1,68,68,0.27,0.21,0.48,,"insufficient_sample (68 of 68 PA+BF scored, need 100)",False
+682982,Daniel Espino,2025,1,0,0,5,0,0,0,,"insufficient_sample (0 of 5 PA+BF scored, need 100)",False
+682982,Daniel Espino,2026,1,1,87,87,0.35,0.09,0.44,,"insufficient_sample (87 of 87 PA+BF scored, need 100)",True
+682985,Riley Greene,2019,3,3,251,251,-0.95,0.82,-0.13,-0.3,scored,False
+682985,Riley Greene,2021,2,2,558,558,2.44,3.14,5.58,6.0,scored,False
+682985,Riley Greene,2022,2,1,68,75,0.12,0.27,0.4,,"insufficient_sample (68 of 75 PA+BF scored, need 100)",True
+682987,Spencer Jones,2022,2,1,95,106,0.19,0.21,0.4,,"insufficient_sample (95 of 106 PA+BF scored, need 100)",False
+682987,Spencer Jones,2023,2,2,537,537,-0.21,1.82,1.61,1.8,scored,False
+682987,Spencer Jones,2024,1,1,544,544,0.65,2.1,2.75,3.03,scored,False
+682987,Spencer Jones,2025,2,2,506,506,2.58,1.6,4.19,4.96,scored,False
+682987,Spencer Jones,2026,1,1,142,142,0.87,0.49,1.36,5.75,scored,True
+682990,Quinn Priester,2019,2,1,140,159,-0.6,0.17,-0.43,-1.83,scored,False
+682990,Quinn Priester,2021,1,1,407,407,-0.05,1.79,1.74,2.56,scored,False
+682990,Quinn Priester,2022,4,1,312,377,1.15,0.85,2.0,3.85,scored,False
+682990,Quinn Priester,2023,1,1,375,375,2.24,0.57,2.81,4.5,scored,True
+682998,Corbin Carroll,2019,2,2,186,186,-0.42,0.36,-0.06,-0.18,scored,False
+682998,Corbin Carroll,2021,1,0,0,29,0,0,0,,"insufficient_sample (0 of 29 PA+BF scored, need 100)",False
+682998,Corbin Carroll,2022,3,2,434,442,3.28,2.5,5.78,8.0,scored,True
+683002,Gunnar Henderson,2019,1,1,121,121,-0.54,0.3,-0.24,-1.18,scored,False
+683002,Gunnar Henderson,2021,3,2,446,463,0.42,2.36,2.78,3.74,scored,False
+683002,Gunnar Henderson,2022,2,2,503,503,3.56,2.59,6.15,7.33,scored,True
+683003,Jared Jones,2021,1,1,302,302,-0.19,0.96,0.77,1.52,scored,False
+683003,Jared Jones,2022,1,1,532,532,-0.54,2.13,1.6,1.8,scored,False
+683003,Jared Jones,2023,2,2,529,529,2.34,1.04,3.38,3.83,scored,False
+683004,Jack Leiter,2022,1,1,425,425,0.54,0.99,1.53,2.16,scored,False
+683004,Jack Leiter,2023,2,1,351,371,-0.13,0.57,0.45,0.76,scored,False
+683004,Jack Leiter,2024,1,0,0,57,0,0,0,,"insufficient_sample (0 of 57 PA+BF scored, need 100)",True
+683011,Anthony Volpe,2021,2,2,513,513,2.37,2.5,4.87,5.7,scored,False
+683011,Anthony Volpe,2022,2,2,596,596,2.38,3.76,6.14,6.18,scored,False
+683146,Brett Baty,2019,2,0,0,42,0,0,0,,"insufficient_sample (0 of 42 PA+BF scored, need 100)",False
+683146,Brett Baty,2021,2,2,385,385,0.91,1.97,2.88,4.48,scored,False
+683146,Brett Baty,2022,2,1,394,420,2.25,2.13,4.38,6.67,scored,True
+683175,Connor Phillips,2021,2,1,322,340,0.08,0.95,1.03,1.92,scored,False
+683175,Connor Phillips,2022,2,2,473,473,0.67,1.52,2.19,2.78,scored,False
+683175,Connor Phillips,2023,2,2,462,462,1.64,0.97,2.61,3.39,scored,True
+683357,Owen Caissie,2021,2,2,226,226,-0.33,0.69,0.36,0.96,scored,False
+683357,Owen Caissie,2022,1,1,433,433,-0.23,2.44,2.21,3.06,scored,False
+683357,Owen Caissie,2023,1,1,528,528,1.66,3.5,5.16,5.86,scored,False
+683357,Owen Caissie,2024,1,1,549,549,2.12,2.21,4.33,4.73,scored,False
+683357,Owen Caissie,2025,1,1,404,404,2.39,1.61,4.0,5.95,scored,True
+683737,Michael Busch,2019,2,0,0,35,0,0,0,,"insufficient_sample (0 of 35 PA+BF scored, need 100)",False
+683737,Michael Busch,2021,1,1,495,495,1.79,1.56,3.35,4.06,scored,False
+683737,Michael Busch,2022,2,2,641,641,3.46,1.91,5.37,5.02,scored,False
+683737,Michael Busch,2023,1,1,102,102,0.81,0.26,1.06,6.26,scored,True
+686217,Sal Frelick,2021,3,2,152,169,0.0,0.52,0.52,2.06,scored,False
+686217,Sal Frelick,2022,3,3,562,562,2.35,2.73,5.08,5.42,scored,False
+686217,Sal Frelick,2023,2,1,183,195,-0.2,0.78,0.58,1.9,scored,True
+686610,Ken Waldichuk,2021,2,2,453,453,0.37,0.52,0.89,1.18,scored,False
+686610,Ken Waldichuk,2022,2,2,397,397,2.03,0.47,2.49,3.77,scored,True
+686611,Dylan Crews,2023,3,2,156,159,-0.19,0.7,0.51,1.97,scored,False
+686611,Dylan Crews,2024,2,2,449,449,0.97,2.1,3.08,4.11,scored,True
+686613,Hunter Brown,2021,2,2,433,433,0.94,0.75,1.7,2.35,scored,False
+686613,Hunter Brown,2022,1,1,426,426,3.01,0.69,3.7,5.22,scored,True
+686752,Ryan Pepiot,2019,2,1,76,98,-0.2,0.06,-0.14,,"insufficient_sample (76 of 98 PA+BF scored, need 100)",False
+686752,Ryan Pepiot,2021,2,2,435,435,-0.01,0.55,0.54,0.74,scored,False
+686752,Ryan Pepiot,2022,1,1,109,109,0.77,0.14,0.91,5.02,scored,True
+686796,Blake Walston,2019,2,0,0,42,0,0,0,,"insufficient_sample (0 of 42 PA+BF scored, need 100)",False
+686796,Blake Walston,2021,2,2,406,406,-0.56,1.62,1.05,1.56,scored,False
+686796,Blake Walston,2022,2,2,532,532,0.91,1.5,2.41,2.71,scored,False
+686796,Blake Walston,2023,1,1,666,666,2.4,0.97,3.37,3.04,scored,False
+686796,Blake Walston,2024,1,1,98,98,0.11,0.13,0.24,,"insufficient_sample (98 of 98 PA+BF scored, need 100)",True
+686797,Brooks Lee,2022,3,1,114,139,0.26,0.48,0.73,3.86,scored,False
+686797,Brooks Lee,2023,2,2,567,567,1.22,3.07,4.29,4.54,scored,False
+686797,Brooks Lee,2024,3,1,94,136,0.87,0.38,1.25,,"insufficient_sample (94 of 136 PA+BF scored, need 100)",True
+686894,Joey Wiemer,2021,2,2,472,472,0.91,0.47,1.38,1.76,scored,False
+686894,Joey Wiemer,2022,2,2,548,548,1.32,2.08,3.4,3.73,scored,False
+687221,Dalton Rushing,2022,2,1,128,134,1.18,0.24,1.42,6.64,scored,False
+687221,Dalton Rushing,2023,1,1,381,381,1.3,0.93,2.23,3.51,scored,False
+687221,Dalton Rushing,2024,2,2,503,503,3.17,1.82,4.99,5.96,scored,False
+687221,Dalton Rushing,2025,1,1,132,132,1.12,0.53,1.64,7.46,scored,True
+687263,Zach Neto,2022,2,1,136,167,0.65,0.92,1.57,6.95,scored,False
+687263,Zach Neto,2023,1,0,0,34,0,0,0,,"insufficient_sample (0 of 34 PA+BF scored, need 100)",True
+687401,Joey Ortiz,2021,2,2,156,156,0.27,0.43,0.69,2.66,scored,False
+687401,Joey Ortiz,2022,2,2,600,600,2.11,1.63,3.73,3.73,scored,False
+687401,Joey Ortiz,2023,1,1,72,72,0.36,0.25,0.6,,"insufficient_sample (72 of 72 PA+BF scored, need 100)",True
+687551,Drew Gilbert,2022,2,0,0,39,0,0,0,,"insufficient_sample (0 of 39 PA+BF scored, need 100)",False
+687551,Drew Gilbert,2023,2,2,513,513,0.97,2.28,3.25,3.8,scored,False
+687551,Drew Gilbert,2024,3,1,247,269,0.04,0.99,1.04,2.52,scored,False
+687551,Drew Gilbert,2025,2,1,381,408,1.06,1.37,2.43,3.82,scored,True
+687597,Jordan Beck,2022,2,2,109,109,-0.02,0.07,0.06,0.31,scored,False
+687597,Jordan Beck,2023,2,2,564,564,0.76,2.34,3.1,3.3,scored,False
+687597,Jordan Beck,2024,1,1,121,121,0.93,0.49,1.42,7.04,scored,True
+687931,Carson Whisenhunt,2022,2,0,0,30,0,0,0,,"insufficient_sample (0 of 30 PA+BF scored, need 100)",False
+687931,Carson Whisenhunt,2023,3,2,178,235,0.35,0.33,0.69,2.31,scored,False
+687931,Carson Whisenhunt,2024,2,1,476,496,1.89,0.68,2.57,3.24,scored,False
+687931,Carson Whisenhunt,2025,1,1,409,409,1.57,0.59,2.15,3.16,scored,True
+688457,Gavin Cross,2022,2,1,123,135,0.3,0.23,0.52,2.55,scored,False
+688457,Gavin Cross,2023,2,1,407,413,-0.99,0.98,-0.01,-0.01,scored,False
+688457,Gavin Cross,2024,1,1,436,436,0.63,1.47,2.1,2.89,scored,False
+688457,Gavin Cross,2025,1,1,507,507,-0.45,0.77,0.32,0.38,scored,False
+688457,Gavin Cross,2026,1,1,362,362,0.21,1.13,1.34,2.21,scored,False
+689672,Drew Thorpe,2023,2,2,536,536,0.52,0.91,1.43,1.6,scored,False
+689672,Drew Thorpe,2024,1,1,224,224,0.25,0.3,0.56,1.49,scored,True
+690291,Jace Jung,2022,1,1,134,134,0.01,0.47,0.48,2.13,scored,False
+690291,Jace Jung,2023,2,2,575,575,1.45,1.7,3.15,3.28,scored,False
+690291,Jace Jung,2024,2,1,415,430,1.76,1.67,3.43,4.95,scored,True
+690953,Mick Abel,2021,1,1,189,189,-0.33,0.66,0.33,1.03,scored,False
+690953,Mick Abel,2022,2,2,471,471,0.19,1.76,1.95,2.49,scored,False
+690953,Mick Abel,2023,2,1,458,482,-0.1,1.23,1.13,1.48,scored,False
+690953,Mick Abel,2024,1,1,515,515,1.01,0.71,1.72,2.0,scored,False
+690953,Mick Abel,2025,1,1,192,192,0.94,0.3,1.24,3.89,scored,True
+690986,Kyle Harrison,2021,1,1,440,440,0.13,1.44,1.57,2.15,scored,False
+690986,Kyle Harrison,2022,2,2,467,467,1.41,1.46,2.87,3.69,scored,False
+690986,Kyle Harrison,2023,2,1,295,301,1.2,0.43,1.63,3.31,scored,True
+690987,Robert Hassell III,2021,2,2,516,516,0.13,2.35,2.48,2.88,scored,False
+690987,Robert Hassell III,2022,2,2,513,513,0.14,2.82,2.96,3.46,scored,False
+690987,Robert Hassell III,2023,2,2,545,545,-1.3,3.23,1.94,2.13,scored,False
+690987,Robert Hassell III,2024,3,2,333,362,-0.51,1.43,0.92,1.67,scored,False
+690987,Robert Hassell III,2025,1,1,175,175,0.24,0.7,0.94,3.23,scored,True
+690990,Cade Horton,2023,3,2,294,349,0.43,0.85,1.28,2.61,scored,False
+690990,Cade Horton,2024,2,2,143,143,0.18,0.25,0.44,1.83,scored,False
+690990,Cade Horton,2025,1,1,108,108,0.59,0.19,0.77,4.3,scored,True
+690993,Colt Keith,2021,3,2,257,270,-0.19,1.22,1.03,2.41,scored,False
+690993,Colt Keith,2022,1,1,216,216,0.73,1.1,1.83,5.09,scored,False
+690993,Colt Keith,2023,2,2,577,577,2.86,3.11,5.96,6.2,scored,False
+691006,Kevin Parada,2022,2,1,41,55,0.12,0.1,0.23,,"insufficient_sample (41 of 55 PA+BF scored, need 100)",False
+691006,Kevin Parada,2023,3,2,442,457,0.5,1.65,2.15,2.92,scored,False
+691006,Kevin Parada,2024,1,1,454,454,0.42,1.95,2.38,3.14,scored,False
+691006,Kevin Parada,2025,2,2,424,424,0.94,1.13,2.08,2.94,scored,False
+691006,Kevin Parada,2026,2,2,274,274,0.04,0.46,0.5,1.1,scored,False
+691011,Drew Romo,2021,1,1,339,339,0.26,1.47,1.73,3.06,scored,False
+691011,Drew Romo,2022,1,1,420,420,0.41,2.18,2.59,3.7,scored,False
+691011,Drew Romo,2023,2,1,368,386,0.57,2.44,3.01,4.91,scored,False
+691011,Drew Romo,2024,1,1,370,370,2.03,1.49,3.52,5.7,scored,True
+691016,Tyler Soderstrom,2021,1,1,254,254,0.8,1.2,2.0,4.73,scored,False
+691016,Tyler Soderstrom,2022,3,2,518,556,1.65,3.08,4.73,5.48,scored,False
+691016,Tyler Soderstrom,2023,1,1,304,304,1.31,1.29,2.6,5.13,scored,True
+691019,Kyle Teel,2023,3,1,66,114,0.35,0.28,0.63,,"insufficient_sample (66 of 114 PA+BF scored, need 100)",False
+691019,Kyle Teel,2024,2,2,505,505,2.41,2.54,4.96,5.89,scored,False
+691019,Kyle Teel,2025,1,1,213,213,1.61,0.85,2.46,6.93,scored,True
+691023,Jordan Walker,2021,2,2,366,366,0.64,2.03,2.67,4.37,scored,False
+691023,Jordan Walker,2022,1,1,536,536,2.07,3.63,5.7,6.38,scored,False
+691026,Masyn Winn,2021,2,2,438,438,-0.45,2.27,1.82,2.49,scored,False
+691026,Masyn Winn,2022,2,2,550,550,2.18,3.55,5.73,6.25,scored,False
+691026,Masyn Winn,2023,1,1,498,498,2.27,2.11,4.38,5.28,scored,True
+691176,Jasson Domínguez,2021,2,1,214,241,-0.5,1.02,0.52,1.47,scored,False
+691176,Jasson Domínguez,2022,3,2,508,530,0.47,2.51,2.98,3.52,scored,False
+691176,Jasson Domínguez,2023,2,1,507,544,0.63,3.36,3.99,4.72,scored,True
+691181,Emmanuel Rodriguez,2021,1,1,153,153,-0.46,0.42,-0.04,-0.17,scored,False
+691181,Emmanuel Rodriguez,2022,1,1,199,199,0.63,0.91,1.54,4.63,scored,False
+691181,Emmanuel Rodriguez,2023,1,1,455,455,0.55,2.55,3.1,4.09,scored,False
+691181,Emmanuel Rodriguez,2024,4,1,167,209,1.37,0.99,2.36,8.49,scored,False
+691181,Emmanuel Rodriguez,2025,3,1,212,267,1.04,0.85,1.89,5.34,scored,False
+691181,Emmanuel Rodriguez,2026,2,1,108,119,0.59,0.44,1.03,5.71,scored,False
+691182,Adael Amador,2021,1,1,200,200,-0.46,0.57,0.11,0.34,scored,False
+691182,Adael Amador,2022,1,1,555,555,0.72,2.53,3.25,3.52,scored,False
+691182,Adael Amador,2023,3,2,300,322,0.45,1.73,2.18,4.36,scored,False
+691182,Adael Amador,2024,1,1,209,209,0.23,1.24,1.48,4.24,scored,True
+691267,Alex Ramírez,2021,1,1,334,334,-0.95,1.59,0.64,1.15,scored,False
+691267,Alex Ramírez,2022,2,2,552,552,-0.55,2.78,2.23,2.43,scored,False
+691267,Alex Ramírez,2023,1,1,521,521,-1.77,2.92,1.15,1.33,scored,False
+691267,Alex Ramírez,2024,1,1,542,542,-1.34,3.22,1.89,2.09,scored,False
+691267,Alex Ramírez,2025,1,1,191,191,-0.43,1.01,0.57,1.8,scored,False
+691267,Alex Ramírez,2026,1,1,412,412,0.27,1.69,1.96,2.86,scored,False
+691406,Junior Caminero,2022,2,2,271,271,0.05,0.84,0.89,1.97,scored,False
+691406,Junior Caminero,2023,2,2,510,510,2.3,3.22,5.53,6.5,scored,True
+691587,Eury Pérez,2021,2,2,305,305,-0.14,1.34,1.2,2.37,scored,False
+691587,Eury Pérez,2022,2,1,311,318,1.08,0.85,1.93,3.71,scored,False
+691587,Eury Pérez,2023,1,1,117,117,0.17,0.35,0.53,2.7,scored,True
+691620,Jeferson Quero,2021,1,1,83,83,0.05,0.19,0.24,,"insufficient_sample (83 of 83 PA+BF scored, need 100)",False
+691620,Jeferson Quero,2022,2,2,405,405,0.61,1.87,2.48,3.67,scored,False
+691620,Jeferson Quero,2023,1,1,381,381,1.09,2.53,3.62,5.7,scored,False
+691620,Jeferson Quero,2024,1,0,0,1,0,0,0,,"insufficient_sample (0 of 1 PA+BF scored, need 100)",False
+691620,Jeferson Quero,2025,2,2,294,294,1.1,0.86,1.96,4.0,scored,False
+691620,Jeferson Quero,2026,1,0,0,4,0,0,0,,"insufficient_sample (0 of 4 PA+BF scored, need 100)",True
+691718,Pete Crow-Armstrong,2021,1,0,0,32,0,0,0,,"insufficient_sample (0 of 32 PA+BF scored, need 100)",False
+691718,Pete Crow-Armstrong,2022,2,2,471,471,0.69,2.27,2.96,3.77,scored,False
+691718,Pete Crow-Armstrong,2023,2,2,500,500,1.59,2.94,4.53,5.44,scored,True
+691723,Coby Mayo,2021,2,2,216,216,0.33,0.71,1.04,2.9,scored,False
+691723,Coby Mayo,2022,3,2,433,439,0.53,2.6,3.13,4.34,scored,False
+691723,Coby Mayo,2023,2,2,614,614,3.75,3.43,7.19,7.02,scored,False
+691723,Coby Mayo,2024,2,1,341,357,2.34,1.37,3.71,6.54,scored,True
+691725,Andrew Painter,2021,1,0,0,21,0,0,0,,"insufficient_sample (0 of 21 PA+BF scored, need 100)",False
+691725,Andrew Painter,2022,3,3,401,401,1.26,1.66,2.92,4.38,scored,False
+691725,Andrew Painter,2025,2,1,475,520,1.18,0.69,1.87,2.37,scored,False
+691728,Zac Veen,2021,1,1,479,479,0.07,2.28,2.35,2.94,scored,False
+691728,Zac Veen,2022,2,2,541,541,-0.12,3.2,3.08,3.42,scored,False
+691728,Zac Veen,2023,1,1,201,201,-0.41,1.33,0.93,2.77,scored,False
+691728,Zac Veen,2024,4,2,237,270,0.51,1.1,1.61,4.07,scored,False
+691728,Zac Veen,2025,1,0,0,37,0,0,0,,"insufficient_sample (0 of 37 PA+BF scored, need 100)",True
+691775,Ryan Clifford,2022,2,2,101,101,-0.23,0.33,0.1,0.59,scored,False
+691775,Ryan Clifford,2023,2,2,511,511,-0.51,2.67,2.16,2.54,scored,False
+691775,Ryan Clifford,2024,2,2,541,541,0.02,3.05,3.06,3.4,scored,False
+691775,Ryan Clifford,2025,2,2,579,579,0.44,3.14,3.58,3.71,scored,False
+691775,Ryan Clifford,2026,1,1,402,402,-1.2,1.64,0.44,0.66,scored,False
+691781,Brady House,2021,1,1,66,66,-0.05,0.2,0.15,,"insufficient_sample (66 of 66 PA+BF scored, need 100)",False
+691781,Brady House,2022,1,1,203,203,-0.16,0.93,0.76,2.26,scored,False
+691781,Brady House,2023,3,3,374,374,0.61,1.97,2.58,4.14,scored,False
+691781,Brady House,2024,2,2,542,542,0.09,2.77,2.86,3.16,scored,False
+691781,Brady House,2025,1,1,283,283,1.34,1.13,2.47,5.23,scored,True
+691783,Jordan Lawlar,2021,1,0,0,6,0,0,0,,"insufficient_sample (0 of 6 PA+BF scored, need 100)",False
+691783,Jordan Lawlar,2022,4,3,435,459,1.4,2.22,3.62,5.0,scored,False
+691783,Jordan Lawlar,2023,2,2,490,490,2.25,3.06,5.31,6.51,scored,True
+691785,Marcelo Mayer,2021,1,1,107,107,-0.19,0.26,0.08,0.43,scored,False
+691785,Marcelo Mayer,2022,2,2,424,424,1.01,2.06,3.07,4.34,scored,False
+691785,Marcelo Mayer,2023,2,2,354,354,-0.19,2.18,2.0,3.38,scored,False
+691785,Marcelo Mayer,2024,1,1,335,335,1.36,1.99,3.35,6.01,scored,False
+691785,Marcelo Mayer,2025,1,1,193,193,0.75,0.77,1.52,4.73,scored,True
+692585,Yanquiel Fernández,2022,1,1,523,523,-0.17,2.39,2.22,2.55,scored,False
+692585,Yanquiel Fernández,2023,3,2,505,521,-0.34,3.08,2.74,3.26,scored,False
+692585,Yanquiel Fernández,2024,2,2,484,484,-0.22,2.61,2.39,2.97,scored,False
+692585,Yanquiel Fernández,2025,1,1,271,271,0.87,1.08,1.95,4.31,scored,True
+693049,Oscar Colás,2022,3,2,493,526,1.13,0.54,1.67,2.03,scored,False
+693304,Nick Gonzales,2021,1,1,369,369,1.26,1.12,2.38,3.87,scored,False
+693304,Nick Gonzales,2022,3,1,316,327,0.93,1.38,2.31,4.39,scored,False
+693304,Nick Gonzales,2023,1,1,262,262,0.76,1.11,1.87,4.29,scored,True
+693308,Nick Frasso,2021,1,0,0,21,0,0,0,,"insufficient_sample (0 of 21 PA+BF scored, need 100)",False
+693308,Nick Frasso,2022,3,2,158,212,0.43,-0.17,0.26,0.99,scored,False
+693308,Nick Frasso,2023,2,2,399,399,1.52,0.21,1.73,2.6,scored,False
+693308,Nick Frasso,2025,1,1,346,346,0.66,0.13,0.78,1.36,scored,False
+693308,Nick Frasso,2026,1,1,131,131,0.86,-0.0,0.86,3.94,scored,False
+693311,Tink Hence,2021,1,0,0,41,0,0,0,,"insufficient_sample (0 of 41 PA+BF scored, need 100)",False
+693311,Tink Hence,2022,1,1,195,195,0.36,0.77,1.13,3.47,scored,False
+693311,Tink Hence,2023,2,2,404,404,-0.08,1.36,1.27,1.89,scored,False
+693311,Tink Hence,2024,1,1,320,320,0.74,0.9,1.64,3.08,scored,False
+693311,Tink Hence,2025,4,0,0,86,0,0,0,,"insufficient_sample (0 of 86 PA+BF scored, need 100)",False
+693311,Tink Hence,2026,1,1,99,99,-0.1,0.13,0.03,,"insufficient_sample (99 of 99 PA+BF scored, need 100)",False
+694183,Cristian Hernández,2022,1,1,175,175,-0.46,0.44,-0.02,-0.07,scored,False
+694183,Cristian Hernández,2023,1,1,431,431,-1.1,1.95,0.85,1.19,scored,False
+694183,Cristian Hernández,2024,2,2,513,513,0.42,1.68,2.09,2.45,scored,False
+694183,Cristian Hernández,2025,1,1,507,507,0.2,1.85,2.05,2.43,scored,False
+694183,Cristian Hernández,2026,1,1,353,353,0.73,2.2,2.94,4.99,scored,False
+694192,Jackson Chourio,2022,3,2,413,439,0.5,2.04,2.53,3.68,scored,False
+694192,Jackson Chourio,2023,2,1,559,583,0.73,3.71,4.44,4.76,scored,False
+694194,Miguel Bleis,2022,1,1,167,167,-0.28,0.46,0.18,0.66,scored,False
+694194,Miguel Bleis,2023,1,1,142,142,-0.68,0.64,-0.04,-0.15,scored,False
+694194,Miguel Bleis,2024,2,2,429,429,-1.11,1.85,0.75,1.05,scored,False
+694194,Miguel Bleis,2025,2,2,443,443,-0.8,2.01,1.2,1.63,scored,False
+694194,Miguel Bleis,2026,1,1,310,310,-0.72,2.09,1.37,2.65,scored,False
+694212,Samuel Basallo,2022,1,1,180,180,-0.14,0.59,0.45,1.5,scored,False
+694212,Samuel Basallo,2023,3,2,467,483,1.66,2.24,3.9,5.01,scored,False
+694212,Samuel Basallo,2024,2,2,532,532,1.93,3.0,4.93,5.56,scored,False
+694212,Samuel Basallo,2025,1,1,321,321,2.71,1.28,3.99,7.45,scored,True
+694224,Gabriel Gonzalez,2022,2,2,290,290,-0.21,1.04,0.84,1.73,scored,False
+694224,Gabriel Gonzalez,2023,2,2,535,535,-0.33,2.64,2.31,2.59,scored,False
+694224,Gabriel Gonzalez,2024,2,1,315,337,-0.53,1.68,1.15,2.2,scored,False
+694224,Gabriel Gonzalez,2025,3,3,550,550,1.97,2.63,4.6,5.02,scored,False
+694224,Gabriel Gonzalez,2026,1,1,197,197,-0.27,0.81,0.53,1.62,scored,True
+694297,Brandon Pfaadt,2021,3,3,529,529,-0.47,0.61,0.14,0.16,scored,False
+694297,Brandon Pfaadt,2022,2,2,689,689,2.37,0.93,3.3,2.87,scored,False
+694297,Brandon Pfaadt,2023,1,1,105,105,0.47,0.15,0.62,3.54,scored,True
+694351,Jacob Berry,2022,2,1,148,166,-0.23,0.32,0.09,0.36,scored,False
+694351,Jacob Berry,2023,2,2,468,468,-1.29,1.76,0.47,0.6,scored,False
+694351,Jacob Berry,2024,2,2,528,528,-0.6,2.04,1.43,1.63,scored,False
+694351,Jacob Berry,2025,1,1,469,469,0.63,1.87,2.5,3.2,scored,False
+694351,Jacob Berry,2026,1,1,302,302,0.4,1.03,1.43,2.85,scored,False
+694357,Ricky Tiedemann,2022,3,2,260,301,0.38,1.17,1.55,3.58,scored,False
+694357,Ricky Tiedemann,2023,4,1,146,186,0.61,0.36,0.97,3.99,scored,False
+694357,Ricky Tiedemann,2024,3,0,0,83,0,0,0,,"insufficient_sample (0 of 83 PA+BF scored, need 100)",False
+694357,Ricky Tiedemann,2026,2,0,0,15,0,0,0,,"insufficient_sample (0 of 15 PA+BF scored, need 100)",False
+694358,Tekoah Roby,2021,1,1,90,90,0.06,0.33,0.39,,"insufficient_sample (90 of 90 PA+BF scored, need 100)",False
+694358,Tekoah Roby,2022,1,1,444,444,-0.45,1.9,1.45,1.96,scored,False
+694358,Tekoah Roby,2023,1,1,239,239,0.57,0.66,1.24,3.1,scored,False
+694358,Tekoah Roby,2024,2,1,154,176,-0.65,0.29,-0.36,-1.41,scored,False
+694358,Tekoah Roby,2025,2,2,316,316,0.83,0.45,1.28,2.42,scored,False
+694371,Tommy Troy,2023,2,1,99,115,0.12,0.41,0.52,,"insufficient_sample (99 of 115 PA+BF scored, need 100)",False
+694371,Tommy Troy,2024,2,1,288,314,-0.31,0.58,0.27,0.55,scored,False
+694371,Tommy Troy,2025,2,2,581,581,2.25,2.06,4.31,4.45,scored,False
+694371,Tommy Troy,2026,1,1,205,205,1.04,0.84,1.88,5.49,scored,True
+694377,Nick Yorke,2021,2,2,442,442,0.76,2.22,2.97,4.04,scored,False
+694377,Nick Yorke,2022,1,1,373,373,-0.5,2.1,1.6,2.57,scored,False
+694377,Nick Yorke,2023,1,1,506,506,0.8,3.36,4.16,4.93,scored,False
+694377,Nick Yorke,2024,2,2,541,541,2.4,2.49,4.89,5.43,scored,True
+694384,Nolan Schanuel,2023,3,1,76,97,0.29,0.5,0.79,,"insufficient_sample (76 of 97 PA+BF scored, need 100)",True
+694462,Hurston Waldrep,2023,4,0,0,123,0,0,0,,"insufficient_sample (0 of 123 PA+BF scored, need 100)",False
+694462,Hurston Waldrep,2024,2,1,214,238,0.3,0.51,0.81,2.26,scored,True
+694497,Evan Carter,2021,1,1,146,146,-0.01,0.7,0.69,2.83,scored,False
+694497,Evan Carter,2022,2,1,447,475,0.71,2.52,3.22,4.32,scored,False
+694497,Evan Carter,2023,3,1,462,513,1.24,3.07,4.3,5.59,scored,True
+694633,Chase Hampton,2023,2,2,438,438,0.47,1.21,1.68,2.31,scored,False
+694633,Chase Hampton,2024,3,0,0,76,0,0,0,,"insufficient_sample (0 of 76 PA+BF scored, need 100)",False
+694633,Chase Hampton,2026,3,1,122,206,0.1,0.03,0.14,0.67,scored,False
+694671,Wyatt Langford,2023,4,2,160,200,1.12,0.76,1.88,7.05,scored,False
+694813,Gavin Stone,2021,2,2,378,378,0.38,0.07,0.45,0.72,scored,False
+694813,Gavin Stone,2022,3,3,496,496,2.79,0.5,3.29,3.97,scored,False
+694813,Gavin Stone,2023,1,1,105,105,0.51,0.14,0.65,3.71,scored,True
+694819,Jacob Misiorowski,2022,1,0,0,14,0,0,0,,"insufficient_sample (0 of 14 PA+BF scored, need 100)",False
+694819,Jacob Misiorowski,2023,3,3,314,314,0.04,0.8,0.85,1.62,scored,False
+694819,Jacob Misiorowski,2024,2,2,417,417,0.17,0.97,1.13,1.63,scored,False
+694819,Jacob Misiorowski,2025,1,1,253,253,1.48,0.41,1.89,4.48,scored,True
+694973,Paul Skenes,2023,3,0,0,28,0,0,0,,"insufficient_sample (0 of 28 PA+BF scored, need 100)",False
+694973,Paul Skenes,2024,1,1,105,105,1.08,0.18,1.26,7.19,scored,True
+695076,Rhett Lowder,2024,3,2,426,447,0.23,1.01,1.25,1.76,scored,True
+695490,Edwin Arroyo,2021,1,1,86,86,-0.26,0.29,0.03,,"insufficient_sample (86 of 86 PA+BF scored, need 100)",False
+695490,Edwin Arroyo,2022,2,1,519,528,0.9,2.37,3.27,3.78,scored,False
+695490,Edwin Arroyo,2023,2,1,534,554,0.13,3.0,3.13,3.51,scored,False
+695490,Edwin Arroyo,2025,1,1,521,521,0.6,3.07,3.67,4.22,scored,False
+695490,Edwin Arroyo,2026,1,1,250,250,1.96,1.02,2.98,7.16,scored,True
+695534,Chase Petty,2021,1,0,0,21,0,0,0,,"insufficient_sample (0 of 21 PA+BF scored, need 100)",False
+695534,Chase Petty,2022,2,2,405,405,-0.19,1.7,1.51,2.23,scored,False
+695534,Chase Petty,2023,2,1,243,274,0.37,1.16,1.53,3.77,scored,False
+695534,Chase Petty,2024,2,1,540,580,-0.17,1.44,1.27,1.41,scored,False
+695534,Chase Petty,2025,1,1,100,100,0.31,0.15,0.46,2.76,scored,True
+695549,Jackson Jobe,2022,2,2,333,333,-0.77,1.2,0.43,0.77,scored,False
+695549,Jackson Jobe,2023,4,2,228,258,-0.13,0.85,0.72,1.9,scored,False
+695549,Jackson Jobe,2024,3,1,299,375,0.31,0.83,1.15,2.3,scored,True
+695578,James Wood,2021,1,1,101,101,-0.05,0.22,0.17,0.99,scored,False
+695578,James Wood,2022,2,1,329,348,0.79,1.4,2.2,4.01,scored,False
+695578,James Wood,2023,2,2,549,549,0.95,3.42,4.37,4.78,scored,False
+695578,James Wood,2024,1,1,231,231,2.22,0.93,3.15,8.18,scored,True
+695657,Colson Montgomery,2021,1,1,111,111,-0.24,0.17,-0.07,-0.36,scored,False
+695657,Colson Montgomery,2022,3,3,421,421,0.66,1.98,2.64,3.76,scored,False
+695657,Colson Montgomery,2023,3,3,294,294,1.17,1.42,2.59,5.28,scored,False
+695657,Colson Montgomery,2024,1,1,573,573,1.22,2.31,3.53,3.69,scored,False
+695657,Colson Montgomery,2025,2,1,242,261,0.48,0.97,1.45,3.59,scored,True
+695670,Harry Ford,2021,1,1,65,65,0.1,0.18,0.27,,"insufficient_sample (65 of 65 PA+BF scored, need 100)",False
+695670,Harry Ford,2022,1,1,499,499,1.5,2.28,3.78,4.55,scored,False
+695670,Harry Ford,2023,1,1,563,563,1.77,3.16,4.93,5.25,scored,False
+695670,Harry Ford,2024,1,1,523,523,1.93,3.11,5.04,5.79,scored,False
+695670,Harry Ford,2025,1,1,458,458,3.11,1.83,4.94,6.47,scored,True
+695865,Wilmer Flores,2021,2,1,224,281,0.1,0.64,0.74,1.98,scored,False
+695865,Wilmer Flores,2022,2,2,422,422,1.34,1.23,2.57,3.66,scored,False
+695865,Wilmer Flores,2023,2,1,337,375,0.68,0.82,1.5,2.67,scored,False
+695865,Wilmer Flores,2024,3,1,128,153,0.09,0.16,0.26,1.2,scored,False
+695865,Wilmer Flores,2025,1,0,0,17,0,0,0,,"insufficient_sample (0 of 17 PA+BF scored, need 100)",False
+696135,Kahlil Watson,2021,1,1,42,42,0.02,0.12,0.14,,"insufficient_sample (42 of 42 PA+BF scored, need 100)",False
+696135,Kahlil Watson,2022,2,1,358,376,-0.93,1.63,0.7,1.18,scored,False
+696135,Kahlil Watson,2023,2,1,341,347,-0.47,1.91,1.44,2.54,scored,False
+696135,Kahlil Watson,2024,1,1,407,407,-0.31,2.42,2.11,3.11,scored,False
+696135,Kahlil Watson,2025,2,2,429,429,0.88,2.16,3.04,4.25,scored,False
+696135,Kahlil Watson,2026,1,1,254,254,1.02,1.04,2.06,4.87,scored,True
+696143,Anthony Solometo,2022,1,1,188,188,0.04,0.78,0.82,2.62,scored,False
+696143,Anthony Solometo,2023,2,2,451,451,0.35,1.72,2.07,2.76,scored,False
+696143,Anthony Solometo,2024,3,1,269,314,-0.69,0.66,-0.02,-0.05,scored,False
+696143,Anthony Solometo,2025,2,0,0,42,0,0,0,,"insufficient_sample (0 of 42 PA+BF scored, need 100)",False
+696143,Anthony Solometo,2026,1,0,0,13,0,0,0,,"insufficient_sample (0 of 13 PA+BF scored, need 100)",False
+696149,Bubba Chandler,2022,2,1,114,173,-0.21,0.4,0.18,0.95,scored,False
+696149,Bubba Chandler,2023,2,1,468,484,-0.93,1.96,1.03,1.31,scored,False
+696149,Bubba Chandler,2024,2,2,479,479,1.45,1.17,2.62,3.28,scored,False
+696149,Bubba Chandler,2025,1,1,442,442,1.98,0.65,2.63,3.57,scored,True
+700246,Carson Williams,2021,1,1,47,47,-0.07,0.15,0.07,,"insufficient_sample (47 of 47 PA+BF scored, need 100)",False
+700246,Carson Williams,2022,1,1,523,523,0.53,2.39,2.91,3.34,scored,False
+700246,Carson Williams,2023,3,1,462,503,0.93,2.59,3.52,4.58,scored,False
+700246,Carson Williams,2024,1,1,505,505,1.9,3.0,4.91,5.83,scored,False
+700246,Carson Williams,2025,1,1,451,451,1.53,1.8,3.33,4.42,scored,True
+700363,AJ Smith-Shawver,2021,1,0,0,38,0,0,0,,"insufficient_sample (0 of 38 PA+BF scored, need 100)",False
+700363,AJ Smith-Shawver,2022,1,1,299,299,0.02,1.11,1.13,2.28,scored,False
+700363,AJ Smith-Shawver,2023,3,0,0,128,0,0,0,,"insufficient_sample (0 of 128 PA+BF scored, need 100)",True
+700669,Gordon Graceffo,2021,1,1,116,116,0.08,0.18,0.26,1.36,scored,False
+700669,Gordon Graceffo,2022,2,2,544,544,0.89,1.36,2.25,2.48,scored,False
+700669,Gordon Graceffo,2023,1,1,387,387,1.64,0.56,2.2,3.4,scored,False
+700669,Gordon Graceffo,2024,1,1,327,327,1.23,0.49,1.72,3.16,scored,True
+700932,Kyle Manzardo,2021,1,1,50,50,-0.11,-0.02,-0.14,,"insufficient_sample (50 of 50 PA+BF scored, need 100)",False
+700932,Kyle Manzardo,2022,2,2,397,397,1.46,1.68,3.14,4.74,scored,False
+700932,Kyle Manzardo,2023,2,1,405,415,0.29,1.72,2.01,2.98,scored,False
+700932,Kyle Manzardo,2024,1,1,128,128,0.72,0.52,1.24,5.8,scored,True
+701327,Elijah Green,2022,1,1,52,52,-0.07,0.13,0.06,,"insufficient_sample (52 of 52 PA+BF scored, need 100)",False
+701327,Elijah Green,2023,2,1,332,361,-1.14,1.5,0.36,0.65,scored,False
+701327,Elijah Green,2024,1,1,468,468,-1.35,1.28,-0.07,-0.09,scored,False
+701327,Elijah Green,2025,3,3,331,331,-1.01,0.52,-0.49,-0.89,scored,False
+701327,Elijah Green,2026,1,1,373,373,-0.46,0.92,0.47,0.75,scored,False
+701350,Roman Anthony,2022,2,2,83,83,-0.26,0.32,0.06,,"insufficient_sample (83 of 83 PA+BF scored, need 100)",False
+701350,Roman Anthony,2023,3,3,491,491,0.46,2.58,3.05,3.72,scored,False
+701350,Roman Anthony,2024,2,2,540,540,2.31,2.9,5.21,5.79,scored,False
+701350,Roman Anthony,2025,1,1,265,265,1.45,1.06,2.5,5.67,scored,True
+701538,Jackson Merrill,2021,1,1,120,120,-0.3,0.35,0.04,0.22,scored,False
+701538,Jackson Merrill,2022,2,1,219,250,0.38,1.0,1.38,3.77,scored,False
+701538,Jackson Merrill,2023,2,2,511,511,0.51,3.08,3.6,4.22,scored,False
+701649,James Triantos,2021,1,1,109,109,-0.13,0.29,0.16,0.87,scored,False
+701649,James Triantos,2022,1,1,504,504,-0.47,2.3,1.83,2.18,scored,False
+701649,James Triantos,2023,2,1,350,363,0.0,1.96,1.97,3.37,scored,False
+701649,James Triantos,2024,2,2,485,485,1.32,2.7,4.02,4.98,scored,False
+701649,James Triantos,2025,2,1,444,480,0.27,1.77,2.05,2.76,scored,False
+701649,James Triantos,2026,1,1,378,378,1.14,1.55,2.69,4.27,scored,True
+702222,Justin Crawford,2022,2,1,43,66,-0.13,0.11,-0.02,,"insufficient_sample (43 of 66 PA+BF scored, need 100)",False
+702222,Justin Crawford,2023,2,2,390,390,0.15,1.85,2.01,3.09,scored,False
+702222,Justin Crawford,2024,2,2,497,497,0.69,2.77,3.46,4.17,scored,False
+702222,Justin Crawford,2025,1,1,506,506,2.63,2.02,4.65,5.51,scored,False
+702253,Cam Collier,2022,1,0,0,35,0,0,0,,"insufficient_sample (0 of 35 PA+BF scored, need 100)",False
+702253,Cam Collier,2023,1,1,461,461,-1.88,2.09,0.2,0.26,scored,False
+702253,Cam Collier,2024,1,1,507,507,-0.58,2.71,2.13,2.52,scored,False
+702253,Cam Collier,2025,3,3,396,396,-0.43,2.04,1.61,2.44,scored,False
+702253,Cam Collier,2026,1,1,418,418,-1.07,2.92,1.85,2.65,scored,False
+702258,Druw Jones,2023,2,2,173,173,-0.56,0.65,0.08,0.29,scored,False
+702258,Druw Jones,2024,1,1,471,471,-0.15,1.28,1.13,1.44,scored,False
+702258,Druw Jones,2025,1,1,545,545,-0.84,1.95,1.12,1.23,scored,False
+702258,Druw Jones,2026,1,1,358,358,0.25,2.2,2.45,4.11,scored,False
+702261,Termarr Johnson,2022,2,1,53,82,0.06,0.24,0.3,,"insufficient_sample (53 of 82 PA+BF scored, need 100)",False
+702261,Termarr Johnson,2023,2,2,462,462,0.59,2.23,2.83,3.67,scored,False
+702261,Termarr Johnson,2024,2,2,544,544,0.47,2.94,3.41,3.77,scored,False
+702261,Termarr Johnson,2025,1,1,503,503,0.62,2.96,3.58,4.27,scored,False
+702261,Termarr Johnson,2026,1,1,381,381,0.34,1.56,1.9,2.99,scored,False
+702266,Dylan Lesko,2023,3,1,68,145,-0.08,0.24,0.16,,"insufficient_sample (68 of 145 PA+BF scored, need 100)",False
+702266,Dylan Lesko,2024,1,1,390,390,-1.51,1.5,-0.02,-0.02,scored,False
+702266,Dylan Lesko,2025,3,1,60,103,-0.34,0.03,-0.31,,"insufficient_sample (60 of 103 PA+BF scored, need 100)",False
+702266,Dylan Lesko,2026,1,1,120,120,-0.3,-0.02,-0.31,-1.57,scored,False
+702273,Noah Schultz,2023,1,1,104,104,-0.11,0.4,0.28,1.63,scored,False
+702273,Noah Schultz,2024,2,2,358,358,0.69,1.16,1.85,3.1,scored,False
+702273,Noah Schultz,2025,2,2,327,327,-0.04,0.75,0.71,1.3,scored,False
+702273,Noah Schultz,2026,1,0,0,47,0,0,0,,"insufficient_sample (0 of 47 PA+BF scored, need 100)",True
+702281,Robby Snelling,2023,3,3,416,416,0.17,1.71,1.88,2.72,scored,False
+702281,Robby Snelling,2024,2,1,483,508,-0.59,1.24,0.65,0.81,scored,False
+702281,Robby Snelling,2025,2,2,547,547,2.16,1.23,3.39,3.72,scored,False
+702281,Robby Snelling,2026,1,1,110,110,0.82,0.19,1.01,5.52,scored,True
+702284,Cole Young,2022,2,1,45,71,0.08,0.21,0.28,,"insufficient_sample (45 of 71 PA+BF scored, need 100)",False
+702284,Cole Young,2023,2,2,606,606,0.5,2.81,3.31,3.28,scored,False
+702284,Cole Young,2024,1,1,552,552,1.06,3.28,4.34,4.72,scored,False
+702284,Cole Young,2025,1,1,245,245,1.23,0.98,2.21,5.4,scored,True
+702518,Jett Williams,2022,1,1,41,41,-0.04,0.1,0.05,,"insufficient_sample (41 of 41 PA+BF scored, need 100)",False
+702518,Jett Williams,2023,3,2,508,534,1.2,2.45,3.64,4.3,scored,False
+702518,Jett Williams,2024,3,1,101,148,-0.34,0.6,0.26,1.56,scored,False
+702518,Jett Williams,2025,2,2,572,572,1.95,3.08,5.03,5.27,scored,False
+702518,Jett Williams,2026,1,1,358,358,0.78,1.46,2.24,3.75,scored,False
+702548,Brock Porter,2023,1,1,293,293,-0.28,0.95,0.67,1.38,scored,False
+702548,Brock Porter,2024,2,0,0,101,0,0,0,,"insufficient_sample (0 of 101 PA+BF scored, need 100)",False
+702548,Brock Porter,2025,2,1,290,294,-0.91,0.13,-0.78,-1.62,scored,False
+702548,Brock Porter,2026,1,1,247,247,-0.06,0.23,0.16,0.4,scored,False
+702616,Jackson Holliday,2022,2,1,57,90,0.01,0.26,0.27,,"insufficient_sample (57 of 90 PA+BF scored, need 100)",False
+702616,Jackson Holliday,2023,4,4,581,581,2.38,3.23,5.62,5.8,scored,False
+702616,Jackson Holliday,2024,1,1,56,56,0.59,0.23,0.82,,"insufficient_sample (56 of 56 PA+BF scored, need 100)",True
+703149,Roderick Arias,2023,1,1,130,130,-0.05,0.3,0.25,1.15,scored,False
+703149,Roderick Arias,2024,1,1,552,552,-0.21,2.12,1.91,2.08,scored,False
+703149,Roderick Arias,2025,1,1,465,465,-0.72,1.09,0.37,0.48,scored,False
+703149,Roderick Arias,2026,1,1,383,383,0.52,1.57,2.1,3.28,scored,False
+703601,Max Clark,2023,2,2,107,107,-0.32,0.38,0.06,0.34,scored,False
+703601,Max Clark,2024,2,2,490,490,-0.15,2.25,2.11,2.58,scored,False
+703601,Max Clark,2025,2,2,533,533,1.03,2.95,3.98,4.48,scored,False
+703601,Max Clark,2026,1,1,418,418,1.33,1.71,3.04,4.36,scored,True
+800050,Chase DeLauter,2023,3,1,176,242,0.36,0.64,1.0,3.41,scored,False
+800050,Chase DeLauter,2024,3,1,128,164,0.05,0.6,0.65,3.04,scored,False
+800050,Chase DeLauter,2025,2,1,149,177,0.6,0.59,1.19,4.79,scored,True
+800060,Xavier Isaac,2022,1,0,0,21,0,0,0,,"insufficient_sample (0 of 21 PA+BF scored, need 100)",False
+800060,Xavier Isaac,2023,2,2,433,433,-0.19,2.02,1.83,2.54,scored,False
+800060,Xavier Isaac,2024,2,2,435,435,0.18,2.41,2.58,3.56,scored,False
+800060,Xavier Isaac,2025,1,1,175,175,0.07,1.03,1.1,3.78,scored,False
+800060,Xavier Isaac,2026,1,1,344,344,0.69,2.16,2.84,4.96,scored,False
+800611,Noble Meyer,2023,2,0,0,51,0,0,0,,"insufficient_sample (0 of 51 PA+BF scored, need 100)",False
+800611,Noble Meyer,2024,2,2,320,320,-1.01,1.33,0.31,0.59,scored,False
+800611,Noble Meyer,2025,1,1,296,296,-0.31,1.26,0.95,1.93,scored,False
+800611,Noble Meyer,2026,1,0,0,24,0,0,0,,"insufficient_sample (0 of 24 PA+BF scored, need 100)",False
+801403,Chase Dollander,2024,2,2,499,499,0.51,0.84,1.35,1.62,scored,False
+801403,Chase Dollander,2025,1,0,0,19,0,0,0,,"insufficient_sample (0 of 19 PA+BF scored, need 100)",True
+805779,Jacob Wilson,2023,2,1,99,111,0.21,0.45,0.65,,"insufficient_sample (99 of 111 PA+BF scored, need 100)",False
+805779,Jacob Wilson,2024,3,2,183,200,2.1,0.88,2.99,9.79,scored,True
+805795,Aidan Miller,2023,2,1,44,80,-0.07,0.2,0.13,,"insufficient_sample (44 of 80 PA+BF scored, need 100)",False
+805795,Aidan Miller,2024,3,2,440,462,0.93,2.01,2.94,4.01,scored,False
+805795,Aidan Miller,2025,2,1,489,526,2.05,2.88,4.93,6.05,scored,False
+805805,Walker Jenkins,2023,2,2,115,115,0.0,0.42,0.42,2.21,scored,False
+805805,Walker Jenkins,2024,4,2,303,368,0.2,1.47,1.67,3.3,scored,False
+805805,Walker Jenkins,2025,4,2,337,371,1.15,1.79,2.94,5.23,scored,False
+805805,Walker Jenkins,2026,3,1,223,240,0.74,0.91,1.65,4.44,scored,False
+805810,Blake Mitchell,2023,1,1,52,52,-0.1,0.11,0.02,,"insufficient_sample (52 of 52 PA+BF scored, need 100)",False
+805810,Blake Mitchell,2024,2,1,466,486,0.85,1.72,2.57,3.31,scored,False
+805810,Blake Mitchell,2025,2,1,216,255,0.12,1.03,1.16,3.21,scored,False
+805810,Blake Mitchell,2026,1,1,386,386,1.66,1.5,3.16,4.91,scored,False
+805811,Bryce Eldridge,2023,2,2,130,130,-0.33,0.46,0.13,0.58,scored,False
+805811,Bryce Eldridge,2024,4,3,484,519,0.2,2.3,2.51,3.11,scored,False
+805811,Bryce Eldridge,2025,3,2,426,433,0.51,1.96,2.47,3.48,scored,True
+806068,Colt Emerson,2023,2,1,79,114,0.18,0.36,0.53,,"insufficient_sample (79 of 114 PA+BF scored, need 100)",False
+806068,Colt Emerson,2024,3,2,332,336,0.41,1.58,1.99,3.6,scored,False
+806068,Colt Emerson,2025,3,2,573,600,1.5,3.14,4.64,4.86,scored,False
+806068,Colt Emerson,2026,1,1,169,169,0.76,0.69,1.46,5.17,scored,True
+806956,Ethan Salas,2023,3,1,220,290,0.24,1.0,1.24,3.37,scored,False
+806956,Ethan Salas,2024,1,1,469,469,-0.57,2.51,1.94,2.49,scored,False
+806956,Ethan Salas,2025,1,1,41,41,-0.01,0.24,0.23,,"insufficient_sample (41 of 41 PA+BF scored, need 100)",False
+806956,Ethan Salas,2026,2,1,300,315,0.97,2.1,3.06,6.13,scored,False
+806964,Sebastian Walcott,2023,2,1,157,173,-0.29,0.61,0.31,1.2,scored,False
+806964,Sebastian Walcott,2024,2,1,491,515,0.8,2.63,3.42,4.18,scored,False
+806964,Sebastian Walcott,2025,1,1,552,552,1.24,3.25,4.49,4.89,scored,False
+806964,Sebastian Walcott,2026,2,1,53,60,0.4,0.37,0.77,,"insufficient_sample (53 of 60 PA+BF scored, need 100)",False
+807713,Matt Shaw,2023,3,2,159,170,0.81,0.8,1.61,6.07,scored,False
+807713,Matt Shaw,2024,2,2,523,523,2.5,2.4,4.9,5.62,scored,False
