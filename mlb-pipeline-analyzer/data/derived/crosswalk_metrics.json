@@ -1,13 +1,13 @@
 {
-  "ranking_rows": 300,
-  "matched_rows": 300,
+  "ranking_rows": 400,
+  "matched_rows": 400,
   "coverage_pct": 100.0,
   "by_stage": {
-    "exact": 289,
-    "exact_disambiguated": 9,
-    "manual_override": 2
+    "exact": 387,
+    "exact_disambiguated": 10,
+    "manual_override": 3
   },
-  "unique_matched_players": 212,
-  "unique_debuted": 179,
-  "unique_never_debuted": 33
+  "unique_matched_players": 267,
+  "unique_debuted": 204,
+  "unique_never_debuted": 63
 }

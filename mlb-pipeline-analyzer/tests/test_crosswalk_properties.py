@@ -95,9 +95,9 @@ def test_cross_cohort_consistency(crosswalk):
 
 
 def test_full_coverage_with_disclosed_overrides(crosswalk):
-    """All 300 rows matched, and any manual overrides are visible as their
-    own method, never folded into the matcher's earned accuracy."""
-    assert len(crosswalk) == 300
+    """Every ranking row matched, and any manual overrides are visible as
+    their own method, never folded into the matcher's earned accuracy."""
+    assert len(crosswalk) == 400  # 2022-2025, four cohorts, 100 rows each
     assert all(r["mlbam_id"] for r in crosswalk)
     overrides = [r for r in crosswalk if r["method"] == "manual_override"]
     for r in overrides:

@@ -1,7 +1,7 @@
 # mlb-pipeline-analyzer
 
 A minor-league readiness score, computed honestly from public data, for the
-players on three real Top 100 prospect lists (2022, 2023, 2024).
+players on four real Top 100 prospect lists (2022, 2023, 2024, 2025).
 
 For every ranked prospect, the pipeline computes an age-adjusted,
 position-adjusted minor-league production WAR, season by season across his
@@ -57,7 +57,25 @@ stated rather than hidden.
    which scores a dead-average Triple-A regular at +2.05 wins per 600 PA.
    It was replaced with the whole-rate construction above. The correction
    is logged, not erased.
-2. **An adversarial review of the built pipeline found four more defects,
+2. **The Rookie-level pitching baseline was silently built from an
+   incomplete, wrong team population, found 2026-08-01 after Reid noticed
+   pitchers scoring visibly lower than hitters and asked for the formula
+   to be validated rather than patched around.** MLB's team-stats endpoint
+   caps results at 50 rows with no limit parameter passed, and Rookie ball
+   genuinely fields 81-90 teams across seasons. Worse, which 50 of those
+   teams survived the cap differed between the hitting query and the
+   pitching query for the same season, confirmed live (only 22-32 of 50
+   team IDs overlapped), so the two baselines were quietly built from two
+   different, non-overlapping team populations. Every other level fields
+   22-30 teams, comfortably under the cap, so this was invisible
+   everywhere else. Fixed by requesting `limit=200` and failing loudly
+   (`RuntimeError`) if the API ever reports more teams than it returns,
+   rather than silently building an incomplete baseline again. Measured
+   effect: the Rookie pitcher-vs-hitter gap narrowed from 0.29 wins to
+   0.19 wins per stint, real but not the whole story, since Single-A
+   through Double-A show a comparable gap with a clean, unaffected
+   baseline, a genuinely unexplained pattern rather than this bug.
+3. **An adversarial review of the built pipeline found four more defects,
    all fixed with regression tests the same day.** The stats API emits a
    blank-team aggregate row beside per-team rows for multi-team seasons and
    the pipeline summed both, exactly doubling 40 player-seasons (one player
@@ -69,41 +87,179 @@ stated rather than hidden.
    is 1.204. And a sub-minimum debut-season tune-up blocked the carry to a
    player's last full scored season, printing refusals for players with
    rich prior years.
-3. **The age credit, not the translation factor, is the dominant source of
+4. **The age credit, not the translation factor, is the dominant source of
    generosity.** Measured in the report, the credit averages roughly three
    times the base signal across scored seasons, and about a quarter of
    crossing seasons cross on the credit alone. It is a predictive-weight
    equivalence (Stoltz 2022), larger than what open-source implementations
    use, and it ships as its own column so it is always severable.
-4. **Triple-A readings run generous.** Today's inflated Triple-A run
+5. **Triple-A readings run generous.** Today's inflated Triple-A run
    environments meet a 2016-vintage translation factor, and the calibration
    table in every output shows the result. Where zero really sits is a
    question for the grading layer, not an assumption.
-5. **Dominican Summer League stints are excluded from scoring.** No cited
+6. **Dominican Summer League stints are excluded from scoring.** No cited
    translation factor covers the DSL, and the rookie-level age baseline
    pools it with US complex ball, which let DSL teenagers max the age cap
    against leagues they never played in.
-6. **Two of 300 ranking rows are resolved by hand.** Two genuine name
+7. **Two of 300 ranking rows are resolved by hand.** Two genuine name
    collisions (two real Greg Joneses, two real Jacob Wilsons) are declined
    by the matcher, correctly, and resolved by a curated override table with
    written provenance (`data/raw/manual_overrides.csv`), labeled
    `manual_override` and excluded from the matcher's earned accuracy.
-7. **Production only, with season-level league context.** No defense, no
+8. **Production only, with season-level league context.** No defense, no
    park effects, no baserunning beyond steals, so a glove-first shortstop
    is undersold by construction. The player's own inputs are strictly
    pre-debut, while league baselines and level average ages are
    full-season aggregates per the season-totals design ruling.
+9. **Center field is valued at shortstop's rate, and secondary "OF" is
+   weaker than standalone "OF," per Reid's ruling 2026-08-01, extending
+   the multi-position work below.** He put it directly, "SS is to the
+   infield as CF is to the outfield," and named a real example, Oneil
+   Cruz, a shortstop-caliber defender genuinely moving to center field
+   this season. Since ranking lists never print "CF" (verified, zero
+   exceptions), a player only reaches that value through a dated,
+   reasoned manual review, never automatically, currently 9 players
+   (Cruz, Carroll, Crawford, Crow-Armstrong, Rodríguez, Wood, Langford,
+   Walker, Rafaela). Separately, "OF" now carries two different values by
+   context. Standalone (a player's entire listing is just "OF") keeps the
+   original blended value, since a real unflagged center fielder could
+   still be sitting there unreviewed. "OF" as a secondary position inside
+   a combo, always paired with an infield spot in this data ("SS/OF"),
+   drops to the pure corner-outfield rate, Reid's reasoning being that
+   this specific combination is the fallback signal of a player who
+   didn't stick at an infield spot, not evidence of burner speed. He also
+   expanded the manual-review table by 5 more players in the same pass
+   (Henderson and Witt pinned to shortstop rather than averaged, Peraza
+   moved to the INF bucket, Vargas dropped outfield from his combo
+   entirely, and Melendez, deliberately reversed from the earlier
+   catcher ruling to outfielder).
+10. **Multi-position ranking-list entries are averaged, per Reid's ruling
+   2026-08-01, arrived at after two corrections the same day.** 47 of 212
+   players were listed with more than one position ("SS/2B"). The old code
+   always took whichever was listed first, arbitrarily. The first fix
+   tried resolving each case with real games-played data, picking a single
+   "winner" position. Reid corrected that twice. Final rule: every
+   multi-position listing has its position-adjustment constant averaged
+   across all the positions named, infield-only combos included, no
+   special-casing, so "SS/2B" is credited the average of shortstop's and
+   second base's values, not one or the other. The one exception is a
+   small set of cases (7 of the 47) that couldn't be cleanly averaged and
+   were reviewed and settled by hand, labeled `reid_confirmed`, dated and
+   reasoned in `data/raw/position_overrides.csv`, never blended into the
+   automated resolution's own accuracy: three confirmed what real games
+   played that season would have suggested (Jung to 1B, Gonzales to 3B,
+   Yorke to 3B), two chose a broader outfield credit over a specific
+   corner spot on real defensive versatility (Marte, Freeman), and two
+   overrode what recent games alone would suggest on real scouting
+   knowledge (Walcott stays a shortstop despite a 14-game, DH-only,
+   likely-injury-shaped sample, Soderstrom stays a catcher despite 93
+   games in left field this season, his real defensive identity). Real
+   games-played data (`data/derived/current_position.csv`) still powers
+   the separate, display-only `position_today` column, unrelated to any
+   of this. Single-position players, including MJ Melendez (the case that
+   surfaced this whole question), are entirely unaffected, there is no
+   ambiguity in a single listing to resolve. One exception inside the
+   single-position case, a player listed simply "INF" is graded at
+   shortstop's value directly rather than a blended average, since an
+   unspecified "he can play the infield" label is itself the high-value
+   signal a scout is making, not a hedge that should be watered down. An
+   idea about valuing a real starting center fielder the way a shortstop
+   is valued was raised and explicitly deferred, small sample, not
+   significant at this stage.
+11. **Two scores, not one, per Reid's ruling 2026-08-01.** Investigating
+   the pitcher gap above surfaced a separate, real distortion: a
+   fast-tracked elite arm (Paul Skenes, 27.3 innings before his call-up)
+   scores unremarkably on total value banked, simply because a short
+   window caps how much value there is to bank, even though the quality
+   of those innings was elite. Rather than redefine the whole tool around
+   one answer, both numbers now ship side by side, everywhere a debut-day
+   or season reading appears. **Readiness Score** is total value banked,
+   naturally larger the more he played. **Rate Score** restates the same
+   performance per 600 PA or BF, a full-season-equivalent workload, how
+   good he was per opportunity, independent of how much opportunity he
+   got. They can and do disagree sharply, Skenes' Readiness Score is a
+   modest 1.26, his Rate Score the highest of any pitcher in the dataset
+   at 7.19. Neither is "the real one." No new computation was needed,
+   rate_per_600 already existed at the season level, it had simply never
+   been given equal billing.
+12. **A fourth cohort, 2025, was added 2026-08-01, growing the population
+   from 212 to 267 unique players.** No pipeline logic changed, ingestion
+   already looped over however many tabs existed. One new real name
+   collision surfaced (a repeat of the same Jacob Wilson ambiguity from
+   the 2024 cohort, under a new rank), resolved the same way. Alongside
+   it, a rule reversal for players who repeat across cohorts, his most
+   recent listing now wins, not his earliest (the opposite of the
+   original design, which reasoned earliest was closer to pre-debut and
+   less contaminated). Checked against the real data before shipping,
+   currently changes zero scores, since no repeat player's listed
+   position actually differs across years, but it is the correct
+   standing rule for whichever cohort is added next.
+
+13. **Pitcher diagnostics, added 2026-08-01, wiring in Session 21's three
+   parked items (role, K%/BB%/GB%, workload).** Seven new independent
+   columns on every scored pitching stint in `readiness_stints.csv`, none
+   of them fed into the WAR chain above, the same "diagnostic, not a
+   scoring input" treatment FIP itself already gets at small samples:
+   WHIP `(BB+H)/IP`, BABIP-against `(H-HR)/(AB-K-HR+SF)` (standard
+   FanGraphs construction, `None` rather than a nonsense value when the
+   balls-in-play denominator isn't positive), BB/9, K% and BB% (both per
+   batters faced), and GB% (`groundOuts/(groundOuts+airOuts)`, disclosed
+   as an OUTS-ONLY approximation, ground balls that go for hits are not
+   in this API's per-stint line and are not counted in either term, so
+   this is not the full batted-ball GB% a Statcast source would report).
+   Role (`start_frac = gamesStarted/gamesPlayed`, `ip_per_start`,
+   `p_per_gs`, and a `starter`/`swingman`/`reliever` label) rides
+   alongside. No single published percentage threshold exists for
+   labeling a season's role (a live research sweep found FanGraphs' own
+   rule is a rolling week-by-week check, not a season-total cutoff); what
+   is published is the "swingman" band, roughly 35-40% of appearances
+   being starts, holding for decades. `ROLE_START_THRESHOLD` (0.80) and
+   `ROLE_SWING_FLOOR` (0.20) bound that band in-house, wide enough to
+   contain the cited swingman range comfortably, same disclosed-cutoff
+   convention as the position table above. All six added source fields
+   (`hits`, `atBats`, `sacFlies`, `numberOfPitches`, `groundOuts`,
+   `airOuts`) were already present on the pitching stat object this
+   project already fetches, verified against the cache, so backfilling
+   them cost zero new API calls. Population and every existing WAR number
+   are unchanged (267 scored, 257 crossed, 204 debuted, identical to
+   before this addition), confirming the wiring is additive only.
+14. **The role label can misread deliberate workload management as a
+   bullpen conversion, caught 2026-08-02 on a real case.** Reid flagged
+   Jacob Misiorowski's 2024 AAA stint (`role=reliever`) as wrong given his
+   established MLB starter identity. The live per-game log backs up the
+   raw label (2 short "starts," then 12 straight relief outings through
+   the rest of that AAA season, all with Nashville Sounds), but Reid's
+   read of WHY was sharper than the label captured: he throws 100+ mph
+   and carried arm-health caution that year, and the log shows BOTH his
+   starts and his relief outings were short (1-2 IP each), not a real
+   role change followed by short relief innings. `start_frac`-based `role`
+   cannot distinguish "kept short across the board" from "genuinely
+   converted to the bullpen," because box-score stats carry no injury or
+   transaction context (the same gap the Phase 2 notes already flagged for
+   rehab-assignment detection, no transactions fetcher exists in this
+   project). Added `ip_per_appearance` (IP over every appearance, not just
+   starts) as an orthogonal diagnostic precisely to surface this: it reads
+   4.2-4.9 for every other season of Misiorowski's career and collapses to
+   1.26 for the flagged 2024 AAA stint, a stint that's short everywhere,
+   not just in relief. Disclosed as a raw, undiagnosed number, not a
+   fix, since this project cannot determine whether a short reading in
+   any given case is health caution, an opener role, or a real demotion.
+   The honest limit stands: `role` is a literal games-started ratio, read
+   it alongside `ip_per_appearance`, never as a standalone verdict.
 
 ## Run order
 
 ```
-python scripts/ingest_prospects.py     # xlsx -> prospect_rankings.csv
-python scripts/fetch_universe.py       # multi-season player universe
-python scripts/build_crosswalk.py      # names -> ids, with metrics
-python scripts/fetch_stats.py          # careers, debut logs, baselines, ages
-python scripts/compute_readiness.py    # the score
-python scripts/write_report.py         # the report
-python -m pytest tests/                # the proofs
+python scripts/ingest_prospects.py       # xlsx -> prospect_rankings.csv
+python scripts/fetch_universe.py         # multi-season player universe
+python scripts/build_crosswalk.py        # names -> ids, with metrics
+python scripts/fetch_stats.py            # careers, debut logs, baselines, ages
+python scripts/fetch_current_position.py # real games-by-position, for disambiguation
+python scripts/compute_readiness.py      # the score
+python scripts/write_report.py           # the report
+python scripts/write_position_review.py  # flagged multi-position players
+python scripts/build_viewer_sheet.py     # simple sheet, both scores, per player
+python -m pytest tests/                  # the proofs
 ```
 
 All API responses are cached to `data/cache/` (gitignored), so a rerun

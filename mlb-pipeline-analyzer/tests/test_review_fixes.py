@@ -10,7 +10,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from scripts.compute_readiness import compute_player, pick_debut_reading, season_readings
+from scripts.compute_readiness import (compute_player, pick_debut_reading,
+                                       pick_ranking_position, season_readings)
 
 PID = "999002"
 PERSON = {
@@ -45,7 +46,7 @@ def test_blank_team_aggregate_row_not_double_counted():
         _hit(2022, 12, 438, 130, team=""),        # the aggregate
     ]
     stints = compute_player(PID, PERSON, splits, [], HIT_BASE, {}, AGES,
-                            ranking_position="SS")
+                            positions=["SS"])
     assert len(stints) == 1
     assert stints[0]["pa"] == 438.0
 
@@ -54,7 +55,7 @@ def test_solo_blank_team_row_still_counts():
     """A bucket whose only row lacks a team name is a real record, not an
     aggregate beside per-team rows, and must be kept."""
     stints = compute_player(PID, PERSON, [_hit(2022, 12, 200, 60, team="")],
-                            [], HIT_BASE, {}, AGES, ranking_position="SS")
+                            [], HIT_BASE, {}, AGES, positions=["SS"])
     assert len(stints) == 1
     assert stints[0]["pa"] == 200.0
 
@@ -66,9 +67,9 @@ def test_dsl_stints_excluded():
     dsl = [_hit(2022, 16, 250, 80, league="Dominican Summer League")]
     complex_ball = [_hit(2022, 16, 250, 80, league="Arizona Complex League")]
     assert compute_player(PID, PERSON, dsl, [], HIT_BASE, {}, AGES,
-                          ranking_position="SS") == []
+                          positions=["SS"]) == []
     assert len(compute_player(PID, PERSON, complex_ball, [], HIT_BASE, {}, AGES,
-                              ranking_position="SS")) == 1
+                              positions=["SS"])) == 1
 
 
 def test_position_comes_from_ranking_not_todays_label():
@@ -78,21 +79,38 @@ def test_position_comes_from_ranking_not_todays_label():
     as_dh_today = dict(PERSON, primary_position="DH")
     as_c_today = dict(PERSON, primary_position="C")
     r1 = compute_player(PID, as_dh_today, splits, [], HIT_BASE, {}, AGES,
-                        ranking_position="C")
+                        positions=["C"])
     r2 = compute_player(PID, as_c_today, splits, [], HIT_BASE, {}, AGES,
-                        ranking_position="C")
+                        positions=["C"])
     assert r1 == r2
     assert r1[0]["pos_adj"] > 0        # catcher credit, not DH dock
 
 
-def test_ranking_position_slash_and_inf_buckets():
+def test_single_resolved_position_buckets():
+    """compute_player takes an already-resolved position list (splitting
+    and averaging a multi-position ranking-list entry is resolve_position's
+    job, tested in test_position_resolve.py). This confirms the SS bucket
+    applies correctly, and that INF grades at shortstop's value per Reid's
+    2026-08-01 ruling, not the old blended average."""
     splits = [_hit(2022, 12, 400, 120)]
-    ss = compute_player(PID, PERSON, splits, [], HIT_BASE, {}, AGES,
-                        ranking_position="SS/3B")
-    inf = compute_player(PID, PERSON, splits, [], HIT_BASE, {}, AGES,
-                         ranking_position="INF")
+    ss = compute_player(PID, PERSON, splits, [], HIT_BASE, {}, AGES, positions=["SS"])
+    inf = compute_player(PID, PERSON, splits, [], HIT_BASE, {}, AGES, positions=["INF"])
     assert ss[0]["pos_adj"] == pytest.approx(7.5 * 100 / 162, abs=0.05)
-    assert inf[0]["pos_adj"] == pytest.approx(4.2 * 100 / 162, abs=0.05)
+    assert inf[0]["pos_adj"] == pytest.approx(ss[0]["pos_adj"])
+
+
+def test_season_rollup_reapplies_the_age_credit_cap():
+    """Found 2026-08-01: hitter_stint/pitcher_stint cap age credit so it
+    can't manufacture a false positive crossing from a below-replacement
+    stint, but season_readings summed base_war and age_credit_war fresh
+    rather than reusing each stint's own capped adj_war, silently undoing
+    the fix at the season level (Sixto Sanchez's real regression case)."""
+    stints = [{"season": 2019, "pa": 0.0, "bf": 150.0, "verdict": "scored",
+              "base_war": -0.5, "age_credit_war": 0.9}]
+    readings = season_readings(stints)
+    assert readings[0]["base_war"] == -0.5
+    assert readings[0]["age_credit_war"] == 0.9
+    assert readings[0]["adj_war"] <= 0  # would be +0.4 uncapped
 
 
 def _reading(season, verdict, adj=1.0, vol_all=400):
@@ -129,10 +147,27 @@ def test_debut_pick_reports_refusal_when_nothing_scored():
     assert basis.startswith("insufficient_sample")
 
 
+def test_pick_ranking_position_prefers_most_recent_cohort():
+    """Reid's ruling 2026-08-01 when the 2025 cohort was added: a repeat
+    player's CURRENT listing wins, not his earliest. Reversed from the
+    original earliest-wins design."""
+    pairs = [("2022", "SS"), ("2024", "SS/3B"), ("2025", "3B")]
+    assert pick_ranking_position(pairs) == ("2025", "3B")
+
+
+def test_pick_ranking_position_order_independent():
+    pairs = [("2025", "3B"), ("2022", "SS"), ("2024", "SS/3B")]
+    assert pick_ranking_position(pairs) == ("2025", "3B")
+
+
+def test_pick_ranking_position_single_cohort_unaffected():
+    assert pick_ranking_position([("2023", "OF")]) == ("2023", "OF")
+
+
 def test_refusal_label_reports_total_volume():
     """The label must show total volume including refused stints, not the
     fictitious zero of scored-only volume."""
     stints = compute_player(PID, PERSON, [_hit(2022, 12, 39, 12)], [],
-                            HIT_BASE, {}, AGES, ranking_position="SS")
+                            HIT_BASE, {}, AGES, positions=["SS"])
     readings = season_readings(stints)
     assert "39" in readings[0]["verdict"]

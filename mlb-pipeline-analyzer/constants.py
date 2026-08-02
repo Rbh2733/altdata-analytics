@@ -101,12 +101,39 @@ REPLACEMENT_RUNS_PER_600 = 20.5
 # historical payloads, so a post-debut conversion (MJ Melendez, a minors
 # catcher relabeled DH today) would rewrite pre-debut stints retroactively.
 # The list position is what the ranker saw, pre-debut by construction.
-# The cost is coarse buckets: "INF" (average of 2B/3B/SS, in-house) and
-# "OF" (average of LF/CF/RF, in-house). Unknown or utility positions get
+# "OF" is the average of LF/CF/RF, in-house, since the ranking lists never
+# name a specific outfield spot (verified against the real data, zero
+# exceptions across 400 rows, 2022-2025). Unknown or utility positions
+# get zero, disclosed rather than guessed.
+# "INF" IS SHORTSTOP'S VALUE, not a blended average, per Reid's ruling
+# 2026-08-01. His reasoning: a scout who lists a player simply as "INF"
+# without naming a specific spot is saying he can competently handle the
+# infield generally, which is itself the high-value signal, the same
+# signal a specifically-named shortstop carries, not a hedge that should
+# be watered down toward the middle of the defensive spectrum.
+# "CF" IS SHORTSTOP'S VALUE TOO, per Reid's ruling 2026-08-01, extending
+# the same logic across the two halves of the defensive spectrum: "SS is
+# to the infield as CF is to the outfield." Real MLB example he named,
+# Oneil Cruz, a shortstop-caliber defender genuinely moving to center
+# field this season. Since the ranking lists never print "CF" (verified,
+# zero exceptions across 400 rows, 2022-2025), a player only ever reaches this value
+# through a dated, reasoned manual override (data/raw/position_overrides.csv),
+# never automatically.
+# "OF" IS TWO DIFFERENT NUMBERS depending on context, also 2026-08-01.
+# Standalone (a player's entire listing is just "OF") keeps the original
+# LF/CF/RF blend, since a real unflagged burner center fielder could
+# still be sitting in that bucket, unreviewed. "OF" as a SECONDARY
+# position inside a multi-position combo (always paired with an infield
+# spot in the real data, e.g. "SS/OF") drops to the pure corner-outfield
+# rate: Reid's reasoning, that combination is the fallback signal of a
+# player who was tried at an infield spot and didn't stick there, not
+# evidence of burner speed. See OF_SECONDARY below and its use in
+# scoring/readiness.py's hitter_stint. Unknown or utility positions get
 # zero, disclosed rather than guessed.
 POSITION_ADJ_PER_162 = {
-    "C": 12.5, "SS": 7.5, "2B": 2.5, "3B": 2.5, "CF": 2.5,
-    "INF": 4.2, "OF": -4.2, "LF": -7.5, "RF": -7.5, "1B": -12.5, "DH": -17.5,
+    "C": 12.5, "SS": 7.5, "2B": 2.5, "3B": 2.5, "CF": 7.5,
+    "INF": 7.5, "OF": -4.2, "OF_SECONDARY": -7.5,
+    "LF": -7.5, "RF": -7.5, "1B": -12.5, "DH": -17.5,
 }
 
 RUNS_PER_WIN = 10.0
@@ -124,3 +151,31 @@ MIN_RATE_BF = 100
 MINOR_SPORT_IDS = [11, 12, 13, 14, 15, 16]
 SPORT_LABELS = {1: "MLB", 11: "AAA", 12: "AA", 13: "A+", 14: "A",
                 15: "SS-A", 16: "ROK"}
+
+# --------------------------------------------------------------------------
+# Pitcher role diagnostics, added 2026-08-01, PARKED item 1 from Session 21.
+# Reported alongside FIP as independent diagnostic columns, per Reid's
+# request, never folded into the WAR chain above. start_frac is
+# gamesStarted / gamesPlayed for the stint. No single published percentage
+# threshold exists for labeling a season "starter" vs "reliever" (FanGraphs'
+# own rule is a rolling, week-by-week practical check, not a season-total
+# cutoff, confirmed by live research sweep 2026-08-01). What IS published is
+# the "swingman" band, pitchers whose share of appearances that are starts
+# has held at roughly 35-40% for decades (High Heat Stats / SABR-adjacent
+# research). ROLE_START_THRESHOLD and ROLE_SWING_FLOOR bound that band
+# in-house: 80%+ starts reads as a starter, under 20% reads as a reliever,
+# the 20-80% span in between (which comfortably contains the cited 35-40%
+# swingman rate) is labeled "swingman" rather than forced into either
+# bucket. Disclosed in-house choice, same convention as this file's other
+# undocumented-in-the-literature cutoffs.
+ROLE_START_THRESHOLD = 0.80
+ROLE_SWING_FLOOR = 0.20
+
+# BABIP-against for pitchers, standard FanGraphs construction:
+# (H - HR) / (AB - K - HR + SF). League average runs close to .300 in most
+# MLB seasons; minor-league levels are not recalibrated to that number here,
+# this is reported as the player's own raw rate, not translated.
+# WHIP, standard construction: (BB + H) / IP.
+# Both are diagnostic-only, deliberately never fed into the WAR chain above,
+# per the same "cleaner signal than FIP at small samples" framing Session 21
+# parked this work under.

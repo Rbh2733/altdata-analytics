@@ -1,4 +1,4 @@
-"""Resolves all 300 ranking rows to MLBAM player ids and writes the
+"""Resolves every ranking row to an MLBAM player id and writes the
 crosswalk plus per-stage metrics.
 
 Precision is reported per stage, never blended: an exact match, a

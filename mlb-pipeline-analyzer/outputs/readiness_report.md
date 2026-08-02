@@ -7,42 +7,57 @@ number below is an accuracy claim.
 
 ## Population
 
-- 300 ranking rows, 300 matched (100.0%), 212 unique players
-- Match stages: {'exact': 289, 'exact_disambiguated': 9, 'manual_override': 2}. The manual_override stage is two curated name-collision resolutions with written provenance in data/raw/manual_overrides.csv, kept out of the matcher's earned accuracy.
-- 179 players have debuted in MLB, 33 have not
+- 400 ranking rows, 400 matched (100.0%), 267 unique players
+- Match stages: {'exact': 387, 'exact_disambiguated': 10, 'manual_override': 3}. The manual_override stage is two curated name-collision resolutions with written provenance in data/raw/manual_overrides.csv, kept out of the matcher's earned accuracy.
+- 204 players have debuted in MLB, 63 have not
 
 ## Readiness, descriptive counts
 
-- 203 of 212 crossed zero on base production alone, 210 with the age credit included (7 players cross only via the credit)
-- First-crossing dominant level: {'A': 92, 'A+': 51, 'AA': 33, 'ROK': 29, 'AAA': 3, 'SS-A': 2}
-- Across 672 scored player-seasons, the age credit averages 1.42 wins against 0.54 wins of base signal, and 162 of 613 crossing seasons (26%) cross on the credit alone. The credit, not the translation factor, is the dominant source of generosity, which is why it ships severable.
+- 257 of 267 crossed zero on base production alone, 257 with the age credit included (0 players cross only via the credit)
+- First-crossing dominant level: {'A': 80, 'AA': 78, 'A+': 71, 'AAA': 18, 'ROK': 9, 'SS-A': 1}
+- Across 813 scored player-seasons, the age credit averages 1.45 wins against 0.55 wins of base signal, and 2 of 557 crossing seasons (0%) cross on the credit alone. The credit, not the translation factor, is the dominant source of generosity, which is why it ships severable.
 - For a Top-100 population these crossing rates are not absurd on
-  their face (179 of 212 really did reach MLB), but
+  their face (204 of 267 really did reach MLB), but
   whether crossing predicted anything is exactly what the deferred
   grading layer will test. These are counts, not a hit rate.
 
-- Debut-day reading basis across debuted players: {'debut_season': 126, 'carried_from_2021': 16, 'carried_from_2023': 14, 'carried_from_2022': 12, 'carried_from_2025': 4, 'carried_from_2019': 3, 'carried_from_2024': 3, 'insufficient_sample (76 of 97 PA+BF scored, need 100)': 1}
-- Season readings refused for sample size: 111 of 783 (672 scored)
+- Debut-day reading basis across debuted players: {'debut_season': 139, 'carried_from_2021': 16, 'carried_from_2023': 15, 'carried_from_2022': 12, 'carried_from_2024': 9, 'carried_from_2025': 7, 'carried_from_2019': 3, 'insufficient_sample (76 of 97 PA+BF scored, need 100)': 1, 'insufficient_sample (97 of 97 PA+BF scored, need 100)': 1, 'no_pre_debut_stint_data': 1}
+- Season readings refused for sample size: 136 of 949 (813 scored)
 
-## Highest debut-day readiness rates (age-adjusted WAR per 600 PA or BF)
+## Two scores, not one: Readiness Score and Rate Score
 
-| Player | Pos | Debut | Rate/600 | Base WAR | Adj WAR | Basis |
-|---|---|---|---|---|---|---|
-| Matt McLain | SS/2B | 2023-05-15 | 10.04 | 2.16 | 2.9 | debut_season |
-| Jacob Wilson | SS | 2024-07-19 | 9.79 | 2.1 | 2.99 | debut_season |
-| Royce Lewis | SS | 2022-05-06 | 8.53 | 1.09 | 1.52 | debut_season |
-| Nolan Gorman | 2B/3B | 2022-05-20 | 8.19 | 1.42 | 2.01 | debut_season |
-| James Wood | OF | 2024-07-01 | 8.18 | 2.22 | 3.15 | debut_season |
-| Logan O'Hoppe | C | 2022-09-28 | 8.0 | 3.3 | 5.96 | debut_season |
-| Corbin Carroll | OF | 2022-08-29 | 8.0 | 3.28 | 5.78 | debut_season |
-| Ezequiel Tovar | SS | 2022-09-23 | 7.93 | 1.9 | 3.9 | debut_season |
-| Elly De La Cruz | SS/3B | 2023-06-06 | 7.65 | 1.58 | 2.37 | debut_season |
-| MJ Melendez | C | 2022-05-03 | 7.63 | 4.14 | 6.75 | carried_from_2021_over_91pa_tuneup |
-| Dalton Rushing | C/OF | 2025-05-15 | 7.46 | 1.12 | 1.64 | debut_season |
-| Samuel Basallo | C/1B | 2025-08-17 | 7.45 | 2.71 | 3.99 | debut_season |
-| Gunnar Henderson | 3B/SS | 2022-08-31 | 7.33 | 3.56 | 6.15 | debut_season |
-| Bo Naylor | C | 2022-10-01 | 7.23 | 3.66 | 6.15 | debut_season |
-| Paul Skenes | RHP | 2024-05-11 | 7.19 | 1.08 | 1.26 | debut_season |
+Per Reid's ruling 2026-08-01. Readiness Score is total value banked by
+debut day, how much he'd already proven, naturally larger the more he
+played before getting called up. Rate Score restates the same
+performance as if he'd gotten a full 600-PA-or-BF season, how good he
+was per opportunity, independent of how much opportunity he actually
+got. They can disagree sharply. Paul Skenes threw 27.3 innings before
+his call-up, a small window to bank total value in, so his Readiness
+Score is modest (1.26). But the quality of those 27.3 innings was
+elite, and his Rate Score (7.19) is the highest of any pitcher in the
+dataset. Neither number is the real one. They answer different
+questions, and a fast-tracked elite arm is exactly the case where
+they diverge most.
+
+**Top 15 by Rate Score:**
+
+| Player | Pos | Debut | Rate Score | Readiness Score (base / adj) | Basis |
+|---|---|---|---|---|---|
+| Matt McLain | SS/2B | 2023-05-15 | 9.84 | 2.1 / 2.84 | debut_season |
+| Jacob Wilson | SS | 2024-07-19 | 9.79 | 2.1 / 2.99 | debut_season |
+| James Wood | OF | 2024-07-01 | 9.16 | 2.6 / 3.53 | debut_season |
+| Corbin Carroll | OF | 2022-08-29 | 8.9 | 3.94 / 6.44 | debut_season |
+| Royce Lewis | SS | 2022-05-06 | 8.53 | 1.09 / 1.52 | debut_season |
+| Nolan Gorman | 2B/3B | 2022-05-20 | 8.19 | 1.42 / 2.01 | debut_season |
+| Wyatt Langford | OF | 2024-03-28 | 8.03 | 1.38 / 2.14 | carried_from_2023 |
+| Logan O'Hoppe | C | 2022-09-28 | 8.0 | 3.3 / 5.96 | debut_season |
+| Ezequiel Tovar | SS | 2022-09-23 | 7.93 | 1.9 / 3.9 | debut_season |
+| Julio Rodríguez | OF | 2022-04-08 | 7.88 | 2.34 / 4.47 | carried_from_2021 |
+| Gunnar Henderson | 3B/SS | 2022-08-31 | 7.75 | 3.91 / 6.49 | debut_season |
+| Moisés Ballesteros | C | 2025-05-13 | 7.59 | 1.3 / 1.9 | debut_season |
+| Elly De La Cruz | SS/3B | 2023-06-06 | 7.46 | 1.52 / 2.31 | debut_season |
+| Jordan Walker | OF/3B | 2023-03-30 | 7.34 | 2.93 / 6.55 | carried_from_2022 |
+| Bo Naylor | C | 2022-10-01 | 7.23 | 3.66 / 6.15 | debut_season |
 
 ## Calibration, what a dead-average regular scores under this chain
 
@@ -58,14 +73,14 @@ The blended columns restate the factors against a blended-MLB baseline
 | AAA | 2023 | 1.52 | 1.91 | 1.2 | 1.59 |
 | AAA | 2024 | 1.47 | 1.81 | 1.17 | 1.5 |
 | AAA | 2025 | 1.34 | 1.64 | 1.04 | 1.34 |
-| AAA | 2026 | 1.46 | 1.79 | 1.15 | 1.47 |
+| AAA | 2026 | 1.46 | 1.78 | 1.15 | 1.46 |
 | AA | 2019 | -0.94 | -1.05 | -1.16 | -1.27 |
 | AA | 2021 | -0.04 | 0.05 | -0.29 | -0.19 |
 | AA | 2022 | 0.6 | 0.85 | 0.35 | 0.59 |
 | AA | 2023 | 0.05 | 0.23 | -0.2 | -0.02 |
 | AA | 2024 | -0.21 | -0.14 | -0.44 | -0.37 |
 | AA | 2025 | -0.33 | -0.26 | -0.55 | -0.49 |
-| AA | 2026 | 0.51 | 0.71 | 0.24 | 0.44 |
+| AA | 2026 | 0.51 | 0.7 | 0.24 | 0.44 |
 | A+ | 2017 | -1.25 | -1.26 | -1.44 | -1.45 |
 | A+ | 2018 | -0.85 | -0.78 | -1.04 | -0.97 |
 | A+ | 2019 | -1.57 | -1.64 | -1.76 | -1.82 |
@@ -74,7 +89,7 @@ The blended columns restate the factors against a blended-MLB baseline
 | A+ | 2023 | -0.86 | -0.73 | -1.07 | -0.94 |
 | A+ | 2024 | -0.77 | -0.64 | -0.97 | -0.84 |
 | A+ | 2025 | -0.87 | -0.73 | -1.07 | -0.93 |
-| A+ | 2026 | -0.08 | 0.24 | -0.32 | 0.0 |
+| A+ | 2026 | -0.08 | 0.24 | -0.32 | 0.01 |
 | A | 2017 | -1.84 | -1.88 | -2.01 | -2.05 |
 | A | 2018 | -1.54 | -1.52 | -1.71 | -1.68 |
 | A | 2019 | -2.11 | -2.15 | -2.27 | -2.31 |
@@ -83,22 +98,22 @@ The blended columns restate the factors against a blended-MLB baseline
 | A | 2023 | -1.41 | -1.2 | -1.59 | -1.38 |
 | A | 2024 | -1.29 | -1.05 | -1.46 | -1.22 |
 | A | 2025 | -1.34 | -1.09 | -1.51 | -1.27 |
-| A | 2026 | -0.86 | -0.54 | -1.07 | -0.74 |
+| A | 2026 | -0.87 | -0.54 | -1.07 | -0.74 |
 | SS-A | 2016 | -2.28 | -2.2 | -2.41 | -2.33 |
 | SS-A | 2017 | -2.5 | -2.48 | -2.63 | -2.61 |
 | SS-A | 2018 | -2.17 | -2.14 | -2.3 | -2.27 |
 | SS-A | 2019 | -2.74 | -2.76 | -2.87 | -2.89 |
-| ROK | 2015 | -1.93 | -2.26 | -2.06 | -2.37 |
-| ROK | 2016 | -2.29 | -2.77 | -2.42 | -2.87 |
-| ROK | 2017 | -2.37 | -2.84 | -2.51 | -2.96 |
-| ROK | 2018 | -2.02 | -2.44 | -2.16 | -2.56 |
-| ROK | 2019 | -2.55 | -2.9 | -2.69 | -3.02 |
-| ROK | 2021 | -2.12 | -2.34 | -2.27 | -2.47 |
-| ROK | 2022 | -1.77 | -1.92 | -1.91 | -2.04 |
-| ROK | 2023 | -1.97 | -2.14 | -2.13 | -2.27 |
-| ROK | 2024 | -1.81 | -1.86 | -1.96 | -1.99 |
-| ROK | 2025 | -1.81 | -1.96 | -1.96 | -2.09 |
-| ROK | 2026 | -1.42 | -1.35 | -1.6 | -1.5 |
+| ROK | 2015 | -2.12 | -1.9 | -2.25 | -2.02 |
+| ROK | 2016 | -2.5 | -2.36 | -2.62 | -2.48 |
+| ROK | 2017 | -2.58 | -2.39 | -2.71 | -2.52 |
+| ROK | 2018 | -2.26 | -2.03 | -2.39 | -2.16 |
+| ROK | 2019 | -2.76 | -2.52 | -2.89 | -2.65 |
+| ROK | 2021 | -2.31 | -1.97 | -2.45 | -2.11 |
+| ROK | 2022 | -1.94 | -1.56 | -2.08 | -1.69 |
+| ROK | 2023 | -2.18 | -1.7 | -2.32 | -1.84 |
+| ROK | 2024 | -1.98 | -1.48 | -2.12 | -1.62 |
+| ROK | 2025 | -1.98 | -1.48 | -2.13 | -1.63 |
+| ROK | 2026 | -1.57 | -0.86 | -1.74 | -1.03 |
 
 ## Disclosures
 

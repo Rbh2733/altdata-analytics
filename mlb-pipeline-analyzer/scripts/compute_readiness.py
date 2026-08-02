@@ -28,12 +28,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import config
 import constants as C
 from scoring import readiness as R
+from scoring.position_resolve import resolve_position
 
 HIT_SUM = ["gamesPlayed", "plateAppearances", "atBats", "hits", "doubles",
            "triples", "homeRuns", "baseOnBalls", "intentionalWalks",
            "hitByPitch", "sacFlies", "stolenBases", "caughtStealing"]
-PIT_SUM = ["gamesPlayed", "inningsPitched", "battersFaced", "earnedRuns",
-           "strikeOuts", "baseOnBalls", "hitBatsmen", "homeRuns"]
+PIT_SUM = ["gamesPlayed", "gamesStarted", "inningsPitched", "battersFaced",
+           "earnedRuns", "strikeOuts", "baseOnBalls", "hitBatsmen", "homeRuns",
+           "hits", "atBats", "sacFlies", "numberOfPitches", "groundOuts",
+           "airOuts"]
 
 
 def read_csv(path):
@@ -48,7 +51,12 @@ def load():
     logs = read_csv(config.DATA_DERIVED / "debut_gamelogs.csv")
     baselines = read_csv(config.DATA_DERIVED / "league_baselines.csv")
     ages = read_csv(config.DATA_DERIVED / "level_ages.csv")
-    return cw, universe, splits, logs, baselines, ages
+    cur_pos_path = config.DATA_DERIVED / "current_position.csv"
+    current_pos = {r["mlbam_id"]: r for r in read_csv(cur_pos_path)} if cur_pos_path.exists() else {}
+    pos_override_path = config.DATA_RAW / "position_overrides.csv"
+    pos_overrides = ({r["mlbam_id"]: r["confirmed_position"] for r in read_csv(pos_override_path)}
+                     if pos_override_path.exists() else {})
+    return cw, universe, splits, logs, baselines, ages, current_pos, pos_overrides
 
 
 def index_baselines(rows):
@@ -63,21 +71,27 @@ def index_baselines(rows):
 
 
 def compute_player(pid, person, my_splits, my_logs, hit_base, pit_base, age_map,
-                   ranking_position=""):
+                   positions=None):
     """Score one player's career. Pure over its inputs, which is what the
     no-future-leak test exploits.
 
-    ranking_position is the position from the player's earliest ranking-list
-    row, the pre-debut-vintage source for the positional adjustment. The
-    API's own position label is current-day even in historical payloads
-    (verified live), so it is never used for scoring. Found by adversarial
-    review 2026-08-01: the old behavior docked MJ Melendez's minor-league
-    catcher seasons at the DH rate because he is labeled DH today.
+    positions is the ALREADY-RESOLVED list of positions for scoring,
+    produced by resolve_position() in main(). The position-adjustment
+    constant is averaged across every entry (a single-position list
+    behaves exactly like a direct lookup). The API's own position label is
+    current-day even in historical payloads (verified live), so it is
+    never used for scoring. Found by adversarial review 2026-08-01: the
+    old behavior docked MJ Melendez's minor-league catcher seasons at the
+    DH rate because he is labeled DH today. Refined 2026-08-01 per Reid:
+    outside the 7 cases he reviewed by hand (data/raw/position_overrides.csv,
+    basis reid_confirmed), a multi-position ranking-list entry ("SS/2B") is
+    averaged across every position it named, never resolved to one picked
+    "winner." Single-position players are entirely unaffected.
     """
     debut = person.get("mlb_debut_date", "")
     debut_season = int(debut[:4]) if debut else None
     birth = person.get("birth_date", "")
-    position = (ranking_position or "").split("/")[0].strip().upper()
+    positions = [p.strip().upper() for p in (positions or []) if p and p.strip()]
 
     # Group split rows into stints: (season, sport, group) -> [rows]
     stints = defaultdict(list)
@@ -131,7 +145,7 @@ def compute_player(pid, person, my_splits, my_logs, hit_base, pit_base, age_map,
                 continue
             age = R.player_age_at(birth, season)
             res = R.hitter_stint(line, lvl, mlb, sport, age,
-                                 age_map.get((sport, season)), position)
+                                 age_map.get((sport, season)), positions)
         else:
             line = R.sum_rows(rows, PIT_SUM)
             lvl, mlb = pit_base.get((sport, season)), pit_base.get((1, season))
@@ -161,7 +175,12 @@ def season_readings(stint_rows):
         vol_all = sum(r["pa"] + r["bf"] for r in rows)
         base = sum(r["base_war"] for r in scored)
         credit = sum(r["age_credit_war"] for r in scored)
-        adj = base + credit
+        # Same cap as scoring/readiness.py's per-stint chain, reapplied
+        # here since season totals are summed fresh from base_war and
+        # age_credit_war rather than reusing each stint's own capped
+        # adj_war. Found 2026-08-01: without this, the season rollup
+        # silently undid the per-stint fix.
+        adj = base + credit if base >= 0 else min(base + credit, 0.0)
         min_needed = C.MIN_RATE_PA
         if vol >= min_needed:
             rate600, verdict = adj * 600 / vol, "scored"
@@ -205,8 +224,22 @@ def pick_debut_reading(readings, debut_season):
     return None, "no_pre_debut_stint_data"
 
 
+def pick_ranking_position(cohort_position_pairs):
+    """For a player who repeats across cohorts, choose which cohort's
+    listed position feeds the score.
+
+    Most recent cohort wins, per Reid's ruling 2026-08-01 when the 2025
+    cohort was added: a repeat player's CURRENT listing is what should
+    score him. Reversed from the original design (earliest cohort wins,
+    reasoned as closer to pre-debut, less contaminated by his later MLB
+    role). cohort_position_pairs is an iterable of (cohort, position)
+    strings; cohorts compare as plain strings (works for "2022".."2025").
+    """
+    return max(cohort_position_pairs, key=lambda pair: pair[0])
+
+
 def main():
-    cw, universe, splits, logs, baselines, ages = load()
+    cw, universe, splits, logs, baselines, ages, current_pos, pos_overrides = load()
     hit_base, pit_base = index_baselines(baselines)
     age_map = {(int(a["sport_id"]), int(a["season"])): float(a["avg_age"]) for a in ages}
 
@@ -219,25 +252,29 @@ def main():
 
     players = {}
     cohorts = defaultdict(list)
-    ranking_pos = {}
+    ranking_pairs = defaultdict(list)
     for r in cw:
         if r["mlbam_id"]:
             players[r["mlbam_id"]] = r
             cohorts[r["mlbam_id"]].append(f"{r['cohort']}#{r['rank']}")
-            # earliest cohort's position wins: the oldest pre-debut vintage
-            key = (r["cohort"], r["position"])
-            if r["mlbam_id"] not in ranking_pos or key[0] < ranking_pos[r["mlbam_id"]][0]:
-                ranking_pos[r["mlbam_id"]] = key
+            ranking_pairs[r["mlbam_id"]].append((r["cohort"], r["position"]))
+    ranking_pos = {pid: pick_ranking_position(pairs) for pid, pairs in ranking_pairs.items()}
 
     all_stints, all_seasons, summary = [], [], []
     for pid in sorted(players):
         person = universe.get(pid)
         if not person:
             continue
+
+        listed_position = ranking_pos.get(pid, ("", ""))[1]
+        cur = current_pos.get(pid, {})
+        real_current_position = cur.get("current_position", "")
+        resolved = resolve_position(listed_position, manual_override=pos_overrides.get(pid))
+
         stint_rows = compute_player(pid, person, splits_by_pid.get(pid, []),
                                     logs_by_pid.get(pid, []),
                                     hit_base, pit_base, age_map,
-                                    ranking_position=ranking_pos.get(pid, ("", ""))[1])
+                                    positions=resolved["positions"])
         readings = season_readings(stint_rows)
         all_stints.extend(stint_rows)
         for rd in readings:
@@ -263,8 +300,10 @@ def main():
 
         summary.append({
             "mlbam_id": pid, "player": person.get("full_name", ""),
-            "position": ranking_pos.get(pid, ("", ""))[1],
-            "position_today": person.get("primary_position", ""),
+            "position": listed_position,
+            "position_used_for_scoring": "/".join(resolved["positions"]),
+            "position_resolution": resolved["basis"],
+            "position_today": real_current_position or person.get("primary_position", ""),
             "cohorts": ";".join(cohorts[pid]),
             "mlb_debut_date": debut,
             "n_seasons_scored": sum(1 for r in readings if r["verdict"] == "scored"),
@@ -292,7 +331,9 @@ def main():
 
     stint_fields = ["mlbam_id", "player", "season", "level", "sport_id", "group",
                     "pre_debut_truncated", "verdict", "detail", "pa", "bf", "g",
-                    "woba", "fip", "native_rate", "savings9", "raa_mlb", "wsb",
+                    "woba", "fip", "whip", "babip", "bb9", "k_pct", "bb_pct",
+                    "gb_pct", "gs", "start_frac", "ip_per_start", "p_per_gs",
+                    "ip_per_appearance", "role", "native_rate", "savings9", "raa_mlb", "wsb",
                     "rep", "pos_adj", "age_years", "base_war", "age_credit_war",
                     "adj_war"]
     write("readiness_stints.csv", all_stints, stint_fields)
@@ -300,7 +341,8 @@ def main():
                      "volume", "volume_all", "base_war", "age_credit_war",
                      "adj_war", "rate_per_600", "verdict", "truncated"]
     write("readiness_by_season.csv", all_seasons, season_fields)
-    summary_fields = ["mlbam_id", "player", "position", "position_today", "cohorts",
+    summary_fields = ["mlbam_id", "player", "position", "position_used_for_scoring",
+                      "position_resolution", "position_today", "cohorts",
                       "mlb_debut_date", "n_seasons_scored",
                       "first_crossing_season", "first_base_crossing_season",
                       "debut_day_adj_war", "debut_day_base_war",

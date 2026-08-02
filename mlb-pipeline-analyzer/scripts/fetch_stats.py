@@ -36,7 +36,13 @@ HIT_FIELDS = ["gamesPlayed", "plateAppearances", "atBats", "hits", "doubles",
               "hitByPitch", "sacFlies", "stolenBases", "caughtStealing", "runs"]
 PIT_FIELDS = ["gamesPlayed", "gamesStarted", "inningsPitched", "battersFaced",
               "earnedRuns", "runs", "strikeOuts", "baseOnBalls", "hitBatsmen",
-              "homeRuns"]
+              "homeRuns", "hits", "atBats", "sacFlies", "numberOfPitches",
+              "groundOuts", "airOuts"]
+# The six added 2026-08-01 (hits/atBats/sacFlies for BABIP-against,
+# numberOfPitches for P/GS workload, groundOuts/airOuts for GB%) are all
+# already present on the same pitching stat object this project already
+# fetches, verified live against the cache. Zero new API calls, a rerun of
+# this script against the existing cache is enough to backfill them.
 
 PITCHER_POSITIONS = {"P", "SP", "RP", "RHP", "LHP"}
 

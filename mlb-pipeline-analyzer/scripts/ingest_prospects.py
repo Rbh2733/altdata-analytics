@@ -1,15 +1,15 @@
-"""Flattens the three-cohort prospect-ranking workbook into one tidy CSV.
+"""Flattens the multi-cohort prospect-ranking workbook into one tidy CSV.
 
-Source: data/raw/prospect_rankings_2022_2024.xlsx, three tabs (2022, 2023,
-2024), 100 ranked prospects each, with a Current Level column reflecting
-where each player sits TODAY rather than when they were ranked.
+Source: data/raw/prospect_rankings_2022_2025.xlsx, one tab per cohort
+(2022, 2023, 2024, 2025 as of 2026-08-01), 100 ranked prospects each,
+with a Current Level column reflecting where each player sits TODAY
+rather than when they were ranked. The loop below reads every tab in the
+workbook, whatever cohorts exist, no count is hardcoded.
 
 Cohorts are kept as separate rows rather than deduped to a unique-player
-table, on purpose: 75 of the 300 rows are repeat appearances, and a
+table, on purpose: many rows are repeat appearances across cohorts, and a
 matcher that resolves the same person inconsistently across cohorts is
-exhibiting a real defect worth being able to see. The measured shape of
-the population: 212 unique names, 137 on exactly one list, 62 on two, 13
-on all three.
+exhibiting a real defect worth being able to see.
 
 Adapted from this repo's earlier baseball project. The current_* columns
 are present-day snapshots and are NEVER used to select populations or
@@ -27,7 +27,7 @@ import pandas as pd
 
 import config
 
-SOURCE = "prospect_rankings_2022_2024.xlsx"
+SOURCE = "prospect_rankings_2022_2025.xlsx"
 FIELDS = ["cohort", "rank", "player", "position", "current_team",
           "current_level", "current_age", "bats", "throws"]
 

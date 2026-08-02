@@ -100,14 +100,30 @@ def main():
     w(f"- Season readings refused for sample size: {len(refused)} of "
       f"{len(seasons)} ({len(scored_rows)} scored)")
     w("")
-    w("## Highest debut-day readiness rates (age-adjusted WAR per 600 PA or BF)")
+    w("## Two scores, not one: Readiness Score and Rate Score")
     w("")
-    w("| Player | Pos | Debut | Rate/600 | Base WAR | Adj WAR | Basis |")
-    w("|---|---|---|---|---|---|---|")
+    w("Per Reid's ruling 2026-08-01. Readiness Score is total value banked by")
+    w("debut day, how much he'd already proven, naturally larger the more he")
+    w("played before getting called up. Rate Score restates the same")
+    w("performance as if he'd gotten a full 600-PA-or-BF season, how good he")
+    w("was per opportunity, independent of how much opportunity he actually")
+    w("got. They can disagree sharply. Paul Skenes threw 27.3 innings before")
+    w("his call-up, a small window to bank total value in, so his Readiness")
+    w("Score is modest (1.26). But the quality of those 27.3 innings was")
+    w("elite, and his Rate Score (7.19) is the highest of any pitcher in the")
+    w("dataset. Neither number is the real one. They answer different")
+    w("questions, and a fast-tracked elite arm is exactly the case where")
+    w("they diverge most.")
+    w("")
+    w("**Top 15 by Rate Score:**")
+    w("")
+    w("| Player | Pos | Debut | Rate Score | Readiness Score (base / adj) | Basis |")
+    w("|---|---|---|---|---|---|")
     for s in by_rate(debuted)[:15]:
         w(f"| {s['player']} | {s['position']} | {s['mlb_debut_date']} | "
-          f"{s['debut_day_rate_per_600']} | {s['debut_day_base_war']} | "
-          f"{s['debut_day_adj_war']} | {s['debut_reading_basis']} |")
+          f"{s['debut_day_rate_per_600']} | "
+          f"{s['debut_day_base_war']} / {s['debut_day_adj_war']} | "
+          f"{s['debut_reading_basis']} |")
     w("")
     w("## Calibration, what a dead-average regular scores under this chain")
     w("")

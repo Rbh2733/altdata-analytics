@@ -91,12 +91,35 @@ def game_log(player_id: int, season: int, group: str, sport_id: int) -> list[dic
 
 
 def teams_stats(sport_id: int, season: int, group: str) -> list[dict]:
-    """Per-team season stat lines for a whole level-season, one call."""
+    """Per-team season stat lines for a whole level-season, one call.
+
+    LIMIT IS EXPLICIT, NOT DEFAULT. Verified live 2026-08-01: the endpoint
+    silently caps results at 50 rows with no limit param, and Rookie ball
+    (sportId 16) genuinely fields 81-90 teams across seasons, well past
+    that cap. Worse, which 50 of the 90 survive differs between the
+    hitting and pitching group queries for the same season (22-32 of 50
+    overlap, confirmed against live team ID lists), so a naive fetch
+    silently builds the hitting and pitching baselines from two different,
+    non-overlapping team populations. Every other level fields 22-30
+    teams, comfortably under the cap, so this was invisible everywhere
+    else. limit=200 is a wide margin above the largest observed count.
+    Fails loudly (never silently) if totalSplits ever exceeds it anyway.
+    """
     data = get_json("/v1/teams/stats",
                     {"sportId": sport_id, "season": season, "group": group,
-                     "stats": "season"})
+                     "stats": "season", "limit": 200})
     stats = data.get("stats", [])
-    return stats[0].get("splits", []) if stats else []
+    if not stats:
+        return []
+    total = stats[0].get("totalSplits", 0)
+    splits = stats[0].get("splits", [])
+    if total > len(splits):
+        raise RuntimeError(
+            f"teams_stats sport={sport_id} season={season} group={group}: "
+            f"API reports {total} teams but returned only {len(splits)}, "
+            f"limit=200 was not enough. Raise it rather than silently "
+            f"building an incomplete baseline.")
+    return splits
 
 
 def sports_players(sport_id: int, season: int) -> list[dict]:
