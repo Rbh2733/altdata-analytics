@@ -1,7 +1,17 @@
 # mlb-pipeline-analyzer
 
-A minor-league readiness score, computed honestly from public data, for the
-players on four real Top 100 prospect lists (2022, 2023, 2024, 2025).
+A minor-league hitter readiness score, computed honestly from public data,
+for the hitters on four real Top 100 prospect lists (2022, 2023, 2024,
+2025).
+
+**Scope: hitters only.** Pitcher evaluation was built, tested, and
+researched extensively (FIP-based translated WAR, role and workload
+diagnostics), but pitching needs a genuinely different WAR construction
+than hitting, one that hasn't been validated against real published
+sabermetric research to this project's own citation standard yet. Rather
+than ship an unvalidated fix, that work is paused, not abandoned: it is
+fully preserved, code and tests and all, at the `pitcher-work-2026-08-02`
+git tag in this repository's history, and is being developed separately.
 
 For every ranked prospect, the pipeline computes an age-adjusted,
 position-adjusted minor-league production WAR, season by season across his
@@ -19,13 +29,12 @@ known biases plainly.
 
 ## The chain, per player, per level, per season
 
-1. wOBA from the full component line (FIP for pitchers).
+1. wOBA from the full component line.
 2. His absolute run-production rate in his own league's terms, the league's
    measured runs per plate appearance plus his wOBA gap converted to runs.
 3. Translated to MLB terms with the level's translation factor, then
    compared against the real MLB average rate of the same season.
-4. Replacement offset, 20.5 runs per 600 PA (per 600 batters faced for
-   pitchers, an in-house symmetry choice, disclosed).
+4. Replacement offset, 20.5 runs per 600 PA.
 5. Position adjustment, standard constants scaled to games played.
 6. Age credit per year younger than the level's measured average age,
    capped at three years, reported as its own severable column.
@@ -41,7 +50,7 @@ Every constant lives in `constants.py` with its citation attached.
 | Constant | Value | Source |
 |---|---|---|
 | Translation factors | AAA .78, AA .68, A+ .58, A .49, SS-A .40, ROK .34 | Clay Davenport league difficulty ratings, collapsed to levels; corroborated by Szymborski (AAA .82), Hall of Miller and Eric (.80/.72), Rosenblum (.825 wOBA) |
-| Age credit | 25 wRC+ pts/yr (A-AA hitters), 1.0/0.5 FIP runs (pitchers), AAA takes half AA | Stoltz, Excessive Prospect Analysis 2022; AAA taper in-house, direction per KATOH and Davenport 2025 |
+| Age credit | 25 wRC+ pts/yr (A-AA), AAA takes half AA | Stoltz, Excessive Prospect Analysis 2022; AAA taper in-house, direction per KATOH and Davenport 2025 |
 | wOBA weights | FanGraphs 2023 constants, scale 1.204 | FanGraphs guts table |
 | Replacement | 20.5 runs per 600 PA | FanGraphs unified replacement convention |
 | Position adjustment | C +12.5 to DH -17.5 per 162 games | standard published convention |
@@ -57,24 +66,17 @@ stated rather than hidden.
    which scores a dead-average Triple-A regular at +2.05 wins per 600 PA.
    It was replaced with the whole-rate construction above. The correction
    is logged, not erased.
-2. **The Rookie-level pitching baseline was silently built from an
-   incomplete, wrong team population, found 2026-08-01 after Reid noticed
-   pitchers scoring visibly lower than hitters and asked for the formula
-   to be validated rather than patched around.** MLB's team-stats endpoint
-   caps results at 50 rows with no limit parameter passed, and Rookie ball
-   genuinely fields 81-90 teams across seasons. Worse, which 50 of those
-   teams survived the cap differed between the hitting query and the
-   pitching query for the same season, confirmed live (only 22-32 of 50
-   team IDs overlapped), so the two baselines were quietly built from two
-   different, non-overlapping team populations. Every other level fields
-   22-30 teams, comfortably under the cap, so this was invisible
-   everywhere else. Fixed by requesting `limit=200` and failing loudly
-   (`RuntimeError`) if the API ever reports more teams than it returns,
-   rather than silently building an incomplete baseline again. Measured
-   effect: the Rookie pitcher-vs-hitter gap narrowed from 0.29 wins to
-   0.19 wins per stint, real but not the whole story, since Single-A
-   through Double-A show a comparable gap with a clean, unaffected
-   baseline, a genuinely unexplained pattern rather than this bug.
+2. **The team-stats fetch layer was silently building incomplete baselines
+   at Rookie level, found 2026-08-01.** MLB's team-stats endpoint caps
+   results at 50 rows with no limit parameter passed, and Rookie ball
+   genuinely fields 81-90 teams across seasons, so every league-average
+   baseline built from that level was quietly missing 22-45% of the real
+   team population. Every other level fields 22-30 teams, comfortably
+   under the cap, so this was invisible everywhere else. Fixed in
+   `ingestion/api.py`'s `teams_stats()` by requesting `limit=200` and
+   failing loudly (`RuntimeError`) if the API ever reports more teams than
+   it returns, rather than silently building an incomplete baseline again.
+   Regression-tested in `tests/test_teams_stats_completeness.py`.
 3. **An adversarial review of the built pipeline found four more defects,
    all fixed with regression tests the same day.** The stats API emits a
    blank-team aggregate row beside per-team rows for multi-team seasons and
@@ -88,9 +90,10 @@ stated rather than hidden.
    player's last full scored season, printing refusals for players with
    rich prior years.
 4. **The age credit, not the translation factor, is the dominant source of
-   generosity.** Measured in the report, the credit averages roughly three
-   times the base signal across scored seasons, and about a quarter of
-   crossing seasons cross on the credit alone. It is a predictive-weight
+   generosity.** Measured in the report, the credit averages roughly 1.67
+   wins against 0.60 wins of base signal across scored seasons (about 2.8x),
+   and almost no crossing seasons cross on the credit alone (2 of 423,
+   under 1%) for this hitter population. It is a predictive-weight
    equivalence (Stoltz 2022), larger than what open-source implementations
    use, and it ships as its own column so it is always severable.
 5. **Triple-A readings run generous.** Today's inflated Triple-A run
@@ -166,22 +169,19 @@ stated rather than hidden.
    idea about valuing a real starting center fielder the way a shortstop
    is valued was raised and explicitly deferred, small sample, not
    significant at this stage.
-11. **Two scores, not one, per Reid's ruling 2026-08-01.** Investigating
-   the pitcher gap above surfaced a separate, real distortion: a
-   fast-tracked elite arm (Paul Skenes, 27.3 innings before his call-up)
-   scores unremarkably on total value banked, simply because a short
-   window caps how much value there is to bank, even though the quality
-   of those innings was elite. Rather than redefine the whole tool around
-   one answer, both numbers now ship side by side, everywhere a debut-day
-   or season reading appears. **Readiness Score** is total value banked,
-   naturally larger the more he played. **Rate Score** restates the same
-   performance per 600 PA or BF, a full-season-equivalent workload, how
-   good he was per opportunity, independent of how much opportunity he
-   got. They can and do disagree sharply, Skenes' Readiness Score is a
-   modest 1.26, his Rate Score the highest of any pitcher in the dataset
-   at 7.19. Neither is "the real one." No new computation was needed,
-   rate_per_600 already existed at the season level, it had simply never
-   been given equal billing.
+11. **Two scores, not one, per Reid's ruling 2026-08-01.** A player with a
+   short but excellent pre-debut window scores unremarkably on total value
+   banked, simply because a short window caps how much value there is to
+   bank, even when the quality of his production was elite. Rather than
+   redefine the whole tool around one answer, both numbers now ship side
+   by side, everywhere a debut-day or season reading appears. **Readiness
+   Score** is total value banked, naturally larger the more he played.
+   **Rate Score** restates the same performance per 600 PA, a
+   full-season-equivalent workload, how good he was per opportunity,
+   independent of how much opportunity he got. They can and do disagree
+   sharply for exactly that kind of player. Neither is "the real one." No
+   new computation was needed, `rate_per_600` already existed at the
+   season level, it had simply never been given equal billing.
 12. **A fourth cohort, 2025, was added 2026-08-01, growing the population
    from 212 to 267 unique players.** No pipeline logic changed, ingestion
    already looped over however many tabs existed. One new real name
@@ -195,57 +195,21 @@ stated rather than hidden.
    position actually differs across years, but it is the correct
    standing rule for whichever cohort is added next.
 
-13. **Pitcher diagnostics, added 2026-08-01, wiring in Session 21's three
-   parked items (role, K%/BB%/GB%, workload).** Seven new independent
-   columns on every scored pitching stint in `readiness_stints.csv`, none
-   of them fed into the WAR chain above, the same "diagnostic, not a
-   scoring input" treatment FIP itself already gets at small samples:
-   WHIP `(BB+H)/IP`, BABIP-against `(H-HR)/(AB-K-HR+SF)` (standard
-   FanGraphs construction, `None` rather than a nonsense value when the
-   balls-in-play denominator isn't positive), BB/9, K% and BB% (both per
-   batters faced), and GB% (`groundOuts/(groundOuts+airOuts)`, disclosed
-   as an OUTS-ONLY approximation, ground balls that go for hits are not
-   in this API's per-stint line and are not counted in either term, so
-   this is not the full batted-ball GB% a Statcast source would report).
-   Role (`start_frac = gamesStarted/gamesPlayed`, `ip_per_start`,
-   `p_per_gs`, and a `starter`/`swingman`/`reliever` label) rides
-   alongside. No single published percentage threshold exists for
-   labeling a season's role (a live research sweep found FanGraphs' own
-   rule is a rolling week-by-week check, not a season-total cutoff); what
-   is published is the "swingman" band, roughly 35-40% of appearances
-   being starts, holding for decades. `ROLE_START_THRESHOLD` (0.80) and
-   `ROLE_SWING_FLOOR` (0.20) bound that band in-house, wide enough to
-   contain the cited swingman range comfortably, same disclosed-cutoff
-   convention as the position table above. All six added source fields
-   (`hits`, `atBats`, `sacFlies`, `numberOfPitches`, `groundOuts`,
-   `airOuts`) were already present on the pitching stat object this
-   project already fetches, verified against the cache, so backfilling
-   them cost zero new API calls. Population and every existing WAR number
-   are unchanged (267 scored, 257 crossed, 204 debuted, identical to
-   before this addition), confirming the wiring is additive only.
-14. **The role label can misread deliberate workload management as a
-   bullpen conversion, caught 2026-08-02 on a real case.** Reid flagged
-   Jacob Misiorowski's 2024 AAA stint (`role=reliever`) as wrong given his
-   established MLB starter identity. The live per-game log backs up the
-   raw label (2 short "starts," then 12 straight relief outings through
-   the rest of that AAA season, all with Nashville Sounds), but Reid's
-   read of WHY was sharper than the label captured: he throws 100+ mph
-   and carried arm-health caution that year, and the log shows BOTH his
-   starts and his relief outings were short (1-2 IP each), not a real
-   role change followed by short relief innings. `start_frac`-based `role`
-   cannot distinguish "kept short across the board" from "genuinely
-   converted to the bullpen," because box-score stats carry no injury or
-   transaction context (the same gap the Phase 2 notes already flagged for
-   rehab-assignment detection, no transactions fetcher exists in this
-   project). Added `ip_per_appearance` (IP over every appearance, not just
-   starts) as an orthogonal diagnostic precisely to surface this: it reads
-   4.2-4.9 for every other season of Misiorowski's career and collapses to
-   1.26 for the flagged 2024 AAA stint, a stint that's short everywhere,
-   not just in relief. Disclosed as a raw, undiagnosed number, not a
-   fix, since this project cannot determine whether a short reading in
-   any given case is health caution, an opener role, or a real demotion.
-   The honest limit stands: `role` is a literal games-started ratio, read
-   it alongside `ip_per_appearance`, never as a standalone verdict.
+13. **Scoped to hitters only, 2026-08-02.** Pitcher scoring (FIP-based
+   translated WAR, plus WHIP/BABIP/BB9/K%/BB%/GB% and role/workload
+   diagnostics) was built, tested, and researched extensively across
+   several sessions, including a real bug catch (item 2 above) and a real
+   correctness fix (a role label that could misread a strict pitch count
+   as a bullpen conversion, caught on a real case and fixed with a new
+   `ip_per_appearance` diagnostic). It was paused, not because it was
+   wrong, but because a proposed fix for a real, measured hitter/pitcher
+   scoring gap turned out to rest on invented, uncited constants once
+   checked against real published sabermetric research. Rather than ship
+   that or leave a half-validated pitcher score in a public tool, the
+   pitcher code and its full test suite are preserved intact at the
+   `pitcher-work-2026-08-02` git tag, and pitcher evaluation is being
+   developed separately with the same citation discipline as every other
+   number in this file.
 
 ## Run order
 

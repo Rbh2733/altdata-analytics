@@ -16,6 +16,12 @@ Outputs:
   outputs/readiness_by_season.csv  per player-season readings
   outputs/readiness_summary.csv    one row per player, crossing + debut-day
   outputs/readiness_report.md      headline tables, calibration, disclosures
+
+Scoped to hitters only as of 2026-08-02: pure-pitcher-position players
+(constants.PITCHER_POSITIONS) are excluded from the scored population.
+Pitcher scoring (PIT_SUM, the pitching branch of compute_player, pitcher
+calibration) is preserved at the `pitcher-work-2026-08-02` git tag, not
+deleted.
 """
 
 import csv
@@ -33,10 +39,6 @@ from scoring.position_resolve import resolve_position
 HIT_SUM = ["gamesPlayed", "plateAppearances", "atBats", "hits", "doubles",
            "triples", "homeRuns", "baseOnBalls", "intentionalWalks",
            "hitByPitch", "sacFlies", "stolenBases", "caughtStealing"]
-PIT_SUM = ["gamesPlayed", "gamesStarted", "inningsPitched", "battersFaced",
-           "earnedRuns", "strikeOuts", "baseOnBalls", "hitBatsmen", "homeRuns",
-           "hits", "atBats", "sacFlies", "numberOfPitches", "groundOuts",
-           "airOuts"]
 
 
 def read_csv(path):
@@ -60,17 +62,14 @@ def load():
 
 
 def index_baselines(rows):
-    hit, pit = {}, {}
+    hit = {}
     for r in rows:
         key = (int(r["sport_id"]), int(r["season"]))
-        if r["group"] == "hitting":
-            hit[key] = R.hitting_baseline(r)
-        else:
-            pit[key] = R.pitching_baseline(r)
-    return hit, pit
+        hit[key] = R.hitting_baseline(r)
+    return hit
 
 
-def compute_player(pid, person, my_splits, my_logs, hit_base, pit_base, age_map,
+def compute_player(pid, person, my_splits, my_logs, hit_base, age_map,
                    positions=None):
     """Score one player's career. Pure over its inputs, which is what the
     no-future-leak test exploits.
@@ -138,22 +137,13 @@ def compute_player(pid, person, my_splits, my_logs, hit_base, pit_base, age_map,
     out = []
     for (season, sport, group), rows in sorted(stints.items()):
         is_debut_stint = debut_season is not None and season == debut_season
-        if group == "hitting":
-            line = R.sum_rows(rows, HIT_SUM)
-            lvl, mlb = hit_base.get((sport, season)), hit_base.get((1, season))
-            if not lvl or not mlb:
-                continue
-            age = R.player_age_at(birth, season)
-            res = R.hitter_stint(line, lvl, mlb, sport, age,
-                                 age_map.get((sport, season)), positions)
-        else:
-            line = R.sum_rows(rows, PIT_SUM)
-            lvl, mlb = pit_base.get((sport, season)), pit_base.get((1, season))
-            if not lvl or not mlb:
-                continue
-            age = R.player_age_at(birth, season)
-            res = R.pitcher_stint(line, lvl, mlb, sport, age,
-                                  age_map.get((sport, season)))
+        line = R.sum_rows(rows, HIT_SUM)
+        lvl, mlb = hit_base.get((sport, season)), hit_base.get((1, season))
+        if not lvl or not mlb:
+            continue
+        age = R.player_age_at(birth, season)
+        res = R.hitter_stint(line, lvl, mlb, sport, age,
+                             age_map.get((sport, season)), positions)
         res.update({"mlbam_id": pid, "player": person.get("full_name", ""),
                     "season": season, "sport_id": sport,
                     "level": C.SPORT_LABELS.get(sport, str(sport)),
@@ -240,7 +230,7 @@ def pick_ranking_position(cohort_position_pairs):
 
 def main():
     cw, universe, splits, logs, baselines, ages, current_pos, pos_overrides = load()
-    hit_base, pit_base = index_baselines(baselines)
+    hit_base = index_baselines(baselines)
     age_map = {(int(a["sport_id"]), int(a["season"])): float(a["avg_age"]) for a in ages}
 
     splits_by_pid = defaultdict(list)
@@ -253,12 +243,20 @@ def main():
     players = {}
     cohorts = defaultdict(list)
     ranking_pairs = defaultdict(list)
+    excluded_pitchers = set()
     for r in cw:
         if r["mlbam_id"]:
+            pos = (universe.get(r["mlbam_id"], {}).get("primary_position", "") or "").strip().upper()
+            if pos in C.PITCHER_POSITIONS:
+                excluded_pitchers.add(r["mlbam_id"])
+                continue
             players[r["mlbam_id"]] = r
             cohorts[r["mlbam_id"]].append(f"{r['cohort']}#{r['rank']}")
             ranking_pairs[r["mlbam_id"]].append((r["cohort"], r["position"]))
     ranking_pos = {pid: pick_ranking_position(pairs) for pid, pairs in ranking_pairs.items()}
+    print(f"{len(players)} hitters to score ({len(excluded_pitchers)} unique "
+          f"pure-pitcher-position players excluded, preserved at the "
+          f"pitcher-work-2026-08-02 git tag)")
 
     all_stints, all_seasons, summary = [], [], []
     for pid in sorted(players):
@@ -273,7 +271,7 @@ def main():
 
         stint_rows = compute_player(pid, person, splits_by_pid.get(pid, []),
                                     logs_by_pid.get(pid, []),
-                                    hit_base, pit_base, age_map,
+                                    hit_base, age_map,
                                     positions=resolved["positions"])
         readings = season_readings(stint_rows)
         all_stints.extend(stint_rows)
@@ -330,10 +328,8 @@ def main():
         print(f"wrote {len(rows)} rows to {path}")
 
     stint_fields = ["mlbam_id", "player", "season", "level", "sport_id", "group",
-                    "pre_debut_truncated", "verdict", "detail", "pa", "bf", "g",
-                    "woba", "fip", "whip", "babip", "bb9", "k_pct", "bb_pct",
-                    "gb_pct", "gs", "start_frac", "ip_per_start", "p_per_gs",
-                    "ip_per_appearance", "role", "native_rate", "savings9", "raa_mlb", "wsb",
+                    "pre_debut_truncated", "verdict", "detail", "pa", "g",
+                    "woba", "native_rate", "raa_mlb", "wsb",
                     "rep", "pos_adj", "age_years", "base_war", "age_credit_war",
                     "adj_war"]
     write("readiness_stints.csv", all_stints, stint_fields)
@@ -350,7 +346,7 @@ def main():
     write("readiness_summary.csv", summary, summary_fields)
 
     # Calibration table: what a dead-average regular at each level-season
-    # scores under this chain, hitters per 600 PA, pitchers per 600 BF.
+    # scores under this chain, per 600 PA.
     calib = []
     for (sport, season), lvl in sorted(hit_base.items()):
         if sport == 1 or (1, season) not in hit_base:
@@ -364,22 +360,12 @@ def main():
             return round(((lvl["rpa"] * factor - mlb["rpa"]) * 600
                           + C.REPLACEMENT_RUNS_PER_600) / C.RUNS_PER_WIN, 2)
 
-        def p_calib(factor):
-            if (sport, season) not in pit_base or (1, season) not in pit_base:
-                return ""
-            lp, mp = pit_base[(sport, season)], pit_base[(1, season)]
-            pen9 = mp["r9"] - lp["r9"] * factor
-            ip600 = 600 * lp["ip"] / lp["bf"] if lp["bf"] else 0
-            return round((-pen9 * ip600 / 9 + C.REPLACEMENT_RUNS_PER_600) / C.RUNS_PER_WIN, 2)
-
         calib.append({"level": C.SPORT_LABELS[sport], "season": season,
                       "avg_hitter_war_per_600pa": h_calib(tf),
-                      "avg_pitcher_war_per_600bf": p_calib(tf),
-                      "avg_hitter_war_per_600pa_blended": h_calib(tf / C.BLENDED_SCALE_DIVISOR),
-                      "avg_pitcher_war_per_600bf_blended": p_calib(tf / C.BLENDED_SCALE_DIVISOR)})
+                      "avg_hitter_war_per_600pa_blended": h_calib(tf / C.BLENDED_SCALE_DIVISOR)})
     write("calibration_table.csv", calib,
-          ["level", "season", "avg_hitter_war_per_600pa", "avg_pitcher_war_per_600bf",
-           "avg_hitter_war_per_600pa_blended", "avg_pitcher_war_per_600bf_blended"])
+          ["level", "season", "avg_hitter_war_per_600pa",
+           "avg_hitter_war_per_600pa_blended"])
 
     print(f"\n{len(summary)} players scored")
     crossers = [s for s in summary if s["first_crossing_season"]]

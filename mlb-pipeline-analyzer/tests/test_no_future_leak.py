@@ -83,7 +83,7 @@ POISON_LOGS = [
 
 
 def _run(splits, logs):
-    stints = compute_player(PID, PERSON, splits, logs, HIT_BASE, {}, AGE_MAP)
+    stints = compute_player(PID, PERSON, splits, logs, HIT_BASE, AGE_MAP)
     return stints, season_readings(stints)
 
 
@@ -102,8 +102,8 @@ def test_the_poison_would_have_mattered():
     otherwise the leak test above passes for the wrong reason."""
     undated = dict(PERSON, mlb_debut_date="")
     with_poison = compute_player(PID, undated, CLEAN_SPLITS + POISON_SPLITS,
-                                 [], HIT_BASE, {}, AGE_MAP)
-    without = compute_player(PID, undated, CLEAN_SPLITS, [], HIT_BASE, {}, AGE_MAP)
+                                 [], HIT_BASE, AGE_MAP)
+    without = compute_player(PID, undated, CLEAN_SPLITS, [], HIT_BASE, AGE_MAP)
     assert with_poison != without
 
 

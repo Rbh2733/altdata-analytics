@@ -5,6 +5,8 @@ Descriptive only. The scored comparison of readiness against MLB outcomes
 sequencing decision, and nothing in this report computes a hit rate or an
 accuracy claim. The counts that touch debut status are labeled as
 description, not evaluation.
+
+Scoped to hitters only as of 2026-08-02; see the project README.
 """
 
 import csv
@@ -54,7 +56,7 @@ def main():
         rows = [r for r in stints_by.get((s["mlbam_id"], s["first_crossing_season"]), [])
                 if r["verdict"] == "scored"]
         if rows:
-            level_dist[max(rows, key=lambda r: float(r["pa"] or 0) + float(r["bf"] or 0))["level"]] += 1
+            level_dist[max(rows, key=lambda r: float(r["pa"] or 0))["level"]] += 1
 
     def by_rate(rows):
         out = [r for r in rows if r["debut_day_rate_per_600"] not in ("", None)]
@@ -105,15 +107,12 @@ def main():
     w("Per Reid's ruling 2026-08-01. Readiness Score is total value banked by")
     w("debut day, how much he'd already proven, naturally larger the more he")
     w("played before getting called up. Rate Score restates the same")
-    w("performance as if he'd gotten a full 600-PA-or-BF season, how good he")
-    w("was per opportunity, independent of how much opportunity he actually")
-    w("got. They can disagree sharply. Paul Skenes threw 27.3 innings before")
-    w("his call-up, a small window to bank total value in, so his Readiness")
-    w("Score is modest (1.26). But the quality of those 27.3 innings was")
-    w("elite, and his Rate Score (7.19) is the highest of any pitcher in the")
-    w("dataset. Neither number is the real one. They answer different")
-    w("questions, and a fast-tracked elite arm is exactly the case where")
-    w("they diverge most.")
+    w("performance as if he'd gotten a full 600-PA season, how good he was")
+    w("per opportunity, independent of how much opportunity he actually got.")
+    w("They can disagree sharply for a player with a short but excellent")
+    w("pre-debut window: a small sample caps how much total value there is")
+    w("to bank, even when the quality per plate appearance was elite. Neither")
+    w("number is the real one. They answer different questions.")
     w("")
     w("**Top 15 by Rate Score:**")
     w("")
@@ -132,12 +131,11 @@ def main():
     w("The blended columns restate the factors against a blended-MLB baseline")
     w("(divided by 1.05), the sensitivity promised in the spec.")
     w("")
-    w("| Level | Season | Avg hitter /600 PA | Avg pitcher /600 BF | Hitter (blended) | Pitcher (blended) |")
-    w("|---|---|---|---|---|---|")
+    w("| Level | Season | Avg hitter /600 PA | Hitter (blended) |")
+    w("|---|---|---|---|")
     for c in calib:
         w(f"| {c['level']} | {c['season']} | {c['avg_hitter_war_per_600pa']} | "
-          f"{c['avg_pitcher_war_per_600bf']} | {c['avg_hitter_war_per_600pa_blended']} | "
-          f"{c['avg_pitcher_war_per_600bf_blended']} |")
+          f"{c['avg_hitter_war_per_600pa_blended']} |")
     w("")
     w("## Disclosures")
     w("")
@@ -165,8 +163,10 @@ def main():
     w("   that finished forming after the debut. Disclosed, not hidden.")
     w("7. wOBA weights are one MLB season's constants (2023, scale 1.204)")
     w("   applied across all levels and seasons.")
-    w("8. The pitcher replacement offset per 600 batters faced is an in-house")
-    w("   symmetry choice, not a published convention.")
+    w("8. Scoped to hitters only as of 2026-08-02. Pitcher evaluation needs a")
+    w("   different WAR construction, validated against real published")
+    w("   research, and is being developed separately, not abandoned; see the")
+    w("   project README.")
     w("")
 
     path = config.OUTPUTS / "readiness_report.md"

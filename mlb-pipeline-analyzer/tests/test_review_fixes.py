@@ -45,7 +45,7 @@ def test_blank_team_aggregate_row_not_double_counted():
         _hit(2022, 12, 63, 20, team="Team B"),
         _hit(2022, 12, 438, 130, team=""),        # the aggregate
     ]
-    stints = compute_player(PID, PERSON, splits, [], HIT_BASE, {}, AGES,
+    stints = compute_player(PID, PERSON, splits, [], HIT_BASE, AGES,
                             positions=["SS"])
     assert len(stints) == 1
     assert stints[0]["pa"] == 438.0
@@ -55,7 +55,7 @@ def test_solo_blank_team_row_still_counts():
     """A bucket whose only row lacks a team name is a real record, not an
     aggregate beside per-team rows, and must be kept."""
     stints = compute_player(PID, PERSON, [_hit(2022, 12, 200, 60, team="")],
-                            [], HIT_BASE, {}, AGES, positions=["SS"])
+                            [], HIT_BASE, AGES, positions=["SS"])
     assert len(stints) == 1
     assert stints[0]["pa"] == 200.0
 
@@ -66,9 +66,9 @@ def test_dsl_stints_excluded():
     with US complex ball."""
     dsl = [_hit(2022, 16, 250, 80, league="Dominican Summer League")]
     complex_ball = [_hit(2022, 16, 250, 80, league="Arizona Complex League")]
-    assert compute_player(PID, PERSON, dsl, [], HIT_BASE, {}, AGES,
+    assert compute_player(PID, PERSON, dsl, [], HIT_BASE, AGES,
                           positions=["SS"]) == []
-    assert len(compute_player(PID, PERSON, complex_ball, [], HIT_BASE, {}, AGES,
+    assert len(compute_player(PID, PERSON, complex_ball, [], HIT_BASE, AGES,
                               positions=["SS"])) == 1
 
 
@@ -78,9 +78,9 @@ def test_position_comes_from_ranking_not_todays_label():
     splits = [_hit(2022, 12, 400, 120)]
     as_dh_today = dict(PERSON, primary_position="DH")
     as_c_today = dict(PERSON, primary_position="C")
-    r1 = compute_player(PID, as_dh_today, splits, [], HIT_BASE, {}, AGES,
+    r1 = compute_player(PID, as_dh_today, splits, [], HIT_BASE, AGES,
                         positions=["C"])
-    r2 = compute_player(PID, as_c_today, splits, [], HIT_BASE, {}, AGES,
+    r2 = compute_player(PID, as_c_today, splits, [], HIT_BASE, AGES,
                         positions=["C"])
     assert r1 == r2
     assert r1[0]["pos_adj"] > 0        # catcher credit, not DH dock
@@ -93,8 +93,8 @@ def test_single_resolved_position_buckets():
     applies correctly, and that INF grades at shortstop's value per Reid's
     2026-08-01 ruling, not the old blended average."""
     splits = [_hit(2022, 12, 400, 120)]
-    ss = compute_player(PID, PERSON, splits, [], HIT_BASE, {}, AGES, positions=["SS"])
-    inf = compute_player(PID, PERSON, splits, [], HIT_BASE, {}, AGES, positions=["INF"])
+    ss = compute_player(PID, PERSON, splits, [], HIT_BASE, AGES, positions=["SS"])
+    inf = compute_player(PID, PERSON, splits, [], HIT_BASE, AGES, positions=["INF"])
     assert ss[0]["pos_adj"] == pytest.approx(7.5 * 100 / 162, abs=0.05)
     assert inf[0]["pos_adj"] == pytest.approx(ss[0]["pos_adj"])
 
@@ -168,6 +168,6 @@ def test_refusal_label_reports_total_volume():
     """The label must show total volume including refused stints, not the
     fictitious zero of scored-only volume."""
     stints = compute_player(PID, PERSON, [_hit(2022, 12, 39, 12)], [],
-                            HIT_BASE, {}, AGES, positions=["SS"])
+                            HIT_BASE, AGES, positions=["SS"])
     readings = season_readings(stints)
     assert "39" in readings[0]["verdict"]

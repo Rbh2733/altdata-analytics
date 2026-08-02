@@ -9,35 +9,32 @@ number below is an accuracy claim.
 
 - 400 ranking rows, 400 matched (100.0%), 267 unique players
 - Match stages: {'exact': 387, 'exact_disambiguated': 10, 'manual_override': 3}. The manual_override stage is two curated name-collision resolutions with written provenance in data/raw/manual_overrides.csv, kept out of the matcher's earned accuracy.
-- 204 players have debuted in MLB, 63 have not
+- 143 players have debuted in MLB, 44 have not
 
 ## Readiness, descriptive counts
 
-- 257 of 267 crossed zero on base production alone, 257 with the age credit included (0 players cross only via the credit)
-- First-crossing dominant level: {'A': 80, 'AA': 78, 'A+': 71, 'AAA': 18, 'ROK': 9, 'SS-A': 1}
-- Across 813 scored player-seasons, the age credit averages 1.45 wins against 0.55 wins of base signal, and 2 of 557 crossing seasons (0%) cross on the credit alone. The credit, not the translation factor, is the dominant source of generosity, which is why it ships severable.
+- 183 of 187 crossed zero on base production alone, 183 with the age credit included (0 players cross only via the credit)
+- First-crossing dominant level: {'A': 64, 'A+': 54, 'AA': 46, 'AAA': 9, 'ROK': 9, 'SS-A': 1}
+- Across 611 scored player-seasons, the age credit averages 1.67 wins against 0.60 wins of base signal, and 2 of 423 crossing seasons (0%) cross on the credit alone. The credit, not the translation factor, is the dominant source of generosity, which is why it ships severable.
 - For a Top-100 population these crossing rates are not absurd on
-  their face (204 of 267 really did reach MLB), but
+  their face (143 of 187 really did reach MLB), but
   whether crossing predicted anything is exactly what the deferred
   grading layer will test. These are counts, not a hit rate.
 
-- Debut-day reading basis across debuted players: {'debut_season': 139, 'carried_from_2021': 16, 'carried_from_2023': 15, 'carried_from_2022': 12, 'carried_from_2024': 9, 'carried_from_2025': 7, 'carried_from_2019': 3, 'insufficient_sample (76 of 97 PA+BF scored, need 100)': 1, 'insufficient_sample (97 of 97 PA+BF scored, need 100)': 1, 'no_pre_debut_stint_data': 1}
-- Season readings refused for sample size: 136 of 949 (813 scored)
+- Debut-day reading basis across debuted players: {'debut_season': 101, 'carried_from_2023': 10, 'carried_from_2021': 10, 'carried_from_2024': 7, 'carried_from_2022': 6, 'carried_from_2025': 5, 'carried_from_2019': 2, 'insufficient_sample (76 of 97 PA+BF scored, need 100)': 1, 'insufficient_sample (97 of 97 PA+BF scored, need 100)': 1}
+- Season readings refused for sample size: 81 of 692 (611 scored)
 
 ## Two scores, not one: Readiness Score and Rate Score
 
 Per Reid's ruling 2026-08-01. Readiness Score is total value banked by
 debut day, how much he'd already proven, naturally larger the more he
 played before getting called up. Rate Score restates the same
-performance as if he'd gotten a full 600-PA-or-BF season, how good he
-was per opportunity, independent of how much opportunity he actually
-got. They can disagree sharply. Paul Skenes threw 27.3 innings before
-his call-up, a small window to bank total value in, so his Readiness
-Score is modest (1.26). But the quality of those 27.3 innings was
-elite, and his Rate Score (7.19) is the highest of any pitcher in the
-dataset. Neither number is the real one. They answer different
-questions, and a fast-tracked elite arm is exactly the case where
-they diverge most.
+performance as if he'd gotten a full 600-PA season, how good he was
+per opportunity, independent of how much opportunity he actually got.
+They can disagree sharply for a player with a short but excellent
+pre-debut window: a small sample caps how much total value there is
+to bank, even when the quality per plate appearance was elite. Neither
+number is the real one. They answer different questions.
 
 **Top 15 by Rate Score:**
 
@@ -66,54 +63,53 @@ than being hidden. Zero is the claim under test, not a settled truth.
 The blended columns restate the factors against a blended-MLB baseline
 (divided by 1.05), the sensitivity promised in the spec.
 
-| Level | Season | Avg hitter /600 PA | Avg pitcher /600 BF | Hitter (blended) | Pitcher (blended) |
-|---|---|---|---|---|---|
-| AAA | 2021 | 1.09 | 1.29 | 0.79 | 0.99 |
-| AAA | 2022 | 1.59 | 1.86 | 1.28 | 1.56 |
-| AAA | 2023 | 1.52 | 1.91 | 1.2 | 1.59 |
-| AAA | 2024 | 1.47 | 1.81 | 1.17 | 1.5 |
-| AAA | 2025 | 1.34 | 1.64 | 1.04 | 1.34 |
-| AAA | 2026 | 1.46 | 1.78 | 1.15 | 1.46 |
-| AA | 2019 | -0.94 | -1.05 | -1.16 | -1.27 |
-| AA | 2021 | -0.04 | 0.05 | -0.29 | -0.19 |
-| AA | 2022 | 0.6 | 0.85 | 0.35 | 0.59 |
-| AA | 2023 | 0.05 | 0.23 | -0.2 | -0.02 |
-| AA | 2024 | -0.21 | -0.14 | -0.44 | -0.37 |
-| AA | 2025 | -0.33 | -0.26 | -0.55 | -0.49 |
-| AA | 2026 | 0.51 | 0.7 | 0.24 | 0.44 |
-| A+ | 2017 | -1.25 | -1.26 | -1.44 | -1.45 |
-| A+ | 2018 | -0.85 | -0.78 | -1.04 | -0.97 |
-| A+ | 2019 | -1.57 | -1.64 | -1.76 | -1.82 |
-| A+ | 2021 | -0.55 | -0.4 | -0.78 | -0.62 |
-| A+ | 2022 | -0.4 | -0.21 | -0.61 | -0.42 |
-| A+ | 2023 | -0.86 | -0.73 | -1.07 | -0.94 |
-| A+ | 2024 | -0.77 | -0.64 | -0.97 | -0.84 |
-| A+ | 2025 | -0.87 | -0.73 | -1.07 | -0.93 |
-| A+ | 2026 | -0.08 | 0.24 | -0.32 | 0.01 |
-| A | 2017 | -1.84 | -1.88 | -2.01 | -2.05 |
-| A | 2018 | -1.54 | -1.52 | -1.71 | -1.68 |
-| A | 2019 | -2.11 | -2.15 | -2.27 | -2.31 |
-| A | 2021 | -1.16 | -0.86 | -1.35 | -1.05 |
-| A | 2022 | -0.93 | -0.64 | -1.11 | -0.82 |
-| A | 2023 | -1.41 | -1.2 | -1.59 | -1.38 |
-| A | 2024 | -1.29 | -1.05 | -1.46 | -1.22 |
-| A | 2025 | -1.34 | -1.09 | -1.51 | -1.27 |
-| A | 2026 | -0.87 | -0.54 | -1.07 | -0.74 |
-| SS-A | 2016 | -2.28 | -2.2 | -2.41 | -2.33 |
-| SS-A | 2017 | -2.5 | -2.48 | -2.63 | -2.61 |
-| SS-A | 2018 | -2.17 | -2.14 | -2.3 | -2.27 |
-| SS-A | 2019 | -2.74 | -2.76 | -2.87 | -2.89 |
-| ROK | 2015 | -2.12 | -1.9 | -2.25 | -2.02 |
-| ROK | 2016 | -2.5 | -2.36 | -2.62 | -2.48 |
-| ROK | 2017 | -2.58 | -2.39 | -2.71 | -2.52 |
-| ROK | 2018 | -2.26 | -2.03 | -2.39 | -2.16 |
-| ROK | 2019 | -2.76 | -2.52 | -2.89 | -2.65 |
-| ROK | 2021 | -2.31 | -1.97 | -2.45 | -2.11 |
-| ROK | 2022 | -1.94 | -1.56 | -2.08 | -1.69 |
-| ROK | 2023 | -2.18 | -1.7 | -2.32 | -1.84 |
-| ROK | 2024 | -1.98 | -1.48 | -2.12 | -1.62 |
-| ROK | 2025 | -1.98 | -1.48 | -2.13 | -1.63 |
-| ROK | 2026 | -1.57 | -0.86 | -1.74 | -1.03 |
+| Level | Season | Avg hitter /600 PA | Hitter (blended) |
+|---|---|---|---|
+| AAA | 2021 | 1.09 | 0.79 |
+| AAA | 2022 | 1.59 | 1.28 |
+| AAA | 2023 | 1.52 | 1.2 |
+| AAA | 2024 | 1.47 | 1.17 |
+| AAA | 2025 | 1.34 | 1.04 |
+| AAA | 2026 | 1.46 | 1.15 |
+| AA | 2019 | -0.94 | -1.16 |
+| AA | 2021 | -0.04 | -0.29 |
+| AA | 2022 | 0.6 | 0.35 |
+| AA | 2023 | 0.05 | -0.2 |
+| AA | 2024 | -0.21 | -0.44 |
+| AA | 2025 | -0.33 | -0.55 |
+| AA | 2026 | 0.51 | 0.24 |
+| A+ | 2018 | -0.85 | -1.04 |
+| A+ | 2019 | -1.57 | -1.76 |
+| A+ | 2021 | -0.55 | -0.78 |
+| A+ | 2022 | -0.4 | -0.61 |
+| A+ | 2023 | -0.86 | -1.07 |
+| A+ | 2024 | -0.77 | -0.97 |
+| A+ | 2025 | -0.87 | -1.07 |
+| A+ | 2026 | -0.08 | -0.32 |
+| A | 2017 | -1.84 | -2.01 |
+| A | 2018 | -1.54 | -1.71 |
+| A | 2019 | -2.11 | -2.27 |
+| A | 2021 | -1.16 | -1.35 |
+| A | 2022 | -0.93 | -1.11 |
+| A | 2023 | -1.41 | -1.59 |
+| A | 2024 | -1.29 | -1.46 |
+| A | 2025 | -1.34 | -1.51 |
+| A | 2026 | -0.87 | -1.07 |
+| SS-A | 2016 | -2.28 | -2.41 |
+| SS-A | 2017 | -2.5 | -2.63 |
+| SS-A | 2018 | -2.17 | -2.3 |
+| SS-A | 2019 | -2.74 | -2.87 |
+| ROK | 2015 | -2.12 | -2.25 |
+| ROK | 2016 | -2.5 | -2.62 |
+| ROK | 2017 | -2.58 | -2.71 |
+| ROK | 2018 | -2.26 | -2.39 |
+| ROK | 2019 | -2.76 | -2.89 |
+| ROK | 2021 | -2.31 | -2.45 |
+| ROK | 2022 | -1.94 | -2.08 |
+| ROK | 2023 | -2.18 | -2.32 |
+| ROK | 2024 | -1.98 | -2.12 |
+| ROK | 2025 | -1.98 | -2.13 |
+| ROK | 2026 | -1.57 | -1.74 |
 
 ## Disclosures
 
@@ -141,5 +137,7 @@ The blended columns restate the factors against a blended-MLB baseline
    that finished forming after the debut. Disclosed, not hidden.
 7. wOBA weights are one MLB season's constants (2023, scale 1.204)
    applied across all levels and seasons.
-8. The pitcher replacement offset per 600 batters faced is an in-house
-   symmetry choice, not a published convention.
+8. Scoped to hitters only as of 2026-08-02. Pitcher evaluation needs a
+   different WAR construction, validated against real published
+   research, and is being developed separately, not abandoned; see the
+   project README.

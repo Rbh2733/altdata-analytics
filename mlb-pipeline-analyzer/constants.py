@@ -5,6 +5,11 @@ from the data with the method stated, or labeled in-house with its
 rationale. Nothing in this file is a silent guess. Full sourcing narrative:
 the readiness-calculation spec that accompanies this project (private,
 Career/mlb-pipeline-analyzer-readiness-calculation-2026-08-01.md).
+
+Scoped to hitters only as of 2026-08-02. Pitcher constants (age credit,
+role thresholds, replacement/rate floors) are preserved at the
+`pitcher-work-2026-08-02` git tag, not deleted, pending a properly
+validated pitcher WAR construction.
 """
 
 # --------------------------------------------------------------------------
@@ -40,8 +45,7 @@ BLENDED_SCALE_DIVISOR = 1.05
 # Relative to Level" (Excessive Prospect Analysis, 2022), regressions of MLB
 # attainment on age and same-season production, 2006-2016 minors data.
 # Hitters: one year of age carries the predictive weight of ~25 wRC+ points
-# (23.5 at Low-A, 25.5 at High-A, ~25 at Double-A). Pitchers: 1.00 FIP run
-# per nine at A-ball, 0.50 at Double-A.
+# (23.5 at Low-A, 25.5 at High-A, ~25 at Double-A).
 # Triple-A has NO published size anywhere in the research sweep, so it takes
 # half the Double-A value, an IN-HOUSE taper justified by KATOH's published
 # direction (the age effect shrinks as level rises) and Davenport's 2025 AAA
@@ -54,14 +58,6 @@ AGE_WRC_POINTS_PER_YEAR = {
     14: 23.5,   # Stoltz, Low-A
     15: 23.5,   # in-house: Low-A value extended down
     16: 23.5,   # in-house: Low-A value extended down
-}
-AGE_FIP_RUNS_PER_YEAR = {
-    11: 0.25,   # in-house taper: half of AA
-    12: 0.50,   # Stoltz, Double-A
-    13: 1.00,   # Stoltz, A-ball
-    14: 1.00,   # Stoltz, A-ball
-    15: 1.00,   # in-house: A-ball value extended down
-    16: 1.00,   # in-house: A-ball value extended down
 }
 # Cap the credit at +/- 3 years to stay inside the source regressions'
 # observed range.
@@ -90,8 +86,7 @@ CS_RUNS = -0.41
 
 # --------------------------------------------------------------------------
 # Replacement offset: 20.5 runs per 600 PA below average, the published
-# FanGraphs unified-replacement convention for position players. Applied to
-# pitchers per 600 batters faced as an IN-HOUSE symmetry choice, disclosed.
+# FanGraphs unified-replacement convention for position players.
 REPLACEMENT_RUNS_PER_600 = 20.5
 
 # Positional adjustment, standard published convention, runs per 162 games.
@@ -139,43 +134,20 @@ POSITION_ADJ_PER_162 = {
 RUNS_PER_WIN = 10.0
 
 # --------------------------------------------------------------------------
-# Sample minimums, house discipline: no reading on a handful of PA.
+# Sample minimum, house discipline: no reading on a handful of PA.
 # A stint below the stint minimum contributes nothing and is reported as
 # insufficient with its count. A season rate reading below the rate minimum
 # is refused with its count.
 MIN_STINT_PA = 40
-MIN_STINT_BF = 60
 MIN_RATE_PA = 100
-MIN_RATE_BF = 100
 
 MINOR_SPORT_IDS = [11, 12, 13, 14, 15, 16]
 SPORT_LABELS = {1: "MLB", 11: "AAA", 12: "AA", 13: "A+", 14: "A",
                 15: "SS-A", 16: "ROK"}
 
 # --------------------------------------------------------------------------
-# Pitcher role diagnostics, added 2026-08-01, PARKED item 1 from Session 21.
-# Reported alongside FIP as independent diagnostic columns, per Reid's
-# request, never folded into the WAR chain above. start_frac is
-# gamesStarted / gamesPlayed for the stint. No single published percentage
-# threshold exists for labeling a season "starter" vs "reliever" (FanGraphs'
-# own rule is a rolling, week-by-week practical check, not a season-total
-# cutoff, confirmed by live research sweep 2026-08-01). What IS published is
-# the "swingman" band, pitchers whose share of appearances that are starts
-# has held at roughly 35-40% for decades (High Heat Stats / SABR-adjacent
-# research). ROLE_START_THRESHOLD and ROLE_SWING_FLOOR bound that band
-# in-house: 80%+ starts reads as a starter, under 20% reads as a reliever,
-# the 20-80% span in between (which comfortably contains the cited 35-40%
-# swingman rate) is labeled "swingman" rather than forced into either
-# bucket. Disclosed in-house choice, same convention as this file's other
-# undocumented-in-the-literature cutoffs.
-ROLE_START_THRESHOLD = 0.80
-ROLE_SWING_FLOOR = 0.20
-
-# BABIP-against for pitchers, standard FanGraphs construction:
-# (H - HR) / (AB - K - HR + SF). League average runs close to .300 in most
-# MLB seasons; minor-league levels are not recalibrated to that number here,
-# this is reported as the player's own raw rate, not translated.
-# WHIP, standard construction: (BB + H) / IP.
-# Both are diagnostic-only, deliberately never fed into the WAR chain above,
-# per the same "cleaner signal than FIP at small samples" framing Session 21
-# parked this work under.
+# Scoped to hitters only as of 2026-08-02. Pure-pitcher-position players are
+# excluded from the population in both scripts/fetch_stats.py and
+# scripts/compute_readiness.py; a two-way ("TWP") player's hitting side
+# still counts. Shared here so both scripts filter on the same definition.
+PITCHER_POSITIONS = {"P", "SP", "RP", "RHP", "LHP"}

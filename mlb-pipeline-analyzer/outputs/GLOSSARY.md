@@ -13,13 +13,16 @@ beats a freely available replacement player.
 **Two different scores, not one, per Reid's ruling 2026-08-01.** Readiness
 Score is total value banked, how much he'd already proven by a given day,
 naturally larger the more he played. Rate Score restates the same
-performance as if he'd gotten a full 600-PA-or-BF season, how good he was
-per opportunity, independent of how much opportunity he actually got.
-They can disagree sharply, and a fast-tracked elite arm (Paul Skenes threw
-only 27.3 innings before his call-up) is exactly where they diverge most,
-a modest Readiness Score (a small window to bank value in) next to the
-single highest Rate Score of any pitcher in the dataset. Neither is "the
-real one." They answer different questions.
+performance as if he'd gotten a full 600-PA season, how good he was per
+opportunity, independent of how much opportunity he actually got. They can
+disagree sharply for a player with a short but excellent pre-debut window,
+a modest Readiness Score (a small window to bank value in) next to a
+high Rate Score. Neither is "the real one." They answer different
+questions.
+
+**Scope: hitters only, as of 2026-08-02.** These CSVs no longer carry any
+pitching columns or rows. Pitcher scoring is preserved at the
+`pitcher-work-2026-08-02` git tag, see the project README.
 
 ---
 
@@ -42,7 +45,7 @@ One row per prospect. The headline file.
 | `first_base_crossing_season` | Same, but production alone, no age credit. Blank if it never did. |
 | `debut_day_adj_war` | **Readiness Score.** His total value banked (base + age credit) as of the day he arrived in MLB, over however many at-bats or innings he actually had. Grows with playing time. |
 | `debut_day_base_war` | Same reading, production only, no age credit. |
-| `debut_day_rate_per_600` | **Rate Score.** The same debut-day performance restated as "wins per 600 plate appearances or batters faced," a full-season-equivalent workload, so a guy with 30 dominant innings and a guy with 150 good innings can be compared on quality alone, independent of how much either one actually played. Higher is better. Blank when even the rate couldn't clear the sample-size floor (see `outputs/readiness_at_debut.xlsx`, shown there as "n/a, sample too small"). |
+| `debut_day_rate_per_600` | **Rate Score.** The same debut-day performance restated as "wins per 600 plate appearances," a full-season-equivalent workload, so a guy with a short hot stretch and a guy with a long good season can be compared on quality alone, independent of how much either one actually played. Higher is better. Blank when even the rate couldn't clear the sample-size floor (see `outputs/readiness_at_debut.xlsx`, shown there as "n/a, sample too small"). |
 | `debut_reading_basis` | Where the debut-day number came from. `debut_season` = built from his own debut-year games. `carried_from_20XX` = his debut year didn't have enough at-bats, so his last full prior season stands in. `_over_Npa_tuneup` appended means a short debut-season stint existed but wasn't big enough to trust, so the fuller earlier season is used instead. `never_debuted` = hasn't reached MLB. |
 
 ---
@@ -57,12 +60,12 @@ that `readiness_summary.csv` boils down to one number.
 | `mlbam_id`, `player`, `season` | Who, and which year. |
 | `n_stints` | How many separate stops he had that season (levels, teams). |
 | `n_scored` | Of those stops, how many had enough playing time to score. |
-| `volume` | Total plate appearances plus batters faced across only the stops that scored. |
+| `volume` | Total plate appearances across only the stops that scored. |
 | `volume_all` | Same total, but including stops that didn't have enough playing time to score. Shows what got left out. |
 | `base_war` | Production-only score for the whole season, summed across scored stops. |
 | `age_credit_war` | Age bonus for the whole season, summed across scored stops. |
 | `adj_war` | `base_war` + `age_credit_war`. The season's headline number. |
-| `rate_per_600` | **Rate Score**, for this one season. The season score restated per 600 PA/BF, for comparing seasons of different length on quality alone. Blank if the season didn't clear the minimum playing time to trust a rate. |
+| `rate_per_600` | **Rate Score**, for this one season. The season score restated per 600 PA, for comparing seasons of different length on quality alone. Blank if the season didn't clear the minimum playing time to trust a rate. |
 | `verdict` | `scored` if the season produced a real number. Otherwise, a plain-English refusal like "76 of 97 PA+BF scored, need 100," meaning there wasn't enough data to trust a season-level rate, so none is reported rather than a shaky one. |
 | `truncated` | `True` if this was the player's debut season, meaning only games before his MLB call-up were counted, not the whole year. |
 
@@ -76,31 +79,16 @@ levels in one season gets two rows here, summed into one row there).
 
 | Column | Meaning |
 |---|---|
-| `mlbam_id`, `player`, `season`, `level`, `sport_id`, `group` | Who, when, what level, MLB's internal level code, and hitting or pitching. |
+| `mlbam_id`, `player`, `season`, `level`, `sport_id`, `group` | Who, when, what level, MLB's internal level code, and the stat group (always `hitting`). |
 | `pre_debut_truncated` | `yes` if this stint's games were cut off the day before his MLB debut. |
 | `verdict` | `scored` or `insufficient_sample` (not enough playing time at this one stop to trust a number). |
-| `detail` | Plain-English playing-time count, e.g. "147 BF, 36.3 IP" or "76 PA (need 100)." |
-| `pa` | Plate appearances (hitters). |
-| `bf` | Batters faced (pitchers). |
+| `detail` | Plain-English playing-time count, e.g. "223 PA" or "76 PA (need 100)." |
+| `pa` | Plate appearances. |
 | `g` | Games played. |
-| `woba` | Weighted on-base average for the stint, a single number summarizing all of a hitter's offense (walks, hits by type, home runs), weighted by how much each actually contributes to winning. Blank for pitchers. |
-| `fip` | Fielding-independent pitching, a pitcher's performance based only on strikeouts, walks, hit batters, and home runs, the outcomes that don't depend on his fielders. Blank for hitters. |
-| `whip` | Walks plus hits per inning pitched, `(BB+H)/IP`. How many baserunners he allowed per inning, regardless of how those innings ended. Blank for hitters. |
-| `babip` | Batting average on balls in play against him, `(H-HR)/(AB-K-HR+SF)`. The rate at which a ball actually put in play against him fell for a hit. A pitcher has limited control over this once contact happens, so an unusually high or low reading here (versus the roughly .300 that most pitchers drift toward) is a flag that his ERA-shaped numbers that season may be running on luck rather than repeatable skill, in either direction. Blank if the sample was too lopsided to compute (rare) or he's a hitter. |
-| `bb9` | Walks allowed per nine innings, `9*BB/IP`. Blank for hitters. |
-| `k_pct` | Strikeouts as a share of batters faced. Blank for hitters. |
-| `bb_pct` | Walks as a share of batters faced. Blank for hitters. |
-| `gb_pct` | Ground-ball outs as a share of all outs recorded in the air or on the ground, `groundOuts/(groundOuts+airOuts)`. An approximation: ground balls that go for hits aren't counted in either the top or bottom of this ratio, since that split isn't in the per-stint data this project pulls, so this reads real grounder-heavy or flyball-heavy tendencies but isn't the full batted-ball GB% you'd see from a Statcast-based source. Blank for hitters. |
-| `gs` | Games started, raw count. Blank for hitters. |
-| `start_frac` | Games started divided by games played, `0` for a pure reliever up to `1` for a pure starter. Blank for hitters. |
-| `ip_per_start` | Innings pitched per start. Blank for hitters and for anyone with zero starts that stint (nothing to divide by). |
-| `p_per_gs` | Pitches thrown per start. Same blank rule as `ip_per_start`. |
-| `ip_per_appearance` | Innings pitched per appearance, counting every game he pitched in, not just starts. Added after a real case (Jacob Misiorowski's 2024 AAA stint) showed why this matters: a hard-throwing, health-flagged pitcher on a strict pitch count can be kept short in BOTH his starts and his relief outings, which makes `role` below read as a bullpen conversion when it may really be workload management. This project has no injury or transaction data to tell those two apart, so treat a low `ip_per_appearance` as a flag to read `role` as a literal games-started ratio, not as a verdict about why his outings were short. |
-| `role` | `starter` (started at least 80% of his appearances), `reliever` (started under 20%), or `swingman` (in between), from `start_frac`. No single published cutoff exists for this label; the 80/20 bounds are an in-house choice wide enough to contain the roughly-35-40%-of-appearances "swingman" band that shows up in the published research, see the project README. Read this alongside `ip_per_appearance`, a short `role: reliever` stint with a short `ip_per_appearance` may just be a starter on a pitch count, not a role change (see above). Blank for hitters. |
+| `woba` | Weighted on-base average for the stint, a single number summarizing all of a hitter's offense (walks, hits by type, home runs), weighted by how much each actually contributes to winning. |
 | `native_rate` | The player's run-production rate stated in his own level's terms, before any MLB translation. |
-| `savings9` | For pitchers only, how many runs per nine innings better than league-level-average his FIP was. |
 | `raa_mlb` | Runs above (or below) an average MLB player, after translating his level performance to MLB terms. The core production number. |
-| `wsb` | Runs added by stolen-base activity (translated to MLB terms). Small, hitters only. |
+| `wsb` | Runs added by stolen-base activity (translated to MLB terms). |
 | `rep` | The "replacement level" credit, a standard baseline adjustment reflecting that even a bare-minimum MLB fill-in player has some value. |
 | `pos_adj` | Bonus or penalty for defensive position (e.g. shortstop gets a bonus, first base a penalty), scaled to games played. |
 | `age_years` | Years younger (positive) or older (negative) than the level's actual average age that season, capped at 3 either direction. |
@@ -138,8 +126,7 @@ calibrated.
 |---|---|
 | `level`, `season` | Which level and year. |
 | `avg_hitter_war_per_600pa` | What a league-average hitter at this level scores, per 600 plate appearances. |
-| `avg_pitcher_war_per_600bf` | What a league-average pitcher at this level scores, per 600 batters faced. |
-| `avg_hitter_war_per_600pa_blended`, `avg_pitcher_war_per_600bf_blended` | The same two numbers recomputed on a slightly different translation scale (see README), included as a sensitivity check rather than a second opinion to prefer. |
+| `avg_hitter_war_per_600pa_blended` | The same number recomputed on a slightly different translation scale (see README), included as a sensitivity check rather than a second opinion to prefer. |
 
 ---
 
