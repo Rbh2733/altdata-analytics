@@ -1,0 +1,117 @@
+@prefix svod: <https://github.com/Rbh2733/altdata-analytics/ontology#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# ---------------------------------------------------------------------------
+# SHACL validation shapes for the SVOD attention graph.
+#
+# Run post-load, as a consistency check over the derived graph.
+# generate_sample_data.py seeds a small share of ViewingEvents with an invalid
+# negative duration on purpose, so this file has a real violation to catch
+# rather than a synthetic pass-through.
+# ---------------------------------------------------------------------------
+
+svod:ViewerShape a sh:NodeShape ;
+    sh:targetClass svod:Viewer ;
+    sh:property [
+        sh:path svod:name ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path svod:hasSubscriptionEvent ;
+        sh:class svod:SubscriptionEvent ;
+        sh:minCount 1 ;
+        sh:message "Every Viewer must have at least one SubscriptionEvent." ;
+    ] .
+
+svod:ViewingEventShape a sh:NodeShape ;
+    sh:targetClass svod:ViewingEvent ;
+    sh:property [
+        sh:path svod:viewedTitle ;
+        sh:class svod:Title ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Every ViewingEvent must reference exactly one Title." ;
+    ] ;
+    sh:property [
+        sh:path svod:onPlatform ;
+        sh:class svod:Platform ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Every ViewingEvent must reference exactly one Platform." ;
+    ] ;
+    sh:property [
+        sh:path svod:watchedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path svod:watchDurationMinutes ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:message "watchDurationMinutes must be a non-negative integer." ;
+    ] .
+
+svod:SubscriptionEventShape a sh:NodeShape ;
+    sh:targetClass svod:SubscriptionEvent ;
+    sh:property [
+        sh:path svod:eventType ;
+        sh:in ( "subscribe" "churn" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "eventType must be exactly one of: subscribe, churn." ;
+    ] ;
+    sh:property [
+        sh:path svod:eventPlatform ;
+        sh:class svod:Platform ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
+
+svod:TitleShape a sh:NodeShape ;
+    sh:targetClass svod:Title ;
+    sh:property [
+        sh:path svod:hasGenre ;
+        sh:class svod:Genre ;
+        sh:minCount 1 ;
+        sh:message "Every Title must have at least one Genre." ;
+    ] ;
+    sh:property [
+        sh:path svod:availableOn ;
+        sh:class svod:Platform ;
+        sh:minCount 1 ;
+        sh:message "Every Title must be available on at least one Platform." ;
+    ] .
+
+svod:AffinityScoreShape a sh:NodeShape ;
+    sh:targetClass svod:AffinityScore ;
+    sh:property [
+        sh:path svod:affinityType ;
+        sh:in ( "genre" "brand" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path svod:affinityWeight ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 1 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "affinityWeight must be a decimal in [0,1]." ;
+    ] .
+
+svod:LifecycleSignalShape a sh:NodeShape ;
+    sh:targetClass svod:LifecycleSignal ;
+    sh:property [
+        sh:path svod:lifecycleStage ;
+        sh:in ( "active" "at_risk" "churned" ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "lifecycleStage must be one of: active, at_risk, churned." ;
+    ] .

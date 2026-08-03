@@ -1,0 +1,99 @@
+@prefix svod: <https://github.com/Rbh2733/altdata-analytics/ontology#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# ---------------------------------------------------------------------------
+# SVOD Attention Ontology
+#
+# Models the same object this project's independent research already covers
+# by hand: viewers, platforms, titles, genres, and the subscribe/watch/churn
+# events that connect them. RDFS/OWL define the schema (classes, properties,
+# domains/ranges); SHACL (shapes.ttl) enforces it at load time;
+# derive_affinities.py aggregates raw events into the durable per-viewer
+# attributes (genre affinity, brand affinity, viewing summaries, lifecycle
+# signals) that everything downstream reads.
+# ---------------------------------------------------------------------------
+
+<https://github.com/Rbh2733/altdata-analytics/ontology> a owl:Ontology ;
+    rdfs:comment "SVOD attention ontology: viewers, platforms, titles, genres, and derived affinity/lifecycle attributes." .
+
+# --- Classes ----------------------------------------------------------------
+
+svod:Viewer a owl:Class ; rdfs:comment "A person whose viewing and subscription activity is tracked." .
+svod:Platform a owl:Class ; rdfs:comment "An SVOD service (e.g. a streaming platform)." .
+svod:Title a owl:Class ; rdfs:comment "A piece of content (show or film) available on one or more platforms." .
+svod:Genre a owl:Class ; rdfs:comment "A content genre or category." .
+
+svod:ViewingEvent a owl:Class ; rdfs:comment "A single instance of a viewer watching a title on a platform." .
+svod:SubscriptionEvent a owl:Class ; rdfs:comment "A subscribe or churn event tying a viewer to a platform at a point in time." .
+
+svod:AffinityScore a owl:Class ; rdfs:comment "A derived attribute: a viewer's weighted affinity for a genre or a platform, computed from raw ViewingEvents." .
+svod:ViewingSummary a owl:Class ; rdfs:comment "A derived per-viewer rollup of total viewing activity." .
+svod:LifecycleSignal a owl:Class ; rdfs:comment "A derived per-viewer lifecycle classification (active / at_risk / churned), computed from subscription history and viewing recency." .
+
+# --- Object properties --------------------------------------------------------
+
+svod:subscribesTo a owl:ObjectProperty ;
+    rdfs:domain svod:Viewer ; rdfs:range svod:Platform ;
+    rdfs:comment "Viewer currently subscribes to Platform." .
+
+svod:hasSubscriptionEvent a owl:ObjectProperty ;
+    rdfs:domain svod:Viewer ; rdfs:range svod:SubscriptionEvent .
+
+svod:eventPlatform a owl:ObjectProperty ;
+    rdfs:domain svod:SubscriptionEvent ; rdfs:range svod:Platform .
+
+svod:hasViewingEvent a owl:ObjectProperty ;
+    rdfs:domain svod:Viewer ; rdfs:range svod:ViewingEvent .
+
+svod:viewedTitle a owl:ObjectProperty ;
+    rdfs:domain svod:ViewingEvent ; rdfs:range svod:Title .
+
+svod:onPlatform a owl:ObjectProperty ;
+    rdfs:domain svod:ViewingEvent ; rdfs:range svod:Platform .
+
+svod:hasGenre a owl:ObjectProperty ;
+    rdfs:domain svod:Title ; rdfs:range svod:Genre .
+
+svod:availableOn a owl:ObjectProperty ;
+    rdfs:domain svod:Title ; rdfs:range svod:Platform .
+
+svod:hasAffinityScore a owl:ObjectProperty ;
+    rdfs:domain svod:Viewer ; rdfs:range svod:AffinityScore .
+
+svod:forGenre a owl:ObjectProperty ; rdfs:domain svod:AffinityScore ; rdfs:range svod:Genre .
+svod:forPlatform a owl:ObjectProperty ; rdfs:domain svod:AffinityScore ; rdfs:range svod:Platform .
+
+svod:hasViewingSummary a owl:ObjectProperty ;
+    rdfs:domain svod:Viewer ; rdfs:range svod:ViewingSummary .
+
+svod:primaryPlatform a owl:ObjectProperty ;
+    rdfs:domain svod:ViewingSummary ; rdfs:range svod:Platform .
+
+svod:hasLifecycleSignal a owl:ObjectProperty ;
+    rdfs:domain svod:Viewer ; rdfs:range svod:LifecycleSignal .
+
+# --- Datatype properties -----------------------------------------------------
+
+svod:name a owl:DatatypeProperty ; rdfs:range xsd:string .
+svod:watchedAt a owl:DatatypeProperty ; rdfs:domain svod:ViewingEvent ; rdfs:range xsd:dateTime .
+svod:watchDurationMinutes a owl:DatatypeProperty ; rdfs:domain svod:ViewingEvent ; rdfs:range xsd:integer .
+svod:eventType a owl:DatatypeProperty ; rdfs:domain svod:SubscriptionEvent ; rdfs:range xsd:string ;
+    rdfs:comment "One of: subscribe, churn." .
+svod:eventDate a owl:DatatypeProperty ; rdfs:domain svod:SubscriptionEvent ; rdfs:range xsd:date .
+
+svod:affinityType a owl:DatatypeProperty ; rdfs:domain svod:AffinityScore ; rdfs:range xsd:string ;
+    rdfs:comment "One of: genre, brand." .
+svod:affinityWeight a owl:DatatypeProperty ; rdfs:domain svod:AffinityScore ; rdfs:range xsd:decimal ;
+    rdfs:comment "Normalized affinity weight in [0,1], share of a viewer's watch time attributable to this genre or platform." .
+svod:derivedFromEventCount a owl:DatatypeProperty ; rdfs:domain svod:AffinityScore ; rdfs:range xsd:integer ;
+    rdfs:comment "Provenance: number of raw ViewingEvents this score was aggregated from." .
+
+svod:totalViewingMinutes a owl:DatatypeProperty ; rdfs:domain svod:ViewingSummary ; rdfs:range xsd:integer .
+svod:distinctTitlesWatched a owl:DatatypeProperty ; rdfs:domain svod:ViewingSummary ; rdfs:range xsd:integer .
+
+svod:lifecycleStage a owl:DatatypeProperty ; rdfs:domain svod:LifecycleSignal ; rdfs:range xsd:string ;
+    rdfs:comment "One of: active, at_risk, churned." .
+svod:daysSinceLastView a owl:DatatypeProperty ; rdfs:domain svod:LifecycleSignal ; rdfs:range xsd:integer .
