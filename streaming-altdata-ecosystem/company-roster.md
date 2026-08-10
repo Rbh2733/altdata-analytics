@@ -72,6 +72,7 @@
 | The Trade Desk | Owns Unified ID 2.0 (UID2), the leading open-source identity alternative to LiveRamp |
 | Amazon Marketing Cloud | Amazon's walled-garden clean room |
 | Walmart Connect | Walmart's walled-garden clean room, powered by Luminate (rebranding to Scintilla); global ad revenue $4.4B in FY2025 and $6.4B in FY2026 per Walmart's SEC 8-Ks |
+| OpenAP | Cross-publisher TV advertising clean room jointly owned by Fox, NBCUniversal, Paramount, and WBD (plus A+E, AMC Global, Hallmark, Scripps, TelevisaUnivision); Data Hub launched June 2022, powered by Snowflake, with a direct Snowflake Ventures investment to accelerate its build-out |
 
 ---
 
