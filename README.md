@@ -24,6 +24,10 @@ A multi-source fundamentals reconciliation pipeline: the same metrics ingested f
 
 An end-to-end entity-resolution and AI-tagging pipeline for vendor spend data: raw card-feed merchant strings matched to a canonical vendor table in stages (normalize, exact, fuzzy with a review band, AI tagger for the tail), with a validation harness, QA expectations, drift monitoring, and a DuckDB SQL layer. Deterministic synthetic data, so every number in its README reproduces from a clean copy. A live Claude adapter ships alongside the deterministic mock tagger.
 
+### [viewer-attribute-graph](viewer-attribute-graph/)
+
+A viewer-attribute derivation pipeline built as an RDF/OWL knowledge graph rather than a relational store: three raw event types (viewing, subscription, and their derived affinity scores) share no natural key and all resolve back to one canonical Viewer URI, turning a three-way reconciliation into a single SPARQL traversal. Deterministic synthetic data (60 viewers, 6 platforms, 30 titles, 10 genres, seeded), with roughly 4% of viewing events carrying a deliberately planted negative-duration defect that SHACL validation catches and reports while the derivation layer excludes those rows before aggregating, so validation reports the raw truth and derivation defends the outputs. Five SPARQL 1.1 queries answer the questions the graph exists for, and committed outputs regenerate byte-identically from a clean clone.
+
 ### [dbt-streaming-analytics](dbt-streaming-analytics/)
 
 A dbt-core plus DuckDB warehouse over a synthetic music-streaming catalog: staging, intermediate, and marts layers in a star schema, 60 automated tests (50 generic, 10 singular), documentation as code, and an optional Streamlit dashboard. The 85,000-row seed regenerates byte-identically from a committed script, so the entire warehouse is a pure function of one file; the layering and testing patterns are the point, and the fictional data is labeled as such throughout.
